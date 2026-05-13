@@ -75,6 +75,17 @@ class Presentation(PartElementProxy):
         """
         return self.part.notes_master
 
+    @lazyproperty
+    def handout_master(self):
+        """|HandoutMaster| instance for this presentation.
+
+        If the presentation does not have a handout master, one is created
+        from a default template.
+        """
+        from pptx.handout import HandoutMaster
+
+        return self.part.handout_master_part.handout_master
+
     def save(self, file: str | IO[bytes]):
         """Writes this presentation to `file`.
 

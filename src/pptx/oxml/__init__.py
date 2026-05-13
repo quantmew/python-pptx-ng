@@ -117,6 +117,34 @@ register_element_cls("p:custShowLst", CT_CustomShowList)
 register_element_cls("p:sldLst", CT_SlideRelationshipList)
 
 
+from pptx.oxml.handout import (  # noqa: E402
+    CT_HandoutMaster,
+    CT_HandoutMasterIdList,
+    CT_HandoutMasterIdListEntry,
+)
+
+register_element_cls("p:handoutMaster", CT_HandoutMaster)
+register_element_cls("p:handoutMasterId", CT_HandoutMasterIdListEntry)
+register_element_cls("p:handoutMasterIdLst", CT_HandoutMasterIdList)
+
+
+from pptx.oxml.tags import CT_Tag, CT_TagList  # noqa: E402
+
+register_element_cls("p:tag", CT_Tag)
+register_element_cls("p:tagLst", CT_TagList)
+
+
+from pptx.oxml.chartex.chartex import (  # noqa: E402
+    CT_ChartEx,
+    CT_ChartExData,
+    CT_ChartExSpace,
+)
+
+register_element_cls("cx:chart", CT_ChartEx)
+register_element_cls("cx:chartData", CT_ChartExData)
+register_element_cls("cx:chartSpace", CT_ChartExSpace)
+
+
 from pptx.oxml.chart.axis import (  # noqa: E402
     CT_AxisUnit,
     CT_CatAx,
@@ -493,9 +521,11 @@ from pptx.oxml.slide import (  # noqa: E402
     CT_SlideMaster,
     CT_SlideTiming,
     CT_TimeNodeList,
+    CT_TLMediaNodeAudio,
     CT_TLMediaNodeVideo,
 )
 
+register_element_cls("p:audio", CT_TLMediaNodeAudio)
 register_element_cls("p:bg", CT_Background)
 register_element_cls("p:bgPr", CT_BackgroundProperties)
 register_element_cls("p:childTnLst", CT_TimeNodeList)
@@ -566,6 +596,187 @@ register_element_cls("a:spcPts", CT_TextSpacingPoint)
 register_element_cls("a:txBody", CT_TextBody)
 register_element_cls("c:txPr", CT_TextBody)
 register_element_cls("p:txBody", CT_TextBody)
+
+
+from pptx.oxml.diagram.core import (  # noqa: E402
+    CT_ColorsDefinition,
+    CT_Connection,
+    CT_ConnectionList,
+    CT_DataModel,
+    CT_LayoutDefinition,
+    CT_Point,
+    CT_PointList,
+    CT_StyleDefinition,
+)
+
+register_element_cls("dgm:colorsDef", CT_ColorsDefinition)
+register_element_cls("dgm:cxn", CT_Connection)
+register_element_cls("dgm:cxnLst", CT_ConnectionList)
+register_element_cls("dgm:dataModel", CT_DataModel)
+register_element_cls("dgm:layoutDef", CT_LayoutDefinition)
+register_element_cls("dgm:pt", CT_Point)
+register_element_cls("dgm:ptLst", CT_PointList)
+register_element_cls("dgm:styleDef", CT_StyleDefinition)
+
+
+from pptx.oxml.math.core import (  # noqa: E402
+    CT_OMath,
+    CT_OMathAccent,
+    CT_OMathAccentProperties,
+    CT_OMathArgument,
+    CT_OMathBar,
+    CT_OMathBarProperties,
+    CT_OMathBase,
+    CT_OMathBorderBox,
+    CT_OMathBorderBoxProperties,
+    CT_OMathBox,
+    CT_OMathBoxProperties,
+    CT_OMathControlProperties,
+    CT_OMathDelimiter,
+    CT_OMathDelimiterProperties,
+    CT_OMathDenominator,
+    CT_OMathDegree,
+    CT_OMathEqArr,
+    CT_OMathEqArrProperties,
+    CT_OMathFrac,
+    CT_OMathFracProperties,
+    CT_OMathFunction,
+    CT_OMathFunctionName,
+    CT_OMathFunctionProperties,
+    CT_OMathGroupChar,
+    CT_OMathGroupCharProperties,
+    CT_OMathLimit,
+    CT_OMathLimitLower,
+    CT_OMathLimitLowerProperties,
+    CT_OMathLimitUpper,
+    CT_OMathLimitUpperProperties,
+    CT_OMathMatrix,
+    CT_OMathMatrixColumn,
+    CT_OMathMatrixColumnProperties,
+    CT_OMathMatrixProperties,
+    CT_OMathMatrixRow,
+    CT_OMathNary,
+    CT_OMathNaryProperties,
+    CT_OMathNumerator,
+    CT_OMathPara,
+    CT_OMathRad,
+    CT_OMathRadProperties,
+    CT_OMathRun,
+    CT_OMathRunProperties,
+    CT_OMathSub,
+    CT_OMathSubArgument,
+    CT_OMathSubProperties,
+    CT_OMathSubSup,
+    CT_OMathSubSupProperties,
+    CT_OMathSup,
+    CT_OMathSupArgument,
+    CT_OMathSupProperties,
+    CT_OMathText,
+)
+
+register_element_cls("m:acc", CT_OMathAccent)
+register_element_cls("m:accPr", CT_OMathAccentProperties)
+register_element_cls("m:bar", CT_OMathBar)
+register_element_cls("m:barPr", CT_OMathBarProperties)
+register_element_cls("m:borderBox", CT_OMathBorderBox)
+register_element_cls("m:borderBoxPr", CT_OMathBorderBoxProperties)
+register_element_cls("m:box", CT_OMathBox)
+register_element_cls("m:boxPr", CT_OMathBoxProperties)
+register_element_cls("m:d", CT_OMathDelimiter)
+register_element_cls("m:deg", CT_OMathDegree)
+register_element_cls("m:den", CT_OMathDenominator)
+register_element_cls("m:dPr", CT_OMathDelimiterProperties)
+register_element_cls("m:e", CT_OMathBase)
+register_element_cls("m:eqArr", CT_OMathEqArr)
+register_element_cls("m:eqArrPr", CT_OMathEqArrProperties)
+register_element_cls("m:f", CT_OMathFrac)
+register_element_cls("m:fName", CT_OMathFunctionName)
+register_element_cls("m:fPr", CT_OMathFracProperties)
+register_element_cls("m:func", CT_OMathFunction)
+register_element_cls("m:funcPr", CT_OMathFunctionProperties)
+register_element_cls("m:groupChr", CT_OMathGroupChar)
+register_element_cls("m:groupChrPr", CT_OMathGroupCharProperties)
+register_element_cls("m:lim", CT_OMathLimit)
+register_element_cls("m:limLow", CT_OMathLimitLower)
+register_element_cls("m:limLowPr", CT_OMathLimitLowerProperties)
+register_element_cls("m:limUpp", CT_OMathLimitUpper)
+register_element_cls("m:limUppPr", CT_OMathLimitUpperProperties)
+register_element_cls("m:m", CT_OMathMatrix)
+register_element_cls("m:mc", CT_OMathMatrixColumn)
+register_element_cls("m:mcPr", CT_OMathMatrixColumnProperties)
+register_element_cls("m:mPr", CT_OMathMatrixProperties)
+register_element_cls("m:mr", CT_OMathMatrixRow)
+register_element_cls("m:nary", CT_OMathNary)
+register_element_cls("m:naryPr", CT_OMathNaryProperties)
+register_element_cls("m:num", CT_OMathNumerator)
+register_element_cls("m:oMath", CT_OMath)
+register_element_cls("m:oMathPara", CT_OMathPara)
+register_element_cls("m:rad", CT_OMathRad)
+register_element_cls("m:radPr", CT_OMathRadProperties)
+register_element_cls("m:r", CT_OMathRun)
+register_element_cls("m:rPr", CT_OMathRunProperties)
+register_element_cls("m:sSub", CT_OMathSub)
+register_element_cls("m:sSubPr", CT_OMathSubProperties)
+register_element_cls("m:sSubSup", CT_OMathSubSup)
+register_element_cls("m:sSubSupPr", CT_OMathSubSupProperties)
+register_element_cls("m:sSup", CT_OMathSup)
+register_element_cls("m:sSupPr", CT_OMathSupProperties)
+register_element_cls("m:sub", CT_OMathSubArgument)
+register_element_cls("m:sup", CT_OMathSupArgument)
+register_element_cls("m:t", CT_OMathText)
+register_element_cls("m:ctrlPr", CT_OMathControlProperties)
+
+register_element_cls("m:acc", CT_OMathAccent)
+register_element_cls("m:accPr", CT_OMathAccentProperties)
+register_element_cls("m:bar", CT_OMathBar)
+register_element_cls("m:barPr", CT_OMathBarProperties)
+register_element_cls("m:borderBox", CT_OMathBorderBox)
+register_element_cls("m:borderBoxPr", CT_OMathBorderBoxProperties)
+register_element_cls("m:box", CT_OMathBox)
+register_element_cls("m:boxPr", CT_OMathBoxProperties)
+register_element_cls("m:d", CT_OMathDelimiter)
+register_element_cls("m:deg", CT_OMathDegree)
+register_element_cls("m:den", CT_OMathDenominator)
+register_element_cls("m:dPr", CT_OMathDelimiterProperties)
+register_element_cls("m:e", CT_OMathBase)
+register_element_cls("m:eqArr", CT_OMathEqArr)
+register_element_cls("m:eqArrPr", CT_OMathEqArrProperties)
+register_element_cls("m:f", CT_OMathFrac)
+register_element_cls("m:fName", CT_OMathFunctionName)
+register_element_cls("m:fPr", CT_OMathFracProperties)
+register_element_cls("m:func", CT_OMathFunction)
+register_element_cls("m:funcPr", CT_OMathFunctionProperties)
+register_element_cls("m:groupChr", CT_OMathGroupChar)
+register_element_cls("m:groupChrPr", CT_OMathGroupCharProperties)
+register_element_cls("m:lim", CT_OMathLimit)
+register_element_cls("m:limLow", CT_OMathLimitLower)
+register_element_cls("m:limLowPr", CT_OMathLimitLowerProperties)
+register_element_cls("m:limUpp", CT_OMathLimitUpper)
+register_element_cls("m:limUppPr", CT_OMathLimitUpperProperties)
+register_element_cls("m:m", CT_OMathMatrix)
+register_element_cls("m:mc", CT_OMathMatrixColumn)
+register_element_cls("m:mcPr", CT_OMathMatrixColumnProperties)
+register_element_cls("m:mPr", CT_OMathMatrixProperties)
+register_element_cls("m:mr", CT_OMathMatrixRow)
+register_element_cls("m:nary", CT_OMathNary)
+register_element_cls("m:naryPr", CT_OMathNaryProperties)
+register_element_cls("m:num", CT_OMathNumerator)
+register_element_cls("m:oMath", CT_OMath)
+register_element_cls("m:oMathPara", CT_OMathPara)
+register_element_cls("m:rad", CT_OMathRad)
+register_element_cls("m:radPr", CT_OMathRadProperties)
+register_element_cls("m:r", CT_OMathRun)
+register_element_cls("m:rPr", CT_OMathRunProperties)
+register_element_cls("m:sSub", CT_OMathSub)
+register_element_cls("m:sSubPr", CT_OMathSubProperties)
+register_element_cls("m:sSubSup", CT_OMathSubSup)
+register_element_cls("m:sSubSupPr", CT_OMathSubSupProperties)
+register_element_cls("m:sSup", CT_OMathSup)
+register_element_cls("m:sSupPr", CT_OMathSupProperties)
+register_element_cls("m:sub", CT_OMathSubArgument)
+register_element_cls("m:sup", CT_OMathSupArgument)
+register_element_cls("m:t", CT_OMathText)
+register_element_cls("m:ctrlPr", CT_OMathControlProperties)
 
 
 from pptx.oxml.theme import CT_OfficeStyleSheet  # noqa: E402

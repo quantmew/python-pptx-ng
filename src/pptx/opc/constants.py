@@ -9,7 +9,15 @@ from __future__ import annotations
 class CONTENT_TYPE:
     """Content type URIs (like MIME-types) that specify a part's format."""
 
+    AIFF = "audio/x-aiff"
     ASF = "video/x-ms-asf"
+    AUDIO = "audio/unknown"
+    AUDIO_M4A = "audio/mp4"
+    AUDIO_MIDI = "audio/midi"
+    AUDIO_MP3 = "audio/mpeg"
+    AUDIO_OGG = "audio/ogg"
+    AUDIO_WAV = "audio/vnd.wave"
+    AUDIO_WMA = "audio/x-ms-wma"
     AVI = "video/avi"
     BMP = "image/bmp"
     DML_CHART = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"

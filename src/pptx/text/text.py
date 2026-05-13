@@ -475,6 +475,39 @@ class _Paragraph(Subshape):
         """Add line break at end of this paragraph."""
         self._p.add_br()
 
+    def add_math(self):
+        """Return a |MathFormula| instance appended to this paragraph.
+
+        The returned object provides methods for building mathematical
+        formulas using OMML (Office Math Markup Language).
+        """
+        from pptx.math import MathFormula
+        from pptx.oxml import parse_xml
+        from pptx.oxml.math.core import CT_OMath
+        from pptx.oxml.ns import qn
+
+        oMath = CT_OMath.new()
+        # Wrap in mc:AlternateContent > a14:m for PowerPoint rendering.
+        # PowerPoint requires this wrapper to display OMML in DrawingML text.
+        mc_xml = (
+            '<mc:AlternateContent '
+            'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" '
+            'xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" '
+            'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">'
+            '<mc:Choice Requires="a14">'
+            '<a14:m/>'
+            '</mc:Choice>'
+            '<mc:Fallback>'
+            '<a:r><a:t/></a:r>'
+            '</mc:Fallback>'
+            '</mc:AlternateContent>'
+        )
+        mc_el = parse_xml(mc_xml)
+        a14_m = mc_el.find(".//" + qn("a14:m"))
+        a14_m.append(oMath)
+        self._p.append(mc_el)
+        return MathFormula(oMath)
+
     def add_run(self) -> _Run:
         """Return a new run appended to the runs in this paragraph."""
         r = self._p.add_r()

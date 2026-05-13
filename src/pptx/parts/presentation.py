@@ -8,6 +8,7 @@ from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from pptx.opc.package import XmlPart
 from pptx.opc.packuri import PackURI
 from pptx.parts.comment import CommentAuthorsPart
+from pptx.parts.handout import HandoutMasterPart
 from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
 from pptx.parts.slide import NotesMasterPart, SlidePart
 from pptx.presentation import Presentation
@@ -76,6 +77,21 @@ class PresentationPart(XmlPart):
             notes_master_part = NotesMasterPart.create_default(self.package)
             self.relate_to(notes_master_part, RT.NOTES_MASTER)
             return notes_master_part
+
+    @lazyproperty
+    def handout_master_part(self) -> HandoutMasterPart:
+        """Return the |HandoutMasterPart| object for this presentation.
+
+        If the presentation does not have a handout master, one is created from a default template.
+        """
+        try:
+            return self.part_related_by(RT.HANDOUT_MASTER)
+        except KeyError:
+            handout_master_part = HandoutMasterPart.create_default(self.package)
+            rId = self.relate_to(handout_master_part, RT.HANDOUT_MASTER)
+            handoutMasterIdLst = self._element.get_or_add_handoutMasterIdLst()
+            handoutMasterIdLst._add_handoutMasterId(rId=rId)
+            return handout_master_part
 
     @lazyproperty
     def comment_authors_part(self) -> CommentAuthorsPart:

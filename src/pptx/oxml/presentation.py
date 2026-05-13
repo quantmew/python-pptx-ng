@@ -9,6 +9,7 @@ from pptx.oxml.xmlchemy import BaseOxmlElement, RequiredAttribute, ZeroOrMore, Z
 
 if TYPE_CHECKING:
     from pptx.oxml.customshow import CT_CustomShowList
+    from pptx.oxml.handout import CT_HandoutMasterIdList
     from pptx.util import Length
 
 
@@ -18,6 +19,7 @@ class CT_Presentation(BaseOxmlElement):
     get_or_add_sldSz: Callable[[], CT_SlideSize]
     get_or_add_sldIdLst: Callable[[], CT_SlideIdList]
     get_or_add_sldMasterIdLst: Callable[[], CT_SlideMasterIdList]
+    get_or_add_handoutMasterIdLst: Callable[[], CT_HandoutMasterIdList]
     get_or_add_custShowLst: Callable[[], CT_CustomShowList]
 
     sldMasterIdLst: CT_SlideMasterIdList | None = (
@@ -31,6 +33,10 @@ class CT_Presentation(BaseOxmlElement):
                 "p:notesSz",
             ),
         )
+    )
+    handoutMasterIdLst: CT_HandoutMasterIdList | None = ZeroOrOne(  # pyright: ignore[reportAssignmentType]
+        "p:handoutMasterIdLst",
+        successors=("p:sldIdLst", "p:sldSz", "p:notesSz"),
     )
     sldIdLst: CT_SlideIdList | None = ZeroOrOne(  # pyright: ignore[reportAssignmentType]
         "p:sldIdLst", successors=("p:sldSz", "p:notesSz")

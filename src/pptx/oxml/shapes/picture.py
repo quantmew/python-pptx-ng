@@ -102,6 +102,38 @@ class CT_Picture(BaseShapeElement):
             ),
         )
 
+    @classmethod
+    def new_audio_pic(
+        cls,
+        shape_id: int,
+        shape_name: str,
+        audio_rId: str,
+        media_rId: str,
+        poster_frame_rId: str,
+        x: Length,
+        y: Length,
+        cx: Length,
+        cy: Length,
+    ) -> CT_Picture:
+        """Return a new `p:pic` populated with the specified audio."""
+        return cast(
+            CT_Picture,
+            parse_xml(
+                cls._pic_audio_tmpl()
+                % (
+                    shape_id,
+                    shape_name,
+                    audio_rId,
+                    media_rId,
+                    poster_frame_rId,
+                    x,
+                    y,
+                    cx,
+                    cy,
+                )
+            ),
+        )
+
     @property
     def srcRect_b(self):
         """Value of `p:blipFill/a:srcRect/@b` or 0.0 if not present."""
@@ -224,6 +256,45 @@ class CT_Picture(BaseShapeElement):
             "    </p:cNvPicPr>\n"
             "    <p:nvPr>\n"
             '      <a:videoFile r:link="%%s"/>\n'
+            "      <p:extLst>\n"
+            '        <p:ext uri="{DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230}">\n'
+            '          <p14:media xmlns:p14="http://schemas.microsoft.com/of'
+            'fice/powerpoint/2010/main" r:embed="%%s"/>\n'
+            "        </p:ext>\n"
+            "      </p:extLst>\n"
+            "    </p:nvPr>\n"
+            "  </p:nvPicPr>\n"
+            "  <p:blipFill>\n"
+            '    <a:blip r:embed="%%s"/>\n'
+            "    <a:stretch>\n"
+            "      <a:fillRect/>\n"
+            "    </a:stretch>\n"
+            "  </p:blipFill>\n"
+            "  <p:spPr>\n"
+            "    <a:xfrm>\n"
+            '      <a:off x="%%d" y="%%d"/>\n'
+            '      <a:ext cx="%%d" cy="%%d"/>\n'
+            "    </a:xfrm>\n"
+            '    <a:prstGeom prst="rect">\n'
+            "      <a:avLst/>\n"
+            "    </a:prstGeom>\n"
+            "  </p:spPr>\n"
+            "</p:pic>" % nsdecls("a", "p", "r")
+        )
+
+    @classmethod
+    def _pic_audio_tmpl(cls):
+        return (
+            "<p:pic %s>\n"
+            "  <p:nvPicPr>\n"
+            '    <p:cNvPr id="%%d" name="%%s">\n'
+            '      <a:hlinkClick r:id="" action="ppaction://media"/>\n'
+            "    </p:cNvPr>\n"
+            "    <p:cNvPicPr>\n"
+            '      <a:picLocks noChangeAspect="1"/>\n'
+            "    </p:cNvPicPr>\n"
+            "    <p:nvPr>\n"
+            '      <a:audioFile r:link="%%s"/>\n'
             "      <p:extLst>\n"
             '        <p:ext uri="{DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230}">\n'
             '          <p14:media xmlns:p14="http://schemas.microsoft.com/of'

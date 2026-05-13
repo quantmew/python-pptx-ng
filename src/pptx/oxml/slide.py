@@ -313,6 +313,25 @@ class CT_SlideTiming(BaseOxmlElement):
 class CT_TimeNodeList(BaseOxmlElement):
     """`p:tnLst` or `p:childTnList` element."""
 
+    def add_audio(self, shape_id):
+        """Add a new `p:audio` child element for audio having *shape_id*."""
+        audio_xml = (
+            "<p:audio %s>\n"
+            '  <p:cMediaNode vol="80000">\n'
+            '    <p:cTn id="%d" fill="hold" display="0">\n'
+            "      <p:stCondLst>\n"
+            '        <p:cond delay="indefinite"/>\n'
+            "      </p:stCondLst>\n"
+            "    </p:cTn>\n"
+            "    <p:tgtEl>\n"
+            '      <p:spTgt spid="%d"/>\n'
+            "    </p:tgtEl>\n"
+            "  </p:cMediaNode>\n"
+            "</p:audio>\n" % (nsdecls("p"), self._next_cTn_id, shape_id)
+        )
+        audio = parse_xml(audio_xml)
+        self.append(audio)
+
     def add_video(self, shape_id):
         """Add a new `p:video` child element for movie having *shape_id*."""
         video_xml = (
@@ -338,6 +357,14 @@ class CT_TimeNodeList(BaseOxmlElement):
         cTn_id_strs = self.xpath("/p:sld/p:timing//p:cTn/@id")
         ids = [int(id_str) for id_str in cTn_id_strs]
         return max(ids) + 1
+
+
+class CT_TLMediaNodeAudio(BaseOxmlElement):
+    """`p:audio` element, specifying audio media details."""
+
+    _tag_seq = ("p:cMediaNode",)
+    cMediaNode = OneAndOnlyOne("p:cMediaNode")
+    del _tag_seq
 
 
 class CT_TLMediaNodeVideo(BaseOxmlElement):

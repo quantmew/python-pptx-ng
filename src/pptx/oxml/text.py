@@ -403,10 +403,12 @@ class CT_TextParagraph(BaseOxmlElement):
     _add_r: Callable[[], CT_RegularTextRun]
 
     pPr: CT_TextParagraphProperties | None = ZeroOrOne(  # pyright: ignore[reportAssignmentType]
-        "a:pPr", successors=("a:r", "a:br", "a:fld", "a:endParaRPr")
+        "a:pPr", successors=("a:r", "a:br", "a:fld", "m:oMath", "m:oMathPara", "a:endParaRPr")
     )
     r = ZeroOrMore("a:r", successors=("a:endParaRPr",))
     br = ZeroOrMore("a:br", successors=("a:endParaRPr",))
+    oMath = ZeroOrMore("m:oMath", successors=("a:endParaRPr",))
+    oMathPara = ZeroOrMore("m:oMathPara", successors=("a:endParaRPr",))
     endParaRPr: CT_TextCharacterProperties | None = ZeroOrOne(
         "a:endParaRPr", successors=()
     )  # pyright: ignore[reportAssignmentType]

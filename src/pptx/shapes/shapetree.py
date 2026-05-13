@@ -7,7 +7,7 @@ import os
 from typing import IO, TYPE_CHECKING, Callable, Iterable, Iterator, cast
 
 from pptx.enum.shapes import PP_PLACEHOLDER, PROG_ID
-from pptx.media import SPEAKER_IMAGE_BYTES, Video
+from pptx.media import SPEAKER_IMAGE_BYTES, Audio, Video
 from pptx.opc.constants import CONTENT_TYPE as CT
 from pptx.oxml.ns import qn
 from pptx.oxml.shapes.autoshape import CT_Shape
@@ -544,6 +544,68 @@ class SlideShapes(_BaseGroupShapes):
 
     parent: Slide  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    def add_smartart(
+        self,
+        left: Length,
+        top: Length,
+        width: Length,
+        height: Length,
+    ) -> GraphicFrame:
+        """Add a new SmartArt graphic to the slide.
+
+        Returns a |GraphicFrame| object. Use the returned object's properties
+        to access the underlying diagram data.
+        """
+        data_rId, layout_rId, style_rId, colors_rId = self.part.add_diagram_parts()
+        shape_id = self._next_shape_id
+        name = "Diagram %d" % (shape_id - 1)
+        graphicFrame = CT_GraphicalObjectFrame.new_smartart_graphicFrame(
+            shape_id, name, data_rId, layout_rId, style_rId, colors_rId,
+            left, top, width, height,
+        )
+        self._spTree.append(graphicFrame)
+        self._recalculate_extents()
+        return cast(GraphicFrame, self._shape_factory(graphicFrame))
+
+    def add_audio(
+        self,
+        audio_file: str | IO[bytes],
+        left: Length,
+        top: Length,
+        width: Length,
+        height: Length,
+        poster_frame_image: str | IO[bytes] | None = None,
+        mime_type: str = CT.AUDIO,
+    ) -> GraphicFrame:
+        """Return newly added audio shape displaying audio in *audio_file*.
+
+        **EXPERIMENTAL.** This method has similar limitations to :meth:`add_movie`:
+
+        * The size must be specified.
+        * The MIME type of the audio file should be specified, e.g. 'audio/mpeg'. The provided
+          audio file is not interrogated for its type. The MIME type `audio/unknown` is used by
+          default.
+        * A poster frame image can be provided. If none is provided, the default "media
+          loudspeaker" image will be used.
+
+        Return a newly added audio shape to the slide, positioned at (`left`, `top`), having size
+        (`width`, `height`), and containing `audio_file`.
+        """
+        audio_pic = _AudioPicElementCreator.new_audio_pic(
+            self,
+            self._next_shape_id,
+            audio_file,
+            left,
+            top,
+            width,
+            height,
+            poster_frame_image,
+            mime_type,
+        )
+        self._spTree.append(audio_pic)
+        self._add_audio_timing(audio_pic)
+        return cast(GraphicFrame, self._shape_factory(audio_pic))
+
     def add_movie(
         self,
         movie_file: str | IO[bytes],
@@ -642,6 +704,16 @@ class SlideShapes(_BaseGroupShapes):
         sld = self._spTree.xpath("/p:sld")[0]
         childTnLst = sld.get_or_add_childTnLst()
         childTnLst.add_video(pic.shape_id)
+
+    def _add_audio_timing(self, pic: CT_Picture) -> None:
+        """Add a `p:audio` element under `p:sld/p:timing`.
+
+        The element will refer to the specified `pic` element by its shape id, and cause the audio
+        play controls to appear for that audio.
+        """
+        sld = self._spTree.xpath("/p:sld")[0]
+        childTnLst = sld.get_or_add_childTnLst()
+        childTnLst.add_audio(pic.shape_id)
 
     def _shape_factory(self, shape_elm: ShapeElement) -> BaseShape:
         """Return an instance of the appropriate shape proxy class for `shape_elm`."""
@@ -806,7 +878,10 @@ def BaseShapeFactory(shape_elm: ShapeElement, parent: ProvidesPart) -> BaseShape
 
     if isinstance(shape_elm, CT_Picture):
         videoFiles = shape_elm.xpath("./p:nvPicPr/p:nvPr/a:videoFile")
+        audioFiles = shape_elm.xpath("./p:nvPicPr/p:nvPr/a:audioFile")
         if videoFiles:
+            return Movie(shape_elm, parent)
+        if audioFiles:
             return Movie(shape_elm, parent)
         return Picture(shape_elm, parent)
 
@@ -995,6 +1070,106 @@ class _MoviePicElementCreator(object):
         and the other is the media rId.
         """
         return self._video_part_rIds[1]
+
+
+class _AudioPicElementCreator(object):
+    """Functional service object for creating a new audio p:pic element."""
+
+    def __init__(
+        self,
+        shapes: SlideShapes,
+        shape_id: int,
+        audio_file: str | IO[bytes],
+        x: Length,
+        y: Length,
+        cx: Length,
+        cy: Length,
+        poster_frame_file: str | IO[bytes] | None,
+        mime_type: str | None,
+    ):
+        super(_AudioPicElementCreator, self).__init__()
+        self._shapes = shapes
+        self._shape_id = shape_id
+        self._audio_file = audio_file
+        self._x, self._y, self._cx, self._cy = x, y, cx, cy
+        self._poster_frame_file = poster_frame_file
+        self._mime_type = mime_type
+
+    @classmethod
+    def new_audio_pic(
+        cls,
+        shapes: SlideShapes,
+        shape_id: int,
+        audio_file: str | IO[bytes],
+        x: Length,
+        y: Length,
+        cx: Length,
+        cy: Length,
+        poster_frame_image: str | IO[bytes] | None,
+        mime_type: str | None,
+    ) -> CT_Picture:
+        """Return a new `p:pic` element containing audio in `audio_file`."""
+        return cls(shapes, shape_id, audio_file, x, y, cx, cy, poster_frame_image, mime_type)._pic
+
+    @property
+    def _media_rId(self) -> str:
+        """Return the rId of RT.MEDIA relationship to audio part."""
+        return self._audio_part_rIds[0]
+
+    @lazyproperty
+    def _pic(self) -> CT_Picture:
+        """Return the new `p:pic` element referencing the audio."""
+        return CT_Picture.new_audio_pic(
+            self._shape_id,
+            self._shape_name,
+            self._audio_rId,
+            self._media_rId,
+            self._poster_frame_rId,
+            self._x,
+            self._y,
+            self._cx,
+            self._cy,
+        )
+
+    @lazyproperty
+    def _poster_frame_image_file(self) -> str | IO[bytes]:
+        """Return the image file for audio placeholder image."""
+        poster_frame_file = self._poster_frame_file
+        if poster_frame_file is None:
+            return io.BytesIO(SPEAKER_IMAGE_BYTES)
+        return poster_frame_file
+
+    @lazyproperty
+    def _poster_frame_rId(self) -> str:
+        """Return the rId of relationship to poster frame image."""
+        _, poster_frame_rId = self._slide_part.get_or_add_image_part(self._poster_frame_image_file)
+        return poster_frame_rId
+
+    @property
+    def _shape_name(self) -> str:
+        """Return the appropriate shape name for the p:pic shape."""
+        return self._audio.filename
+
+    @property
+    def _slide_part(self) -> SlidePart:
+        """Return SlidePart object for slide containing this audio."""
+        return self._shapes.part
+
+    @lazyproperty
+    def _audio(self) -> Audio:
+        """Return a |Audio| object containing the audio file."""
+        return Audio.from_path_or_file_like(self._audio_file, self._mime_type)
+
+    @lazyproperty
+    def _audio_part_rIds(self) -> tuple[str, str]:
+        """Return the rIds for relationships to media part for audio."""
+        media_rId, audio_rId = self._slide_part.get_or_add_audio_media_part(self._audio)
+        return media_rId, audio_rId
+
+    @property
+    def _audio_rId(self) -> str:
+        """Return the rId of RT.AUDIO relationship to audio part."""
+        return self._audio_part_rIds[1]
 
 
 class _OleObjectElementCreator(object):

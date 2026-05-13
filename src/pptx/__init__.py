@@ -10,8 +10,16 @@ from pptx.api import Presentation
 from pptx.opc.constants import CONTENT_TYPE as CT
 from pptx.opc.package import PartFactory
 from pptx.parts.chart import ChartPart
+from pptx.parts.chartex import ChartExPart
 from pptx.parts.comment import CommentAuthorsPart, CommentPart
 from pptx.parts.coreprops import CorePropertiesPart
+from pptx.parts.diagram import (
+    DiagramColorsPart,
+    DiagramDataPart,
+    DiagramLayoutPart,
+    DiagramStylePart,
+)
+from pptx.parts.handout import HandoutMasterPart
 from pptx.parts.image import ImagePart
 from pptx.parts.media import MediaPart
 from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
@@ -23,6 +31,7 @@ from pptx.parts.slide import (
     SlideMasterPart,
     SlidePart,
 )
+from pptx.parts.tags import UserDefinedTagsPart
 
 if TYPE_CHECKING:
     from pptx.opc.package import Part
@@ -46,10 +55,24 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.PML_VIEW_PROPS: ViewPropertiesPart,
     CT.PML_COMMENTS: CommentPart,
     CT.PML_COMMENT_AUTHORS: CommentAuthorsPart,
+    CT.PML_HANDOUT_MASTER: HandoutMasterPart,
     CT.PML_SLIDE: SlidePart,
     CT.PML_SLIDE_LAYOUT: SlideLayoutPart,
     CT.PML_SLIDE_MASTER: SlideMasterPart,
     CT.DML_CHART: ChartPart,
+    CT.DML_DIAGRAM_COLORS: DiagramColorsPart,
+    CT.DML_DIAGRAM_DATA: DiagramDataPart,
+    CT.DML_DIAGRAM_LAYOUT: DiagramLayoutPart,
+    CT.DML_DIAGRAM_STYLE: DiagramStylePart,
+    CT.OFC_CHART_EX: ChartExPart,
+    CT.AIFF: MediaPart,
+    CT.AUDIO: MediaPart,
+    CT.AUDIO_M4A: MediaPart,
+    CT.AUDIO_MIDI: MediaPart,
+    CT.AUDIO_MP3: MediaPart,
+    CT.AUDIO_OGG: MediaPart,
+    CT.AUDIO_WAV: MediaPart,
+    CT.AUDIO_WMA: MediaPart,
     CT.BMP: ImagePart,
     CT.GIF: ImagePart,
     CT.JPEG: ImagePart,
@@ -68,6 +91,7 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.VIDEO: MediaPart,
     CT.WMV: MediaPart,
     CT.X_MS_VIDEO: MediaPart,
+    CT.PML_TAGS: UserDefinedTagsPart,
     # -- accommodate "image/jpg" as an alias for "image/jpeg" --
     "image/jpg": ImagePart,
 }
@@ -76,9 +100,15 @@ PartFactory.part_type_for.update(content_type_to_part_class_map)
 
 del (
     ChartPart,
+    ChartExPart,
     CommentAuthorsPart,
     CommentPart,
     CorePropertiesPart,
+    DiagramColorsPart,
+    DiagramDataPart,
+    DiagramLayoutPart,
+    DiagramStylePart,
+    HandoutMasterPart,
     ImagePart,
     MediaPart,
     PresentationPropertiesPart,
@@ -87,6 +117,7 @@ del (
     SlideLayoutPart,
     SlideMasterPart,
     PresentationPart,
+    UserDefinedTagsPart,
     CT,
     PartFactory,
 )

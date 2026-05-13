@@ -10,17 +10,19 @@ from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from pptx.opc.package import XmlPart
 from pptx.opc.packuri import PackURI
 from pptx.oxml.slide import CT_NotesMaster, CT_NotesSlide, CT_Slide
+from pptx.oxml.tags import CT_TagList
 from pptx.oxml.theme import CT_OfficeStyleSheet
 from pptx.parts.chart import ChartPart
 from pptx.parts.comment import CommentPart
 from pptx.parts.embeddedpackage import EmbeddedPackagePart
+from pptx.parts.tags import UserDefinedTagsPart
 from pptx.slide import NotesMaster, NotesSlide, Slide, SlideLayout, SlideMaster
 from pptx.util import lazyproperty
 
 if TYPE_CHECKING:
     from pptx.chart.data import ChartData
     from pptx.enum.chart import XL_CHART_TYPE
-    from pptx.media import Video
+    from pptx.media import Audio, Video
     from pptx.parts.image import Image, ImagePart
 
 
@@ -177,6 +179,27 @@ class SlidePart(BaseSlidePart):
         """
         return self.relate_to(ChartPart.new(chart_type, chart_data, self._package), RT.CHART)
 
+    def add_diagram_parts(self) -> tuple[str, str, str, str]:
+        """Return (data_rId, layout_rId, style_rId, colors_rId) for new diagram parts."""
+        from pptx.parts.diagram import (
+            DiagramColorsPart,
+            DiagramDataPart,
+            DiagramLayoutPart,
+            DiagramStylePart,
+        )
+
+        data_part = DiagramDataPart.new(self._package)
+        layout_part = DiagramLayoutPart.new(self._package)
+        style_part = DiagramStylePart.new(self._package)
+        colors_part = DiagramColorsPart.new(self._package)
+
+        data_rId = self.relate_to(data_part, RT.DIAGRAM_DATA)
+        layout_rId = self.relate_to(layout_part, RT.DIAGRAM_LAYOUT)
+        style_rId = self.relate_to(style_part, RT.DIAGRAM_QUICK_STYLE)
+        colors_rId = self.relate_to(colors_part, RT.DIAGRAM_COLORS)
+
+        return data_rId, layout_rId, style_rId, colors_rId
+
     def add_embedded_ole_object_part(
         self, prog_id: PROG_ID | str, ole_object_file: str | IO[bytes]
     ):
@@ -203,6 +226,18 @@ class SlidePart(BaseSlidePart):
         media_rId = self.relate_to(media_part, RT.MEDIA)
         video_rId = self.relate_to(media_part, RT.VIDEO)
         return media_rId, video_rId
+
+    def get_or_add_audio_media_part(self, audio: Audio) -> tuple[str, str]:
+        """Return rIds for media and audio relationships to media part.
+
+        A new |MediaPart| object is created if it does not already exist.
+        Two relationships to the media part are created, one each with
+        MEDIA and AUDIO relationship types.
+        """
+        media_part = self._package.get_or_add_media_part(audio)
+        media_rId = self.relate_to(media_part, RT.MEDIA)
+        audio_rId = self.relate_to(media_part, RT.AUDIO)
+        return media_rId, audio_rId
 
     @property
     def has_notes_slide(self):
@@ -259,6 +294,28 @@ class SlidePart(BaseSlidePart):
             comment_part = CommentPart.new(self.package)
             self.relate_to(comment_part, RT.COMMENTS)
             return comment_part
+
+    @property
+    def has_tags(self):
+        """Return True if this slide has a tags part, False otherwise."""
+        try:
+            self.part_related_by(RT.TAGS)
+        except KeyError:
+            return False
+        return True
+
+    @lazyproperty
+    def tags_part(self) -> UserDefinedTagsPart:
+        """The |UserDefinedTagsPart| for this slide.
+
+        If the slide does not have a tags part, a new one is created.
+        """
+        try:
+            return self.part_related_by(RT.TAGS)
+        except KeyError:
+            tags_part = UserDefinedTagsPart.new(self.package)
+            self.relate_to(tags_part, RT.TAGS)
+            return tags_part
 
     @property
     def slide_id(self) -> int:

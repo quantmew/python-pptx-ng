@@ -11,6 +11,90 @@ from pptx.opc.constants import CONTENT_TYPE as CT
 from pptx.util import lazyproperty
 
 
+class Audio(object):
+    """Immutable value object representing an audio clip such as MP3."""
+
+    def __init__(self, blob: bytes, mime_type: str | None, filename: str | None):
+        super(Audio, self).__init__()
+        self._blob = blob
+        self._mime_type = mime_type
+        self._filename = filename
+
+    @classmethod
+    def from_blob(cls, blob: bytes, mime_type: str | None, filename: str | None = None):
+        """Return a new |Audio| object loaded from audio binary in *blob*."""
+        return cls(blob, mime_type, filename)
+
+    @classmethod
+    def from_path_or_file_like(cls, audio_file: str | IO[bytes], mime_type: str | None) -> Audio:
+        """Return a new |Audio| object containing audio in *audio_file*.
+
+        *audio_file* can be either a path (string) or a file-like
+        (e.g. BytesIO) object.
+        """
+        if isinstance(audio_file, str):
+            with open(audio_file, "rb") as f:
+                blob = f.read()
+            filename = os.path.basename(audio_file)
+        else:
+            blob = audio_file.read()
+            filename = None
+
+        return cls.from_blob(blob, mime_type, filename)
+
+    @property
+    def blob(self):
+        """The bytestream of the audio "file"."""
+        return self._blob
+
+    @property
+    def content_type(self):
+        """MIME-type of this audio, e.g. `'audio/mpeg'`."""
+        return self._mime_type
+
+    @property
+    def ext(self):
+        """Return the file extension for this audio, e.g. 'mp3'.
+
+        The extension is that from the actual filename if known. Otherwise
+        it is the lowercase canonical extension for the audio's MIME type.
+        'aud' is used if the MIME type is 'audio/unknown'.
+        """
+        if self._filename:
+            return os.path.splitext(self._filename)[1].lstrip(".")
+        return {
+            CT.AIFF: "aiff",
+            CT.AUDIO_M4A: "m4a",
+            CT.AUDIO_MIDI: "midi",
+            CT.AUDIO_MP3: "mp3",
+            CT.AUDIO_OGG: "ogg",
+            CT.AUDIO_WAV: "wav",
+            CT.AUDIO_WMA: "wma",
+        }.get(self._mime_type, "aud")
+
+    @property
+    def filename(self) -> str:
+        """Return a filename.ext string appropriate to this audio.
+
+        The base filename from the original path is used if this audio was
+        loaded from the filesystem. If no filename is available, such as when
+        the audio object is created from an in-memory stream, the string
+        'audio.{ext}' is used where 'ext' is suitable to the audio format,
+        such as 'mp3'.
+        """
+        if self._filename is not None:
+            return self._filename
+        return "audio.%s" % self.ext
+
+    @lazyproperty
+    def sha1(self):
+        """The SHA1 hash digest for the binary "file" of this audio.
+
+        Example: `'1be010ea47803b00e140b852765cdf84f491da47'`
+        """
+        return hashlib.sha1(self._blob).hexdigest()
+
+
 class Video(object):
     """Immutable value object representing a video such as MP4."""
 

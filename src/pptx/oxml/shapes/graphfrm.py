@@ -19,6 +19,7 @@ from pptx.oxml.xmlchemy import (
 )
 from pptx.spec import (
     GRAPHIC_DATA_URI_CHART,
+    GRAPHIC_DATA_URI_DIAGRAM,
     GRAPHIC_DATA_URI_OLEOBJ,
     GRAPHIC_DATA_URI_TABLE,
 )
@@ -186,6 +187,33 @@ class CT_GraphicalObjectFrame(BaseShapeElement):
         graphicData = graphicFrame.graphic.graphicData
         graphicData.uri = GRAPHIC_DATA_URI_CHART
         graphicData.append(CT_Chart.new_chart(rId))
+        return graphicFrame
+
+    @classmethod
+    def new_smartart_graphicFrame(
+        cls,
+        id_: int,
+        name: str,
+        data_rId: str,
+        layout_rId: str,
+        style_rId: str,
+        colors_rId: str,
+        x: int,
+        y: int,
+        cx: int,
+        cy: int,
+    ) -> CT_GraphicalObjectFrame:
+        """Return a `p:graphicFrame` element tree populated with a SmartArt element."""
+        graphicFrame = CT_GraphicalObjectFrame.new_graphicFrame(id_, name, x, y, cx, cy)
+        graphicData = graphicFrame.graphic.graphicData
+        graphicData.uri = GRAPHIC_DATA_URI_DIAGRAM
+        graphicData.append(
+            parse_xml(
+                "<dgm:relIds %s "
+                'r:dm="%s" r:lo="%s" r:qs="%s" r:cs="%s"/>'
+                % (nsdecls("dgm", "r"), data_rId, layout_rId, style_rId, colors_rId)
+            )
+        )
         return graphicFrame
 
     @classmethod

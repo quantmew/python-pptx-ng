@@ -37,6 +37,12 @@ Feature Support
 * Define custom shows (named sub-sets of slides)
 * Add slide transitions (fade, push, wipe, split, and 16 others)
 * Add entrance animations (appear, fade) to shapes
+* Add audio shapes to slides with poster frames and timing
+* Access handout master for print layout customization
+* Add user-defined tags (key-value metadata) to slides
+* Embed mathematical formulas (OMML) including fractions, integrals, matrices, and more
+* Add SmartArt diagram graphics to slides
+* Support extended chart types (chartEx) for treemap, sunburst, waterfall, etc.
 * Validate presentations against Open XML schema and semantic constraints
 * And many others ...
 
@@ -114,6 +120,11 @@ API Documentation
    api/customshow
    api/transition
    api/animation
+   api/audio
+   api/handout
+   api/tags
+   api/math
+   api/diagram
    api/enum/index
 
 

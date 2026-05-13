@@ -177,3 +177,56 @@ this will not change color when the theme is changed::
 A run can also be made into a hyperlink by providing a target URL::
 
     run.hyperlink.address = 'https://github.com/scanny/python-pptx'
+
+
+Adding math formulas
+--------------------
+
+A paragraph can contain inline math formulas using Office Math Markup Language
+(OMML). Use the ``add_math()`` method on a paragraph to add a formula::
+
+    from pptx import Presentation
+    from pptx.util import Inches
+
+    prs = Presentation()
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(6), Inches(4))
+    tf = txBox.text_frame
+
+    # E = mc²
+    p = tf.paragraphs[0]
+    math = p.add_math()
+    math.add_run("E=m")
+    sSup = math.add_superscript()
+    sSup.base.add_run("c")
+    sSup.superscript.add_run("2")
+
+The ``add_math()`` method returns a |MathFormula| object which provides methods
+for building formula structures:
+
+* ``add_run(text)`` — add a text run
+* ``add_fraction()`` — add a/b fraction
+* ``add_radical()`` — add a square root √
+* ``add_superscript()`` — add x² superscript
+* ``add_subscript()`` — add xᵢ subscript
+* ``add_sub_superscript()`` — add xᵢⁿ sub-superscript
+* ``add_nary(char)`` — add integral ∫, sum Σ, etc.
+* ``add_matrix(rows, cols)`` — add a matrix
+* ``add_delimiter()`` — add parentheses ( )
+* ``add_accent(char)`` — add accent like x̂
+* ``add_function(name)`` — add sin(x), cos(x), etc.
+
+Formulas can be nested. For example, a quadratic formula::
+
+    math = p.add_math()
+    math.add_run("x=")
+    frac = math.add_fraction()
+    frac.numerator.add_run("-b±")
+    rad = frac.numerator.add_radical()
+    ss = rad.base.add_superscript()
+    ss.base.add_run("b")
+    ss.superscript.add_run("2")
+    rad.base.add_run("-4ac")
+    frac.denominator.add_run("2a")
+
+See :ref:`math_api` for the complete API reference.

@@ -225,6 +225,16 @@ class Slide(_BaseSlide):
 
         return self.part.comment_part.comments
 
+    @lazyproperty
+    def tags(self):
+        """The |UserDefinedTags| instance for this slide.
+
+        If the slide does not have a tags part, one is created.
+        """
+        from pptx.tags import UserDefinedTags
+
+        return self.part.tags_part.tag_list
+
     @property
     def transition(self):
         """The |Transition| for this slide, or |None| if not set.
