@@ -7,11 +7,11 @@ import hashlib
 from behave import given, then, when
 from helpers import saved_pptx_path, test_file, test_pptx, test_text
 
-from pptx import Presentation
-from pptx.chart.data import CategoryChartData
-from pptx.enum.chart import XL_CHART_TYPE
-from pptx.enum.shapes import MSO_SHAPE_TYPE, PP_PLACEHOLDER
-from pptx.shapes.base import _PlaceholderFormat
+from pptx_ng import Presentation
+from pptx_ng.chart.data import CategoryChartData
+from pptx_ng.enum.chart import XL_CHART_TYPE
+from pptx_ng.enum.shapes import MSO_SHAPE_TYPE, PP_PLACEHOLDER
+from pptx_ng.shapes.base import _PlaceholderFormat
 
 # given ===================================================
 

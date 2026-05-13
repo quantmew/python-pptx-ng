@@ -11,13 +11,13 @@ from behave import given, then, when
 from behave.runner import Context
 from helpers import saved_pptx_path, test_file, test_pptx
 
-from pptx import Presentation
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.util import Inches
+from pptx_ng import Presentation
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.util import Inches
 
 if TYPE_CHECKING:
-    from pptx import presentation
-    from pptx.shapes.picture import Picture
+    from pptx_ng import presentation
+    from pptx_ng.shapes.picture import Picture
 
 # given ===================================================
 

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.opc.package import XmlPart
-from pptx.shared import ElementProxy, ParentedElementProxy
+from pptx_ng.opc.package import XmlPart
+from pptx_ng.shared import ElementProxy, ParentedElementProxy
 
 from .unitutil.cxml import element
 from .unitutil.mock import instance_mock

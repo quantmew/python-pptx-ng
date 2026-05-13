@@ -9,7 +9,7 @@ from struct import calcsize
 
 import pytest
 
-from pptx.text.fonts import (
+from pptx_ng.text.fonts import (
     FontFiles,
     _BaseTable,
     _Font,
@@ -90,7 +90,7 @@ class DescribeFontFiles(object):
             "darwin": _os_x_font_directories_,
             "win32": _windows_font_directories_,
         }[platform]
-        sys_ = var_mock(request, "pptx.text.fonts.sys")
+        sys_ = var_mock(request, "pptx_ng.text.fonts.sys")
         sys_.platform = platform
         dirs_meth_mock.return_value = expected_dirs
         return expected_dirs
@@ -120,7 +120,7 @@ class DescribeFontFiles(object):
     def osx_dirs_fixture(self, request):
         import os
 
-        os_ = var_mock(request, "pptx.text.fonts.os")
+        os_ = var_mock(request, "pptx_ng.text.fonts.os")
         os_.path = os.path
         os_.environ = {"HOME": "/Users/fbar"}
         return [
@@ -139,7 +139,7 @@ class DescribeFontFiles(object):
 
     @pytest.fixture
     def _Font_(self, request):
-        return class_mock(request, "pptx.text.fonts._Font")
+        return class_mock(request, "pptx_ng.text.fonts._Font")
 
     @pytest.fixture
     def _font_directories_(self, request):
@@ -309,7 +309,7 @@ class Describe_Font(object):
 
     @pytest.fixture
     def _Stream_(self, request):
-        return class_mock(request, "pptx.text.fonts._Stream")
+        return class_mock(request, "pptx_ng.text.fonts._Stream")
 
     @pytest.fixture
     def stream_(self, request):
@@ -321,7 +321,7 @@ class Describe_Font(object):
 
     @pytest.fixture
     def _TableFactory_(self, request):
-        return function_mock(request, "pptx.text.fonts._TableFactory")
+        return function_mock(request, "pptx_ng.text.fonts._TableFactory")
 
     @pytest.fixture
     def _table_count_(self, request):
@@ -336,7 +336,7 @@ class Describe_Stream(object):
     """Unit-test suite for `pptx.text.fonts._Stream` object."""
 
     def it_can_construct_from_a_path(self, request):
-        open_ = open_mock(request, "pptx.text.fonts")
+        open_ = open_mock(request, "pptx_ng.text.fonts")
         _init_ = initializer_mock(request, _Stream)
         file_ = open_.return_value
 
@@ -411,9 +411,9 @@ class Describe_TableFactory(object):
         tag = request.param
         offset, length = 42, 21
         TableClass, target = {
-            "name": (_NameTable, "pptx.text.fonts._NameTable"),
-            "head": (_HeadTable, "pptx.text.fonts._HeadTable"),
-            "foob": (_BaseTable, "pptx.text.fonts._BaseTable"),
+            "name": (_NameTable, "pptx_ng.text.fonts._NameTable"),
+            "head": (_HeadTable, "pptx_ng.text.fonts._HeadTable"),
+            "foob": (_BaseTable, "pptx_ng.text.fonts._BaseTable"),
         }[tag]
         TableClass_ = class_mock(request, target)
         return tag, stream_, offset, length, TableClass_, TableClass

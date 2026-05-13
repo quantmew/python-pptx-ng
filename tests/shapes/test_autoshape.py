@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 
-from pptx.dml.fill import FillFormat
-from pptx.dml.line import LineFormat
-from pptx.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE
-from pptx.oxml import parse_xml
-from pptx.oxml.shapes.autoshape import CT_PresetGeometry2D, CT_Shape
-from pptx.shapes.autoshape import Adjustment, AdjustmentCollection, AutoShapeType, Shape
-from pptx.text.text import TextFrame
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.dml.line import LineFormat
+from pptx_ng.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.shapes.autoshape import CT_PresetGeometry2D, CT_Shape
+from pptx_ng.shapes.autoshape import Adjustment, AdjustmentCollection, AutoShapeType, Shape
+from pptx_ng.text.text import TextFrame
 
 from ..oxml.unitdata.shape import (
     a_cNvSpPr,
@@ -29,7 +29,7 @@ from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock, property_mock
 
 if TYPE_CHECKING:
-    from pptx.spec import AdjustmentValue
+    from pptx_ng.spec import AdjustmentValue
 
 
 class DescribeAdjustment(object):
@@ -415,7 +415,7 @@ class DescribeShape(object):
     def AdjustmentCollection_(self, request, adjustments_):
         return class_mock(
             request,
-            "pptx.shapes.autoshape.AdjustmentCollection",
+            "pptx_ng.shapes.autoshape.AdjustmentCollection",
             return_value=adjustments_,
         )
 
@@ -480,7 +480,7 @@ class DescribeShape(object):
 
     @pytest.fixture
     def TextFrame_(self, request, text_frame_):
-        return class_mock(request, "pptx.shapes.autoshape.TextFrame", return_value=text_frame_)
+        return class_mock(request, "pptx_ng.shapes.autoshape.TextFrame", return_value=text_frame_)
 
     @pytest.fixture
     def text_frame_(self, request):

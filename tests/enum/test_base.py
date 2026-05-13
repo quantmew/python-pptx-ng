@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.action import PP_ACTION, PP_ACTION_TYPE
-from pptx.enum.dml import MSO_LINE_DASH_STYLE
+from pptx_ng.enum.action import PP_ACTION, PP_ACTION_TYPE
+from pptx_ng.enum.dml import MSO_LINE_DASH_STYLE
 
 
 class DescribeBaseEnum:

@@ -10,11 +10,11 @@ import zipfile
 
 import pytest
 
-from pptx.exc import PackageNotFoundError
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.opc.package import Part, _Relationships
-from pptx.opc.packuri import CONTENT_TYPES_URI, PackURI
-from pptx.opc.serialized import (
+from pptx_ng.exc import PackageNotFoundError
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.opc.package import Part, _Relationships
+from pptx_ng.opc.packuri import CONTENT_TYPES_URI, PackURI
+from pptx_ng.opc.serialized import (
     PackageReader,
     PackageWriter,
     _ContentTypesItem,
@@ -74,7 +74,7 @@ class DescribePackageReader:
 
     def it_constructs_its_blob_reader_to_help(self, request: FixtureRequest):
         phys_pkg_reader_ = instance_mock(request, _PhysPkgReader)
-        _PhysPkgReader_ = class_mock(request, "pptx.opc.serialized._PhysPkgReader")
+        _PhysPkgReader_ = class_mock(request, "pptx_ng.opc.serialized._PhysPkgReader")
         _PhysPkgReader_.factory.return_value = phys_pkg_reader_
         package_reader = PackageReader("prs.pptx")
 
@@ -107,7 +107,7 @@ class DescribePackageWriter:
     def it_can_write_a_package(
         self, request: FixtureRequest, phys_writer_: Mock, relationships_: Mock
     ):
-        _PhysPkgWriter_ = class_mock(request, "pptx.opc.serialized._PhysPkgWriter")
+        _PhysPkgWriter_ = class_mock(request, "pptx_ng.opc.serialized._PhysPkgWriter")
         phys_writer_.__enter__.return_value = phys_writer_
         _PhysPkgWriter_.factory.return_value = phys_writer_
         _write_content_types_stream_ = method_mock(
@@ -127,10 +127,10 @@ class DescribePackageWriter:
     def it_can_write_a_content_types_stream(
         self, request: FixtureRequest, phys_writer_: Mock, relationships_: Mock, part_: Mock
     ):
-        _ContentTypesItem_ = class_mock(request, "pptx.opc.serialized._ContentTypesItem")
+        _ContentTypesItem_ = class_mock(request, "pptx_ng.opc.serialized._ContentTypesItem")
         _ContentTypesItem_.xml_for.return_value = "part_xml"
         serialize_part_xml_ = function_mock(
-            request, "pptx.opc.serialized.serialize_part_xml", return_value=b"xml"
+            request, "pptx_ng.opc.serialized.serialize_part_xml", return_value=b"xml"
         )
         package_writer = PackageWriter("", relationships_, (part_, part_))
 
@@ -206,7 +206,7 @@ class Describe_PhysPkgReader:
     def and_it_constructs_DirPkgReader_when_pkg_is_a_dir(self, request: FixtureRequest):
         dir_pkg_reader_ = instance_mock(request, _DirPkgReader)
         _DirPkgReader_ = class_mock(
-            request, "pptx.opc.serialized._DirPkgReader", return_value=dir_pkg_reader_
+            request, "pptx_ng.opc.serialized._DirPkgReader", return_value=dir_pkg_reader_
         )
 
         phys_reader = _PhysPkgReader.factory(dir_pkg_path)
@@ -238,7 +238,7 @@ class Describe_PhysPkgReader:
 
     @pytest.fixture
     def _ZipPkgReader_(self, request: FixtureRequest):
-        return class_mock(request, "pptx.opc.serialized._ZipPkgReader")
+        return class_mock(request, "pptx_ng.opc.serialized._ZipPkgReader")
 
 
 class Describe_DirPkgReader:
@@ -303,7 +303,7 @@ class Describe_PhysPkgWriter:
     def it_constructs_ZipPkgWriter_unconditionally(self, request: FixtureRequest):
         zip_pkg_writer_ = instance_mock(request, _ZipPkgWriter)
         _ZipPkgWriter_ = class_mock(
-            request, "pptx.opc.serialized._ZipPkgWriter", return_value=zip_pkg_writer_
+            request, "pptx_ng.opc.serialized._ZipPkgWriter", return_value=zip_pkg_writer_
         )
 
         phys_writer = _PhysPkgWriter.factory("prs.pptx")
@@ -336,7 +336,7 @@ class Describe_ZipPkgWriter:
         assert members[pack_uri] == b"blob"
 
     def it_provides_access_to_the_open_zip_file_to_help(self, request: FixtureRequest):
-        ZipFile_ = class_mock(request, "pptx.opc.serialized.zipfile.ZipFile")
+        ZipFile_ = class_mock(request, "pptx_ng.opc.serialized.zipfile.ZipFile")
         pkg_writer = _ZipPkgWriter("prs.pptx")
 
         zipf = pkg_writer._zipf

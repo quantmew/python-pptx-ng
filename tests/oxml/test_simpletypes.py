@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.simpletypes import (
+from pptx_ng.oxml.simpletypes import (
     BaseIntType,
     BaseSimpleType,
     ST_Coordinate,

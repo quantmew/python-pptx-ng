@@ -5,9 +5,9 @@ from __future__ import annotations
 from behave import given, then, when
 from helpers import test_pptx
 
-from pptx import Presentation
-from pptx.enum.text import PP_ALIGN
-from pptx.util import Emu
+from pptx_ng import Presentation
+from pptx_ng.enum.text import PP_ALIGN
+from pptx_ng.util import Emu
 
 # given ===================================================
 

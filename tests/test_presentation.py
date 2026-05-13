@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.parts.coreprops import CorePropertiesPart
-from pptx.parts.presentation import PresentationPart
-from pptx.parts.slide import NotesMasterPart
-from pptx.presentation import Presentation
-from pptx.slide import SlideLayouts, SlideMaster, SlideMasters, Slides
+from pptx_ng.parts.coreprops import CorePropertiesPart
+from pptx_ng.parts.presentation import PresentationPart
+from pptx_ng.parts.slide import NotesMasterPart
+from pptx_ng.presentation import Presentation
+from pptx_ng.slide import SlideLayouts, SlideMaster, SlideMasters, Slides
 
 from .unitutil.cxml import element, xml
 from .unitutil.mock import class_mock, instance_mock, property_mock
@@ -212,7 +212,7 @@ class DescribePresentation(object):
 
     @pytest.fixture
     def SlideMasters_(self, request, slide_masters_):
-        return class_mock(request, "pptx.presentation.SlideMasters", return_value=slide_masters_)
+        return class_mock(request, "pptx_ng.presentation.SlideMasters", return_value=slide_masters_)
 
     @pytest.fixture
     def slide_master_(self, request):
@@ -224,7 +224,7 @@ class DescribePresentation(object):
 
     @pytest.fixture
     def Slides_(self, request, slides_):
-        return class_mock(request, "pptx.presentation.Slides", return_value=slides_)
+        return class_mock(request, "pptx_ng.presentation.Slides", return_value=slides_)
 
     @pytest.fixture
     def slides_(self, request):

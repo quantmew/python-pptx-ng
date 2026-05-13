@@ -9,7 +9,7 @@ Corresponds to the ``spd`` attribute on ``p:transition``.
 
 Example::
 
-    from pptx.enum.transition import PP_TRANSITION_SPEED
+    from pptx_ng.enum.transition import PP_TRANSITION_SPEED
 
     slide.transition.speed = PP_TRANSITION_SPEED.FAST
 

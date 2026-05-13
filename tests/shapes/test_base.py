@@ -8,17 +8,17 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 
-from pptx.action import ActionSetting
-from pptx.dml.effect import ShadowFormat
-from pptx.enum.shapes import PP_PLACEHOLDER
-from pptx.oxml.shapes.shared import BaseShapeElement
-from pptx.oxml.text import CT_TextBody
-from pptx.shapes import Subshape
-from pptx.shapes.autoshape import Shape
-from pptx.shapes.base import BaseShape, _PlaceholderFormat
-from pptx.shapes.graphfrm import GraphicFrame
-from pptx.shapes.picture import Picture
-from pptx.shapes.shapetree import BaseShapeFactory, SlideShapes
+from pptx_ng.action import ActionSetting
+from pptx_ng.dml.effect import ShadowFormat
+from pptx_ng.enum.shapes import PP_PLACEHOLDER
+from pptx_ng.oxml.shapes.shared import BaseShapeElement
+from pptx_ng.oxml.text import CT_TextBody
+from pptx_ng.shapes import Subshape
+from pptx_ng.shapes.autoshape import Shape
+from pptx_ng.shapes.base import BaseShape, _PlaceholderFormat
+from pptx_ng.shapes.graphfrm import GraphicFrame
+from pptx_ng.shapes.picture import Picture
+from pptx_ng.shapes.shapetree import BaseShapeFactory, SlideShapes
 
 from ..oxml.unitdata.shape import (
     a_cNvPr,
@@ -39,9 +39,9 @@ from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock, loose_mock
 
 if TYPE_CHECKING:
-    from pptx.opc.package import XmlPart
-    from pptx.oxml.shapes import ShapeElement
-    from pptx.types import ProvidesPart
+    from pptx_ng.opc.package import XmlPart
+    from pptx_ng.oxml.shapes import ShapeElement
+    from pptx_ng.types import ProvidesPart
 
 
 class DescribeBaseShape(object):
@@ -387,7 +387,7 @@ class DescribeBaseShape(object):
 
     @pytest.fixture
     def ActionSetting_(self, request, action_setting_):
-        return class_mock(request, "pptx.shapes.base.ActionSetting", return_value=action_setting_)
+        return class_mock(request, "pptx_ng.shapes.base.ActionSetting", return_value=action_setting_)
 
     @pytest.fixture
     def action_setting_(self, request):
@@ -500,7 +500,7 @@ class DescribeBaseShape(object):
     def _PlaceholderFormat_(self, request, placeholder_format_):
         return class_mock(
             request,
-            "pptx.shapes.base._PlaceholderFormat",
+            "pptx_ng.shapes.base._PlaceholderFormat",
             return_value=placeholder_format_,
         )
 
@@ -514,7 +514,7 @@ class DescribeBaseShape(object):
 
     @pytest.fixture
     def ShadowFormat_(self, request):
-        return class_mock(request, "pptx.shapes.base.ShadowFormat")
+        return class_mock(request, "pptx_ng.shapes.base.ShadowFormat")
 
     @pytest.fixture
     def shape_elm_(self, request, shape_id, shape_name, txBody_):

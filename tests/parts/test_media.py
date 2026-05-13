@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from pptx.media import Video
-from pptx.package import Package
-from pptx.parts.media import MediaPart
+from pptx_ng.media import Video
+from pptx_ng.package import Package
+from pptx_ng.parts.media import MediaPart
 
 from ..unitutil.mock import initializer_mock, instance_mock
 

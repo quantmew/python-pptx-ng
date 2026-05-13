@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.opc.packuri import PackURI
+from pptx_ng.opc.packuri import PackURI
 
 
 class DescribePackURI(object):

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.math import (
+from pptx_ng import Presentation
+from pptx_ng.math import (
     MathAccent,
     MathArgument,
     MathDelimiter,
@@ -20,8 +20,8 @@ from pptx.math import (
     MathSubSuperscript,
     MathSuperscript,
 )
-from pptx.oxml import parse_xml
-from pptx.oxml.math.core import (
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.math.core import (
     CT_OMath,
     CT_OMathAccent,
     CT_OMathBar,
@@ -38,8 +38,8 @@ from pptx.oxml.math.core import (
     CT_OMathSubSup,
     CT_OMathSup,
 )
-from pptx.oxml.ns import nsdecls, qn
-from pptx.util import Inches
+from pptx_ng.oxml.ns import nsdecls, qn
+from pptx_ng.util import Inches
 
 
 # -- CT_OMath element tests --

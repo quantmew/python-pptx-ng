@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.diagram import SmartArtData, SmartArtNode
-from pptx.oxml import parse_xml
-from pptx.oxml.diagram.core import (
+from pptx_ng import Presentation
+from pptx_ng.diagram import SmartArtData, SmartArtNode
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.diagram.core import (
     CT_ColorsDefinition,
     CT_ConnectionList,
     CT_DataModel,
@@ -15,14 +15,14 @@ from pptx.oxml.diagram.core import (
     CT_PointList,
     CT_StyleDefinition,
 )
-from pptx.oxml.ns import nsdecls, qn
-from pptx.parts.diagram import (
+from pptx_ng.oxml.ns import nsdecls, qn
+from pptx_ng.parts.diagram import (
     DiagramColorsPart,
     DiagramDataPart,
     DiagramLayoutPart,
     DiagramStylePart,
 )
-from pptx.util import Inches
+from pptx_ng.util import Inches
 
 
 # -- Oxml element tests --
@@ -149,7 +149,7 @@ class DescribeSlideShapesAddSmartArt:
         slide.shapes.add_smartart(Inches(1), Inches(1), Inches(6), Inches(4))
         rels = slide.part.rels
         rel_types = {r.reltype for r in rels.values()}
-        from pptx.opc.constants import RELATIONSHIP_TYPE as RT
+        from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
         assert RT.DIAGRAM_DATA in rel_types
         assert RT.DIAGRAM_LAYOUT in rel_types
         assert RT.DIAGRAM_QUICK_STYLE in rel_types

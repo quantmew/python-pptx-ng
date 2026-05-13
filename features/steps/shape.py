@@ -7,10 +7,10 @@ import hashlib
 from behave import given, then, when
 from helpers import cls_qname, test_file, test_pptx
 
-from pptx import Presentation
-from pptx.action import ActionSetting
-from pptx.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE, PP_MEDIA_TYPE
-from pptx.util import Emu
+from pptx_ng import Presentation
+from pptx_ng.action import ActionSetting
+from pptx_ng.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE, PP_MEDIA_TYPE
+from pptx_ng.util import Emu
 
 # given ===================================================
 

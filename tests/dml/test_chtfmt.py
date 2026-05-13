@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.chtfmt import ChartFormat
-from pptx.dml.fill import FillFormat
-from pptx.dml.line import LineFormat
+from pptx_ng.dml.chtfmt import ChartFormat
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.dml.line import LineFormat
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock
@@ -72,7 +72,7 @@ class DescribeChartFormat(object):
 
     @pytest.fixture
     def FillFormat_(self, request):
-        return class_mock(request, "pptx.dml.chtfmt.FillFormat")
+        return class_mock(request, "pptx_ng.dml.chtfmt.FillFormat")
 
     @pytest.fixture
     def fill_(self, request):
@@ -80,7 +80,7 @@ class DescribeChartFormat(object):
 
     @pytest.fixture
     def LineFormat_(self, request, line_):
-        return class_mock(request, "pptx.dml.chtfmt.LineFormat", return_value=line_)
+        return class_mock(request, "pptx_ng.dml.chtfmt.LineFormat", return_value=line_)
 
     @pytest.fixture
     def line_(self, request):

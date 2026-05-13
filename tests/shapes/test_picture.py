@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.line import LineFormat
-from pptx.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE, PP_MEDIA_TYPE
-from pptx.parts.image import Image
-from pptx.parts.slide import SlidePart
-from pptx.shapes.picture import Movie, Picture, _BasePicture, _MediaFormat
-from pptx.util import Pt
+from pptx_ng.dml.line import LineFormat
+from pptx_ng.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE, PP_MEDIA_TYPE
+from pptx_ng.parts.image import Image
+from pptx_ng.parts.slide import SlidePart
+from pptx_ng.shapes.picture import Movie, Picture, _BasePicture, _MediaFormat
+from pptx_ng.util import Pt
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import call, class_mock, instance_mock, property_mock
@@ -204,7 +204,7 @@ class DescribeMovie(object):
 
     @pytest.fixture
     def _MediaFormat_(self, request, media_format_):
-        return class_mock(request, "pptx.shapes.picture._MediaFormat", return_value=media_format_)
+        return class_mock(request, "pptx_ng.shapes.picture._MediaFormat", return_value=media_format_)
 
     @pytest.fixture
     def media_format_(self, request):

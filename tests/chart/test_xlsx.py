@@ -10,14 +10,14 @@ import pytest
 from xlsxwriter import Workbook
 from xlsxwriter.worksheet import Worksheet
 
-from pptx.chart.data import (
+from pptx_ng.chart.data import (
     BubbleChartData,
     Categories,
     CategoryChartData,
     CategorySeriesData,
     XyChartData,
 )
-from pptx.chart.xlsx import (
+from pptx_ng.chart.xlsx import (
     BubbleWorkbookWriter,
     CategoryWorkbookWriter,
     XyWorkbookWriter,
@@ -79,11 +79,11 @@ class Describe_BaseWorkbookWriter(object):
 
     @pytest.fixture
     def BytesIO_(self, request):
-        return class_mock(request, "pptx.chart.xlsx.io.BytesIO")
+        return class_mock(request, "pptx_ng.chart.xlsx.io.BytesIO")
 
     @pytest.fixture
     def Workbook_(self, request, workbook_):
-        return class_mock(request, "pptx.chart.xlsx.Workbook", return_value=workbook_)
+        return class_mock(request, "pptx_ng.chart.xlsx.Workbook", return_value=workbook_)
 
     @pytest.fixture
     def workbook_(self, request):

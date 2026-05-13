@@ -10,7 +10,7 @@ Side direction for push, wipe transitions.
 
 Example::
 
-    from pptx.enum.transition import PP_TRANSITION_SIDE_DIRECTION
+    from pptx_ng.enum.transition import PP_TRANSITION_SIDE_DIRECTION
 
     slide.transition.set_push(PP_TRANSITION_SIDE_DIRECTION.LEFT)
 

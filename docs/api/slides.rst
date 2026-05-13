@@ -35,7 +35,7 @@ return value of :meth:`add_slide`.
 The |SlideLayouts| object is accessed using the
 :attr:`~pptx.slide.SlideMaster.slide_layouts` property of |SlideMaster|, typically::
 
-    >>> from pptx import Presentation
+    >>> from pptx_ng import Presentation
     >>> prs = Presentation()
     >>> slide_layouts = prs.slide_master.slide_layouts
 
@@ -68,7 +68,7 @@ This class is not intended to be constructed directly.
 The |SlideMasters| object is accessed using the
 :attr:`~pptx.presentation.slide_masters` property of |Presentation|, typically::
 
-    >>> from pptx import Presentation
+    >>> from pptx_ng import Presentation
     >>> prs = Presentation()
     >>> slide_masters = prs.slide_masters
 

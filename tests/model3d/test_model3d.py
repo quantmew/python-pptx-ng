@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.model3d import Model3D, Model3DCamera, Model3DTransform
-from pptx.oxml.ns import nsdecls, qn
-from pptx.oxml.model3d import (
+from pptx_ng import Presentation
+from pptx_ng.model3d import Model3D, Model3DCamera, Model3DTransform
+from pptx_ng.oxml.ns import nsdecls, qn
+from pptx_ng.oxml.model3d import (
     CT_AmbientLight,
     CT_DirectionalLight,
     CT_Model3D,
@@ -21,8 +21,8 @@ from pptx.oxml.model3d import (
     CT_OrthographicProjection,
     CT_PerspectiveProjection,
 )
-from pptx.oxml import parse_xml
-from pptx.parts.model3d import Model3DBlobPart
+from pptx_ng.oxml import parse_xml
+from pptx_ng.parts.model3d import Model3DBlobPart
 
 
 # -- CT_Model3D element tests --
@@ -142,7 +142,7 @@ class DescribeModel3DBlobPart:
         assert "model3d" in part.partname
 
     def it_has_correct_content_type(self):
-        from pptx.opc.constants import CONTENT_TYPE as CT
+        from pptx_ng.opc.constants import CONTENT_TYPE as CT
 
         assert CT.MODEL_GLB == "model/gltf-binary"
 
@@ -186,13 +186,13 @@ class DescribeModel3DProxy:
 
 class DescribeModel3DNamespace:
     def it_resolves_m3d_namespace(self):
-        from pptx.oxml.ns import _nsmap
+        from pptx_ng.oxml.ns import _nsmap
 
         assert "m3d" in _nsmap
         assert _nsmap["m3d"] == "http://schemas.microsoft.com/office/drawing/2017/model3d"
 
     def it_resolves_model3d_elements(self):
-        from pptx.oxml import register_element_cls
+        from pptx_ng.oxml import register_element_cls
 
         m = parse_xml("<m3d:model3D %s/>" % nsdecls("m3d"))
         assert isinstance(m, CT_Model3D)

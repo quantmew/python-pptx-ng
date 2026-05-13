@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.effect import ShadowFormat
-from pptx.enum.shapes import MSO_SHAPE_TYPE
-from pptx.shapes.group import GroupShape
-from pptx.shapes.shapetree import GroupShapes
+from pptx_ng.dml.effect import ShadowFormat
+from pptx_ng.enum.shapes import MSO_SHAPE_TYPE
+from pptx_ng.shapes.group import GroupShape
+from pptx_ng.shapes.shapetree import GroupShapes
 
 from ..unitutil.cxml import element
 from ..unitutil.mock import class_mock, initializer_mock, instance_mock
@@ -70,4 +70,4 @@ class DescribeGroupShape(object):
 
     @pytest.fixture
     def ShadowFormat_(self, request):
-        return class_mock(request, "pptx.shapes.group.ShadowFormat")
+        return class_mock(request, "pptx_ng.shapes.group.ShadowFormat")

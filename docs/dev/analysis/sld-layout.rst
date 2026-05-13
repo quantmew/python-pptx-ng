@@ -27,7 +27,7 @@ Protocol
 The default slide layout collection (the one belonging to the first slide master) is
 accessible directly from the presentation object::
 
-  >>> from pptx import Presentation
+  >>> from pptx_ng import Presentation
   >>> prs = Presentation()
   >>> slide_layouts = prs.slide_layouts
 

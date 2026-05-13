@@ -8,15 +8,15 @@ import os
 
 import pytest
 
-import pptx
-from pptx.media import Video
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.package import Part, _Relationship
-from pptx.opc.packuri import PackURI
-from pptx.package import Package, _ImageParts, _MediaParts
-from pptx.parts.coreprops import CorePropertiesPart
-from pptx.parts.image import Image, ImagePart
-from pptx.parts.media import MediaPart
+import pptx_ng
+from pptx_ng.media import Video
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.package import Part, _Relationship
+from pptx_ng.opc.packuri import PackURI
+from pptx_ng.package import Package, _ImageParts, _MediaParts
+from pptx_ng.parts.coreprops import CorePropertiesPart
+from pptx_ng.parts.image import Image, ImagePart
+from pptx_ng.parts.media import MediaPart
 
 from .unitutil.mock import call, class_mock, instance_mock, method_mock, property_mock
 
@@ -26,7 +26,7 @@ class DescribePackage(object):
 
     def it_provides_access_to_its_core_properties_part(self):
         default_pptx = os.path.abspath(
-            os.path.join(os.path.split(pptx.__file__)[0], "templates", "default.pptx")
+            os.path.join(os.path.split(pptx_ng.__file__)[0], "templates", "default.pptx")
         )
         pkg = Package.open(default_pptx)
         assert isinstance(pkg.core_properties, CorePropertiesPart)
@@ -142,7 +142,7 @@ class DescribePackage(object):
 
     @pytest.fixture
     def _MediaParts_(self, request):
-        return class_mock(request, "pptx.package._MediaParts")
+        return class_mock(request, "pptx_ng.package._MediaParts")
 
     @pytest.fixture
     def media_parts_(self, request):
@@ -246,7 +246,7 @@ class Describe_ImageParts(object):
 
     @pytest.fixture
     def Image_(self, request):
-        return class_mock(request, "pptx.package.Image")
+        return class_mock(request, "pptx_ng.package.Image")
 
     @pytest.fixture
     def image_(self, request):
@@ -254,7 +254,7 @@ class Describe_ImageParts(object):
 
     @pytest.fixture
     def ImagePart_(self, request):
-        return class_mock(request, "pptx.package.ImagePart")
+        return class_mock(request, "pptx_ng.package.ImagePart")
 
     @pytest.fixture
     def image_part_(self, request):
@@ -366,7 +366,7 @@ class Describe_MediaParts(object):
 
     @pytest.fixture
     def MediaPart_(self, request):
-        return class_mock(request, "pptx.package.MediaPart")
+        return class_mock(request, "pptx_ng.package.MediaPart")
 
     @pytest.fixture
     def media_part_(self, request):

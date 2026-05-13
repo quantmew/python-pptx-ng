@@ -8,9 +8,9 @@ import datetime as dt
 
 import pytest
 
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.oxml.coreprops import CT_CoreProperties
-from pptx.parts.coreprops import CorePropertiesPart
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.oxml.coreprops import CT_CoreProperties
+from pptx_ng.parts.coreprops import CorePropertiesPart
 
 
 class DescribeCorePropertiesPart(object):

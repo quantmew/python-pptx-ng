@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.ns import nsdecls
-from pptx.oxml.shapes.picture import CT_Picture
+from pptx_ng.oxml.ns import nsdecls
+from pptx_ng.oxml.shapes.picture import CT_Picture
 
 
 class DescribeCT_Picture(object):

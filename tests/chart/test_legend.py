@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.legend import Legend
-from pptx.enum.chart import XL_LEGEND_POSITION
-from pptx.text.text import Font
+from pptx_ng.chart.legend import Legend
+from pptx_ng.enum.chart import XL_LEGEND_POSITION
+from pptx_ng.text.text import Font
 
 from ..unitutil.cxml import element, xml
 

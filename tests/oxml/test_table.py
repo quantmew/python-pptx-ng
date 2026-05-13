@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.ns import nsdecls
-from pptx.oxml.table import CT_Table, TcRange
+from pptx_ng.oxml.ns import nsdecls
+from pptx_ng.oxml.table import CT_Table, TcRange
 
 from ..unitutil.cxml import element
 

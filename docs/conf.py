@@ -20,7 +20,7 @@ import sys
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath(".."))
 
-from pptx import __version__  # noqa: E402
+from pptx_ng import __version__  # noqa: E402
 
 
 # -- Allow nonlocal image URI's to accommodate travis-ci status image -------
@@ -290,7 +290,7 @@ rst_epilog = """
 
 .. |pp| replace:: `python-pptx`
 
-.. |Presentation| replace:: :class:`~pptx.presentation.Presentation`
+.. |Presentation| replace:: :class:`~pptx_ng.presentation.Presentation`
 
 .. |PresentationPart| replace:: :class:`.PresentationPart`
 

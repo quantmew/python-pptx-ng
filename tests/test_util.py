@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.util import Centipoints, Cm, Emu, Inches, Length, Mm, Pt
+from pptx_ng.util import Centipoints, Cm, Emu, Inches, Length, Mm, Pt
 
 
 class DescribeLength(object):

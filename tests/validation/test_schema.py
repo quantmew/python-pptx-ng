@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from lxml import etree
 
-from pptx.oxml import parse_xml
-from pptx.oxml.ns import qn
-from pptx.oxml.simpletypes import BaseIntType, XsdBoolean
-from pptx.oxml.xmlchemy import (
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.ns import qn
+from pptx_ng.oxml.simpletypes import BaseIntType, XsdBoolean
+from pptx_ng.oxml.xmlchemy import (
     BaseOxmlElement,
     OneAndOnlyOne,
     OneOrMore,
@@ -17,8 +17,8 @@ from pptx.oxml.xmlchemy import (
     ZeroOrOneChoice,
     Choice,
 )
-from pptx.validation.context import ValidationContext
-from pptx.validation.schema import SchemaValidator
+from pptx_ng.validation.context import ValidationContext
+from pptx_ng.validation.schema import SchemaValidator
 
 
 # -- test element classes ----------------------------------------------------

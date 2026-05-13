@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.chart import Chart
-from pptx.chart.data import ChartData
-from pptx.enum.chart import XL_CHART_TYPE as XCT
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.package import OpcPackage
-from pptx.opc.packuri import PackURI
-from pptx.oxml.chart.chart import CT_ChartSpace
-from pptx.parts.chart import ChartPart, ChartWorkbook
-from pptx.parts.embeddedpackage import EmbeddedXlsxPart
+from pptx_ng.chart.chart import Chart
+from pptx_ng.chart.data import ChartData
+from pptx_ng.enum.chart import XL_CHART_TYPE as XCT
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.package import OpcPackage
+from pptx_ng.opc.packuri import PackURI
+from pptx_ng.oxml.chart.chart import CT_ChartSpace
+from pptx_ng.parts.chart import ChartPart, ChartWorkbook
+from pptx_ng.parts.embeddedpackage import EmbeddedXlsxPart
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock, method_mock, property_mock
@@ -43,7 +43,7 @@ class DescribeChartPart(object):
 
     def it_provides_access_to_the_chart_object(self, request, chartSpace_):
         chart_ = instance_mock(request, Chart)
-        Chart_ = class_mock(request, "pptx.parts.chart.Chart", return_value=chart_)
+        Chart_ = class_mock(request, "pptx_ng.parts.chart.Chart", return_value=chart_)
         chart_part = ChartPart(None, None, None, chartSpace_)
 
         chart = chart_part.chart
@@ -54,7 +54,7 @@ class DescribeChartPart(object):
     def it_provides_access_to_the_chart_workbook(self, request, chartSpace_):
         chart_workbook_ = instance_mock(request, ChartWorkbook)
         ChartWorkbook_ = class_mock(
-            request, "pptx.parts.chart.ChartWorkbook", return_value=chart_workbook_
+            request, "pptx_ng.parts.chart.ChartWorkbook", return_value=chart_workbook_
         )
         chart_part = ChartPart(None, None, None, chartSpace_)
 
@@ -115,7 +115,7 @@ class DescribeChartWorkbook(object):
     def it_adds_an_xlsx_part_on_update_if_needed(
         self, request, chart_part_, package_, xlsx_part_, xlsx_part_prop_
     ):
-        EmbeddedXlsxPart_ = class_mock(request, "pptx.parts.chart.EmbeddedXlsxPart")
+        EmbeddedXlsxPart_ = class_mock(request, "pptx_ng.parts.chart.EmbeddedXlsxPart")
         EmbeddedXlsxPart_.new.return_value = xlsx_part_
         chart_part_.package = package_
         xlsx_part_prop_.return_value = None

@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from pptx import Presentation
-from pptx.transition import Transition
+from pptx_ng import Presentation
+from pptx_ng.transition import Transition
 
 
 class DescribeSlideTransition:
@@ -368,14 +368,14 @@ class DescribeOxmlElements:
     """Tests for low-level oxml transition element classes."""
 
     def it_creates_transition_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         trans = OxmlElement("p:transition")
         trans.set("spd", "fast")
         assert trans.get("spd") == "fast"
 
     def it_detects_transition_type(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         trans = OxmlElement("p:transition")
         assert trans.transition_type is None
@@ -383,7 +383,7 @@ class DescribeOxmlElements:
         assert trans.transition_type == "fade"
 
     def it_handles_split_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
         from lxml import etree
 
         trans = OxmlElement("p:transition")
@@ -395,7 +395,7 @@ class DescribeOxmlElements:
         assert split.get("dir") == "in"
 
     def it_handles_wheel_spokes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
         from lxml import etree
 
         trans = OxmlElement("p:transition")

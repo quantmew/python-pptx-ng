@@ -79,8 +79,8 @@ Adding a table
 
 The following code adds a 3-by-3 table in a new presentation::
 
-    >>> from pptx import Presentation
-    >>> from pptx.util import Inches
+    >>> from pptx_ng import Presentation
+    >>> from pptx_ng.util import Inches
 
     >>> # ---create presentation with 1 slide---
     >>> prs = Presentation()

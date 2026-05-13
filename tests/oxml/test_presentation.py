@@ -8,7 +8,7 @@ from typing import cast
 
 import pytest
 
-from pptx.oxml.presentation import CT_SlideIdList
+from pptx_ng.oxml.presentation import CT_SlideIdList
 
 from ..unitutil.cxml import element, xml
 

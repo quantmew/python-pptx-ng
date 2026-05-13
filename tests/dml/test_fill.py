@@ -6,8 +6,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.color import ColorFormat
-from pptx.dml.fill import (
+from pptx_ng.dml.color import ColorFormat
+from pptx_ng.dml.fill import (
     FillFormat,
     _BlipFill,
     _Fill,
@@ -20,8 +20,8 @@ from pptx.dml.fill import (
     _PattFill,
     _SolidFill,
 )
-from pptx.enum.dml import MSO_FILL, MSO_PATTERN
-from pptx.oxml.dml.fill import CT_GradientStopList
+from pptx_ng.enum.dml import MSO_FILL, MSO_PATTERN
+from pptx_ng.oxml.dml.fill import CT_GradientStopList
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock, method_mock, property_mock
@@ -150,7 +150,7 @@ class DescribeFillFormat(object):
         fill = FillFormat.from_fill_parent(element(cxml))
         # --mock must be after FillFormat call to avoid poss. contructor call
         _NoFill_ = class_mock(
-            request, "pptx.dml.fill._NoFill", return_value=no_fill_, autospec=True
+            request, "pptx_ng.dml.fill._NoFill", return_value=no_fill_, autospec=True
         )
         expected_xml = xml(expected_cxml)
         return fill, _NoFill_, expected_xml, no_fill_
@@ -184,7 +184,7 @@ class DescribeFillFormat(object):
         fill = FillFormat.from_fill_parent(element(cxml))
         # --mock must be after FillFormat call to avoid poss. contructor call
         _GradFill_ = class_mock(
-            request, "pptx.dml.fill._GradFill", return_value=grad_fill_, autospec=True
+            request, "pptx_ng.dml.fill._GradFill", return_value=grad_fill_, autospec=True
         )
         expected_xml = xml(
             expected_cxml + "{rotWithShape=1}/(a:gsLst/(a:gs{pos=0}/a:scheme"
@@ -224,7 +224,7 @@ class DescribeFillFormat(object):
         fill = FillFormat.from_fill_parent(element(cxml))
         # --mock must be after FillFormat call to avoid poss. contructor call
         _PattFill_ = class_mock(
-            request, "pptx.dml.fill._PattFill", return_value=patt_fill_, autospec=True
+            request, "pptx_ng.dml.fill._PattFill", return_value=patt_fill_, autospec=True
         )
         expected_xml = xml(expected_cxml)
         return fill, _PattFill_, expected_xml, patt_fill_
@@ -246,7 +246,7 @@ class DescribeFillFormat(object):
         fill = FillFormat.from_fill_parent(element(cxml))
         # --mock must be after FillFormat call to avoid poss. contructor call
         _SolidFill_ = class_mock(
-            request, "pptx.dml.fill._SolidFill", return_value=solid_fill_, autospec=True
+            request, "pptx_ng.dml.fill._SolidFill", return_value=solid_fill_, autospec=True
         )
         expected_xml = xml(expected_cxml)
         return fill, _SolidFill_, expected_xml, solid_fill_
@@ -435,7 +435,7 @@ class Describe_GradFill(object):
 
     @pytest.fixture
     def _GradientStops_(self, request):
-        return class_mock(request, "pptx.dml.fill._GradientStops")
+        return class_mock(request, "pptx_ng.dml.fill._GradientStops")
 
     @pytest.fixture
     def gradient_stops_(self, request):
@@ -679,7 +679,7 @@ class Describe_GradientStops(object):
 class Describe_GradientStop(object):
     def it_provides_access_to_its_color(self, request):
         gs = element("a:gs")
-        ColorFormat_ = class_mock(request, "pptx.dml.fill.ColorFormat")
+        ColorFormat_ = class_mock(request, "pptx_ng.dml.fill.ColorFormat")
         color_ = instance_mock(request, ColorFormat)
         ColorFormat_.from_colorchoice_parent.return_value = color_
         stop = _GradientStop(gs)

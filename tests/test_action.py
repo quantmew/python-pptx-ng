@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.action import ActionSetting, Hyperlink
-from pptx.enum.action import PP_ACTION
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.package import XmlPart
-from pptx.parts.slide import SlidePart
-from pptx.slide import Slide
+from pptx_ng.action import ActionSetting, Hyperlink
+from pptx_ng.enum.action import PP_ACTION
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.package import XmlPart
+from pptx_ng.parts.slide import SlidePart
+from pptx_ng.slide import Slide
 
 from .unitutil.cxml import element, xml
 from .unitutil.mock import call, class_mock, instance_mock, method_mock, property_mock
@@ -227,7 +227,7 @@ class DescribeActionSetting(object):
 
     @pytest.fixture
     def Hyperlink_(self, request, hyperlink_):
-        return class_mock(request, "pptx.action.Hyperlink", return_value=hyperlink_)
+        return class_mock(request, "pptx_ng.action.Hyperlink", return_value=hyperlink_)
 
     @pytest.fixture
     def hyperlink_(self, request):

@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from pptx import Presentation
-from pptx.viewprops import GridSpacing, ViewProperties
+from pptx_ng import Presentation
+from pptx_ng.viewprops import GridSpacing, ViewProperties
 
 
 class DescribeViewProperties:
@@ -95,7 +95,7 @@ class DescribeGridSpacing:
         """If viewPr has no gridSpacing, one should be created with defaults."""
         prs = Presentation()
         # Remove existing gridSpacing if any
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         view_el = prs.view_properties._element
         existing_gs = view_el.gridSpacing
@@ -206,55 +206,55 @@ class DescribeOxmlElements:
     """Tests for the low-level oxml element classes."""
 
     def it_creates_presentationPr_element(self):
-        from pptx.oxml.presprops import CT_PresentationProperties
+        from pptx_ng.oxml.presprops import CT_PresentationProperties
 
         el = CT_PresentationProperties.new()
         assert el.tag.endswith("}presentationPr")
 
     def it_creates_viewPr_element(self):
-        from pptx.oxml.viewprops import CT_ViewProperties
+        from pptx_ng.oxml.viewprops import CT_ViewProperties
 
         el = CT_ViewProperties.new()
         assert el.tag.endswith("}viewPr")
 
     def it_creates_gridSpacing_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         gs = OxmlElement("p:gridSpacing")
         gs.set("cx", "914400")
         gs.set("cy", "914400")
-        from pptx.oxml.viewprops import CT_GridSpacing
+        from pptx_ng.oxml.viewprops import CT_GridSpacing
 
         assert gs.cx == 914400
         assert gs.cy == 914400
 
     def it_handles_showPr_boolean_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         showPr = OxmlElement("p:showPr")
         showPr.set("loop", "1")
         showPr.set("showAnimation", "0")
-        from pptx.oxml.presprops import CT_ShowProperties
+        from pptx_ng.oxml.presprops import CT_ShowProperties
 
         assert showPr.loop is True
         assert showPr.showAnimation is False
 
     def it_handles_viewPr_optional_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         viewPr = OxmlElement("p:viewPr")
         viewPr.set("lastView", "sldView")
         viewPr.set("showComments", "1")
-        from pptx.oxml.viewprops import CT_ViewProperties
+        from pptx_ng.oxml.viewprops import CT_ViewProperties
 
         assert viewPr.lastView == "sldView"
         assert viewPr.showComments is True
 
     def it_returns_none_for_unset_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         showPr = OxmlElement("p:showPr")
-        from pptx.oxml.presprops import CT_ShowProperties
+        from pptx_ng.oxml.presprops import CT_ShowProperties
 
         assert showPr.loop is None
         assert showPr.showAnimation is None
@@ -262,10 +262,10 @@ class DescribeOxmlElements:
         assert showPr.useTimings is None
 
     def it_allows_setting_showPr_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         showPr = OxmlElement("p:showPr")
-        from pptx.oxml.presprops import CT_ShowProperties
+        from pptx_ng.oxml.presprops import CT_ShowProperties
 
         showPr.loop = True
         assert showPr.loop is True

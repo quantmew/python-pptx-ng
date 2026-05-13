@@ -4,18 +4,18 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.chartex import ChartEx
-from pptx.oxml import parse_xml
-from pptx.oxml.chartex.chartex import (
+from pptx_ng import Presentation
+from pptx_ng.chartex import ChartEx
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.chartex.chartex import (
     CT_ChartEx,
     CT_ChartExData,
     CT_ChartExSpace,
     CT_PlotArea,
     CT_SeriesLayoutPr,
 )
-from pptx.oxml.ns import nsdecls, qn
-from pptx.parts.chartex import ChartExPart
+from pptx_ng.oxml.ns import nsdecls, qn
+from pptx_ng.parts.chartex import ChartExPart
 
 
 class DescribeCT_ChartExSpace:
@@ -104,7 +104,7 @@ class DescribeChartExPart:
         assert part._element.tag == qn("cx:chartSpace")
 
     def it_has_correct_content_type(self):
-        from pptx.opc.constants import CONTENT_TYPE as CT
+        from pptx_ng.opc.constants import CONTENT_TYPE as CT
 
         assert CT.OFC_CHART_EX == "application/vnd.ms-office.chartex+xml"
 
@@ -145,7 +145,7 @@ class DescribeChartExProxy:
 
 class DescribeChartExNamespace:
     def it_resolves_cx_namespace(self):
-        from pptx.oxml.ns import _nsmap
+        from pptx_ng.oxml.ns import _nsmap
 
         assert "cx" in _nsmap
         assert _nsmap["cx"] == "http://schemas.microsoft.com/office/drawing/2014/chartex"

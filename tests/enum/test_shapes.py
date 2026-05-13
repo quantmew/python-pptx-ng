@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.shapes import PROG_ID
+from pptx_ng.enum.shapes import PROG_ID
 
 
 class DescribeProgId:

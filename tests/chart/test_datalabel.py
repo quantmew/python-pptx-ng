@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.datalabel import DataLabel, DataLabels
-from pptx.enum.chart import XL_LABEL_POSITION
-from pptx.text.text import Font
+from pptx_ng.chart.datalabel import DataLabel, DataLabels
+from pptx_ng.enum.chart import XL_LABEL_POSITION
+from pptx_ng.text.text import Font
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import class_mock, instance_mock, method_mock
@@ -253,7 +253,7 @@ class DescribeDataLabel(object):
 
     @pytest.fixture
     def TextFrame_(self, request):
-        return class_mock(request, "pptx.chart.datalabel.TextFrame")
+        return class_mock(request, "pptx_ng.chart.datalabel.TextFrame")
 
 
 class DescribeDataLabels(object):
@@ -656,7 +656,7 @@ class DescribeDataLabels(object):
 
     @pytest.fixture
     def Font_(self, request, font_):
-        return class_mock(request, "pptx.chart.datalabel.Font", return_value=font_)
+        return class_mock(request, "pptx_ng.chart.datalabel.Font", return_value=font_)
 
     @pytest.fixture
     def font_(self, request):

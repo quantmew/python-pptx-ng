@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.category import Categories, Category, CategoryLevel
-from pptx.oxml import parse_xml
+from pptx_ng.chart.category import Categories, Category, CategoryLevel
+from pptx_ng.oxml import parse_xml
 
 from ..unitutil.cxml import element
 from ..unitutil.file import snippet_seq
@@ -146,7 +146,7 @@ class DescribeCategories(object):
 
     @pytest.fixture
     def Category_(self, request, category_):
-        return class_mock(request, "pptx.chart.category.Category", return_value=category_)
+        return class_mock(request, "pptx_ng.chart.category.Category", return_value=category_)
 
     @pytest.fixture
     def category_(self, request):
@@ -155,7 +155,7 @@ class DescribeCategories(object):
     @pytest.fixture
     def CategoryLevel_(self, request, category_level_):
         return class_mock(
-            request, "pptx.chart.category.CategoryLevel", return_value=category_level_
+            request, "pptx_ng.chart.category.CategoryLevel", return_value=category_level_
         )
 
     @pytest.fixture
@@ -242,7 +242,7 @@ class DescribeCategoryLevel(object):
 
     @pytest.fixture
     def Category_(self, request, category_):
-        return class_mock(request, "pptx.chart.category.Category", return_value=category_)
+        return class_mock(request, "pptx_ng.chart.category.Category", return_value=category_)
 
     @pytest.fixture
     def category_(self, request):

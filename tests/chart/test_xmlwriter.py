@@ -9,7 +9,7 @@ from itertools import islice
 
 import pytest
 
-from pptx.chart.data import (
+from pptx_ng.chart.data import (
     BubbleChartData,
     CategoryChartData,
     CategorySeriesData,
@@ -17,7 +17,7 @@ from pptx.chart.data import (
     _BaseChartData,
     _BaseSeriesData,
 )
-from pptx.chart.xmlwriter import (
+from pptx_ng.chart.xmlwriter import (
     ChartXmlWriter,
     SeriesXmlRewriterFactory,
     _AreaChartXmlWriter,
@@ -36,8 +36,8 @@ from pptx.chart.xmlwriter import (
     _XySeriesXmlRewriter,
     _XySeriesXmlWriter,
 )
-from pptx.enum.chart import XL_CHART_TYPE
-from pptx.oxml import parse_xml
+from pptx_ng.enum.chart import XL_CHART_TYPE
+from pptx_ng.oxml import parse_xml
 
 from ..unitutil import count
 from ..unitutil.cxml import element, xml
@@ -90,7 +90,7 @@ class DescribeChartXmlWriter(object):
     def call_fixture(self, request, series_seq_):
         chart_type_member, XmlWriterClass = request.param
         xml_writer_ = instance_mock(request, XmlWriterClass)
-        class_spec = "pptx.chart.xmlwriter.%s" % XmlWriterClass.__name__
+        class_spec = "pptx_ng.chart.xmlwriter.%s" % XmlWriterClass.__name__
         XmlWriterClass_ = class_mock(request, class_spec, return_value=xml_writer_)
         chart_type = getattr(XL_CHART_TYPE, chart_type_member)
         return chart_type, series_seq_, XmlWriterClass_, xml_writer_
@@ -131,7 +131,7 @@ class DescribeSeriesXmlRewriterFactory(object):
         xml_rewriter_ = instance_mock(request, rewriter_cls)
         XmlRewriterClass_ = class_mock(
             request,
-            "pptx.chart.xmlwriter.%s" % rewriter_cls.__name__,
+            "pptx_ng.chart.xmlwriter.%s" % rewriter_cls.__name__,
             return_value=xml_rewriter_,
         )
         return chart_type, chart_data_, XmlRewriterClass_, xml_rewriter_

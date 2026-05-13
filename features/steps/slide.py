@@ -5,7 +5,7 @@ from __future__ import annotations
 from behave import given, then
 from helpers import test_pptx
 
-from pptx import Presentation
+from pptx_ng import Presentation
 
 # given ===================================================
 

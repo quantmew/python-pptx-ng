@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.validation import ValidationErrorType
-from pptx.validation.context import ValidationErrorInfo, ValidationContext
+from pptx_ng.enum.validation import ValidationErrorType
+from pptx_ng.validation.context import ValidationErrorInfo, ValidationContext
 
 
 class DescribeValidationErrorInfo:

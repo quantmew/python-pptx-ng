@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from pptx.oxml import parse_xml
-from pptx.oxml.ns import qn
-from pptx.validation.constraints import (
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.ns import qn
+from pptx_ng.validation.constraints import (
     AttributeCannotOmitConstraint,
     AttributeMutualExclusiveConstraint,
     AttributePairConstraint,
@@ -15,7 +15,7 @@ from pptx.validation.constraints import (
     ReferenceExistConstraint,
     UniqueAttributeValueConstraint,
 )
-from pptx.validation.context import ValidationContext
+from pptx_ng.validation.context import ValidationContext
 
 NSMAP = 'xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"'
 

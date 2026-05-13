@@ -4,23 +4,23 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.data import ChartData
-from pptx.enum.chart import XL_CHART_TYPE as XCT
-from pptx.enum.shapes import PROG_ID
-from pptx.media import Video
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.package import Part
-from pptx.opc.packuri import PackURI
-from pptx.oxml.slide import CT_NotesMaster, CT_NotesSlide, CT_Slide
-from pptx.oxml.theme import CT_OfficeStyleSheet
-from pptx.package import Package
-from pptx.parts.chart import ChartPart
-from pptx.parts.embeddedpackage import EmbeddedPackagePart
-from pptx.parts.image import Image, ImagePart
-from pptx.parts.media import MediaPart
-from pptx.parts.presentation import PresentationPart
-from pptx.parts.slide import (
+from pptx_ng.chart.data import ChartData
+from pptx_ng.enum.chart import XL_CHART_TYPE as XCT
+from pptx_ng.enum.shapes import PROG_ID
+from pptx_ng.media import Video
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.package import Part
+from pptx_ng.opc.packuri import PackURI
+from pptx_ng.oxml.slide import CT_NotesMaster, CT_NotesSlide, CT_Slide
+from pptx_ng.oxml.theme import CT_OfficeStyleSheet
+from pptx_ng.package import Package
+from pptx_ng.parts.chart import ChartPart
+from pptx_ng.parts.embeddedpackage import EmbeddedPackagePart
+from pptx_ng.parts.image import Image, ImagePart
+from pptx_ng.parts.media import MediaPart
+from pptx_ng.parts.presentation import PresentationPart
+from pptx_ng.parts.slide import (
     BaseSlidePart,
     NotesMasterPart,
     NotesSlidePart,
@@ -28,7 +28,7 @@ from pptx.parts.slide import (
     SlideMasterPart,
     SlidePart,
 )
-from pptx.slide import NotesMaster, NotesSlide, Slide, SlideLayout, SlideMaster
+from pptx_ng.slide import NotesMaster, NotesSlide, Slide, SlideLayout, SlideMaster
 
 from ..unitutil.cxml import element
 from ..unitutil.file import absjoin, test_file_dir
@@ -109,7 +109,7 @@ class DescribeNotesMasterPart(object):
     def it_provides_access_to_its_notes_master(self, request):
         notes_master_ = instance_mock(request, NotesMaster)
         NotesMaster_ = class_mock(
-            request, "pptx.parts.slide.NotesMaster", return_value=notes_master_
+            request, "pptx_ng.parts.slide.NotesMaster", return_value=notes_master_
         )
         notesMaster = element("p:notesMaster")
         notes_master_part = NotesMasterPart(None, None, None, notesMaster)
@@ -121,7 +121,7 @@ class DescribeNotesMasterPart(object):
 
     def it_creates_a_new_notes_master_part_to_help(self, request, package_, notes_master_part_):
         NotesMasterPart_ = class_mock(
-            request, "pptx.parts.slide.NotesMasterPart", return_value=notes_master_part_
+            request, "pptx_ng.parts.slide.NotesMasterPart", return_value=notes_master_part_
         )
         notesMaster = element("p:notesMaster")
         method_mock(
@@ -144,7 +144,7 @@ class DescribeNotesMasterPart(object):
         assert notes_master_part is notes_master_part_
 
     def it_creates_a_new_theme_part_to_help(self, request, package_, theme_part_):
-        XmlPart_ = class_mock(request, "pptx.parts.slide.XmlPart", return_value=theme_part_)
+        XmlPart_ = class_mock(request, "pptx_ng.parts.slide.XmlPart", return_value=theme_part_)
         theme_elm = element("p:theme")
         method_mock(
             request,
@@ -224,7 +224,7 @@ class DescribeNotesSlidePart(object):
         assert notes_master is notes_master_
 
     def it_provides_access_to_its_notes_slide(self, request, notes_slide_):
-        NotesSlide_ = class_mock(request, "pptx.parts.slide.NotesSlide", return_value=notes_slide_)
+        NotesSlide_ = class_mock(request, "pptx_ng.parts.slide.NotesSlide", return_value=notes_slide_)
         notes = element("p:notes")
         notes_slide_part = NotesSlidePart(None, None, None, notes)
 
@@ -237,7 +237,7 @@ class DescribeNotesSlidePart(object):
         self, request, package_, slide_part_, notes_master_part_, notes_slide_part_
     ):
         NotesSlidePart_ = class_mock(
-            request, "pptx.parts.slide.NotesSlidePart", return_value=notes_slide_part_
+            request, "pptx_ng.parts.slide.NotesSlidePart", return_value=notes_slide_part_
         )
         notes = element("p:notes")
         new_ = method_mock(request, CT_NotesSlide, "new", autospec=False, return_value=notes)
@@ -306,7 +306,7 @@ class DescribeSlidePart(object):
     def it_can_add_a_chart_part(self, request, package_, relate_to_):
         chart_data_ = instance_mock(request, ChartData)
         chart_part_ = instance_mock(request, ChartPart)
-        ChartPart_ = class_mock(request, "pptx.parts.slide.ChartPart")
+        ChartPart_ = class_mock(request, "pptx_ng.parts.slide.ChartPart")
         ChartPart_.new.return_value = chart_part_
         relate_to_.return_value = "rId42"
         slide_part = SlidePart(None, None, package_, None)
@@ -333,7 +333,7 @@ class DescribeSlidePart(object):
             request, SlidePart, "_blob_from_file", return_value=b"012345"
         )
         embedded_package_part_ = instance_mock(request, EmbeddedPackagePart)
-        EmbeddedPackagePart_ = class_mock(request, "pptx.parts.slide.EmbeddedPackagePart")
+        EmbeddedPackagePart_ = class_mock(request, "pptx_ng.parts.slide.EmbeddedPackagePart")
         EmbeddedPackagePart_.factory.return_value = embedded_package_part_
         relate_to_.return_value = "rId9"
         slide_part = SlidePart(None, None, package_, None)
@@ -364,7 +364,7 @@ class DescribeSlidePart(object):
         partname = PackURI("/foobar.xml")
         _init_ = initializer_mock(request, SlidePart)
         slide_layout_part_ = instance_mock(request, SlideLayoutPart)
-        CT_Slide_ = class_mock(request, "pptx.parts.slide.CT_Slide")
+        CT_Slide_ = class_mock(request, "pptx_ng.parts.slide.CT_Slide")
         CT_Slide_.new.return_value = sld = element("c:sld")
 
         slide_part = SlidePart.new(partname, package_, slide_layout_part_)
@@ -487,7 +487,7 @@ class DescribeSlidePart(object):
     @pytest.fixture
     def NotesSlidePart_(self, request, notes_slide_part_):
         return class_mock(
-            request, "pptx.parts.slide.NotesSlidePart", return_value=notes_slide_part_
+            request, "pptx_ng.parts.slide.NotesSlidePart", return_value=notes_slide_part_
         )
 
     @pytest.fixture
@@ -512,7 +512,7 @@ class DescribeSlidePart(object):
 
     @pytest.fixture
     def Slide_(self, request, slide_):
-        return class_mock(request, "pptx.parts.slide.Slide", return_value=slide_)
+        return class_mock(request, "pptx_ng.parts.slide.Slide", return_value=slide_)
 
     @pytest.fixture
     def slide_(self, request):
@@ -546,7 +546,7 @@ class DescribeSlideLayoutPart(object):
     def it_provides_access_to_its_slide_layout(self, request):
         slide_layout_ = instance_mock(request, SlideLayout)
         SlideLayout_ = class_mock(
-            request, "pptx.parts.slide.SlideLayout", return_value=slide_layout_
+            request, "pptx_ng.parts.slide.SlideLayout", return_value=slide_layout_
         )
         sldLayout = element("p:sldLayout")
         slide_layout_part = SlideLayoutPart(None, None, None, sldLayout)
@@ -563,7 +563,7 @@ class DescribeSlideMasterPart(object):
     def it_provides_access_to_its_slide_master(self, request):
         slide_master_ = instance_mock(request, SlideMaster)
         SlideMaster_ = class_mock(
-            request, "pptx.parts.slide.SlideMaster", return_value=slide_master_
+            request, "pptx_ng.parts.slide.SlideMaster", return_value=slide_master_
         )
         sldMaster = element("p:sldMaster")
         slide_master_part = SlideMasterPart(None, None, None, sldMaster)

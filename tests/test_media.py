@@ -6,7 +6,7 @@ import io
 
 import pytest
 
-from pptx.media import Video
+from pptx_ng.media import Video
 
 from .unitutil.file import absjoin, test_file_dir
 from .unitutil.mock import initializer_mock, instance_mock, method_mock, property_mock

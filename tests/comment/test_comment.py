@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.comment import Comment, CommentAuthor, CommentAuthors, Comments
-from pptx.oxml.comment import (
+from pptx_ng import Presentation
+from pptx_ng.comment import Comment, CommentAuthor, CommentAuthors, Comments
+from pptx_ng.oxml.comment import (
     CT_Comment,
     CT_CommentAuthor,
     CT_CommentAuthorList,

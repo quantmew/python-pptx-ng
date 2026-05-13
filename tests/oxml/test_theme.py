@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.theme import CT_OfficeStyleSheet
+from pptx_ng.oxml.theme import CT_OfficeStyleSheet
 
 from ..unitutil.file import snippet_text
 

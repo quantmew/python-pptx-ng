@@ -9,8 +9,8 @@ Alias: ``MSO_SHAPE``
 
 Example::
 
-    from pptx.enum.shapes import MSO_SHAPE
-    from pptx.util import Inches
+    from pptx_ng.enum.shapes import MSO_SHAPE
+    from pptx_ng.util import Inches
 
     left = top = width = height = Inches(1.0)
     slide.shapes.add_shape(

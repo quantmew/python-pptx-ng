@@ -8,15 +8,15 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 
-from pptx.dml.color import ColorFormat
-from pptx.dml.fill import FillFormat
-from pptx.enum.lang import MSO_LANGUAGE_ID
-from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE, MSO_UNDERLINE, PP_ALIGN
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.package import XmlPart
-from pptx.shapes.autoshape import Shape
-from pptx.text.text import Font, TextFrame, _Hyperlink, _Paragraph, _Run
-from pptx.util import Inches, Pt
+from pptx_ng.dml.color import ColorFormat
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.enum.lang import MSO_LANGUAGE_ID
+from pptx_ng.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE, MSO_UNDERLINE, PP_ALIGN
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.package import XmlPart
+from pptx_ng.shapes.autoshape import Shape
+from pptx_ng.text.text import Font, TextFrame, _Hyperlink, _Paragraph, _Run
+from pptx_ng.util import Inches, Pt
 
 from ..oxml.unitdata.text import a_p, a_t, an_hlinkClick, an_r, an_rPr
 from ..unitutil.cxml import element, xml
@@ -29,7 +29,7 @@ from ..unitutil.mock import (
 )
 
 if TYPE_CHECKING:
-    from pptx.oxml.text import CT_TextBody, CT_TextParagraph
+    from pptx_ng.oxml.text import CT_TextBody, CT_TextParagraph
 
 
 class DescribeTextFrame(object):
@@ -447,7 +447,7 @@ class DescribeTextFrame(object):
 
     @pytest.fixture
     def FontFiles_(self, request):
-        return class_mock(request, "pptx.text.text.FontFiles")
+        return class_mock(request, "pptx_ng.text.text.FontFiles")
 
     @pytest.fixture
     def paragraphs_prop_(self, request):
@@ -455,7 +455,7 @@ class DescribeTextFrame(object):
 
     @pytest.fixture
     def TextFitter_(self, request):
-        return class_mock(request, "pptx.text.text.TextFitter")
+        return class_mock(request, "pptx_ng.text.text.TextFitter")
 
     @pytest.fixture
     def text_frame_with_parent_(self, request):
@@ -1123,7 +1123,7 @@ class Describe_Paragraph(object):
 
     @pytest.fixture
     def Font_(self, request):
-        return class_mock(request, "pptx.text.text.Font")
+        return class_mock(request, "pptx_ng.text.text.Font")
 
     @pytest.fixture
     def p_bldr(self):
@@ -1199,7 +1199,7 @@ class Describe_Run(object):
 
     @pytest.fixture
     def Font_(self, request, font_):
-        return class_mock(request, "pptx.text.text.Font", return_value=font_)
+        return class_mock(request, "pptx_ng.text.text.Font", return_value=font_)
 
     @pytest.fixture
     def font_(self, request):
@@ -1207,7 +1207,7 @@ class Describe_Run(object):
 
     @pytest.fixture
     def _Hyperlink_(self, request, hlink_):
-        return class_mock(request, "pptx.text.text._Hyperlink", return_value=hlink_)
+        return class_mock(request, "pptx_ng.text.text._Hyperlink", return_value=hlink_)
 
     @pytest.fixture
     def hlink_(self, request):
@@ -1218,8 +1218,8 @@ class DescribeAddLatex:
     """Integration tests for _Paragraph.add_latex()."""
 
     def it_inserts_fraction_formula(self):
-        from pptx import Presentation
-        from pptx.util import Inches
+        from pptx_ng import Presentation
+        from pptx_ng.util import Inches
 
         prs = Presentation()
         slide = prs.slides.add_slide(prs.slide_layouts[6])
@@ -1239,8 +1239,8 @@ class DescribeAddLatex:
         assert len(fracs) >= 1
 
     def it_handles_integral_formula(self):
-        from pptx import Presentation
-        from pptx.util import Inches
+        from pptx_ng import Presentation
+        from pptx_ng.util import Inches
 
         prs = Presentation()
         slide = prs.slides.add_slide(prs.slide_layouts[6])
@@ -1260,8 +1260,8 @@ class DescribeAddLatex:
         assert len(narys) >= 1
 
     def it_raises_on_empty_latex(self):
-        from pptx import Presentation
-        from pptx.util import Inches
+        from pptx_ng import Presentation
+        from pptx_ng.util import Inches
 
         prs = Presentation()
         slide = prs.slides.add_slide(prs.slide_layouts[6])
@@ -1272,8 +1272,8 @@ class DescribeAddLatex:
             p.add_latex("")
 
     def it_round_trips_latex_formula(self):
-        from pptx import Presentation
-        from pptx.util import Inches
+        from pptx_ng import Presentation
+        from pptx_ng.util import Inches
 
         import io
 
@@ -1295,8 +1295,8 @@ class DescribeAddLatex:
         assert len(math_elems) == 1
 
     def it_inserts_multiple_formulas(self):
-        from pptx import Presentation
-        from pptx.util import Inches
+        from pptx_ng import Presentation
+        from pptx_ng.util import Inches
 
         prs = Presentation()
         slide = prs.slides.add_slide(prs.slide_layouts[6])

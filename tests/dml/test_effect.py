@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.effect import ShadowFormat
+from pptx_ng.dml.effect import ShadowFormat
 
 from ..unitutil.cxml import element, xml
 

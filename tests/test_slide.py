@@ -6,15 +6,15 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.fill import FillFormat
-from pptx.enum.shapes import PP_PLACEHOLDER
-from pptx.package import Package
-from pptx.parts.presentation import PresentationPart
-from pptx.parts.slide import SlideLayoutPart, SlideMasterPart, SlidePart
-from pptx.presentation import Presentation
-from pptx.shapes.base import BaseShape
-from pptx.shapes.placeholder import LayoutPlaceholder, NotesSlidePlaceholder
-from pptx.shapes.shapetree import (
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.enum.shapes import PP_PLACEHOLDER
+from pptx_ng.package import Package
+from pptx_ng.parts.presentation import PresentationPart
+from pptx_ng.parts.slide import SlideLayoutPart, SlideMasterPart, SlidePart
+from pptx_ng.presentation import Presentation
+from pptx_ng.shapes.base import BaseShape
+from pptx_ng.shapes.placeholder import LayoutPlaceholder, NotesSlidePlaceholder
+from pptx_ng.shapes.shapetree import (
     LayoutPlaceholders,
     LayoutShapes,
     MasterPlaceholders,
@@ -24,7 +24,7 @@ from pptx.shapes.shapetree import (
     SlidePlaceholders,
     SlideShapes,
 )
-from pptx.slide import (
+from pptx_ng.slide import (
     NotesMaster,
     NotesSlide,
     Slide,
@@ -37,7 +37,7 @@ from pptx.slide import (
     _BaseMaster,
     _BaseSlide,
 )
-from pptx.text.text import TextFrame
+from pptx_ng.text.text import TextFrame
 
 from .unitutil.cxml import element, xml
 from .unitutil.mock import call, class_mock, instance_mock, method_mock, property_mock
@@ -99,7 +99,7 @@ class Describe_BaseSlide(object):
 
     @pytest.fixture
     def _Background_(self, request):
-        return class_mock(request, "pptx.slide._Background")
+        return class_mock(request, "pptx_ng.slide._Background")
 
     @pytest.fixture
     def background_(self, request):
@@ -149,11 +149,11 @@ class Describe_BaseMaster(object):
 
     @pytest.fixture
     def MasterPlaceholders_(self, request, placeholders_):
-        return class_mock(request, "pptx.slide.MasterPlaceholders", return_value=placeholders_)
+        return class_mock(request, "pptx_ng.slide.MasterPlaceholders", return_value=placeholders_)
 
     @pytest.fixture
     def MasterShapes_(self, request, shapes_):
-        return class_mock(request, "pptx.slide.MasterShapes", return_value=shapes_)
+        return class_mock(request, "pptx_ng.slide.MasterShapes", return_value=shapes_)
 
     @pytest.fixture
     def placeholders_(self, request):
@@ -267,11 +267,11 @@ class DescribeNotesSlide(object):
 
     @pytest.fixture
     def NotesSlidePlaceholders_(self, request, placeholders_):
-        return class_mock(request, "pptx.slide.NotesSlidePlaceholders", return_value=placeholders_)
+        return class_mock(request, "pptx_ng.slide.NotesSlidePlaceholders", return_value=placeholders_)
 
     @pytest.fixture
     def NotesSlideShapes_(self, request, shapes_):
-        return class_mock(request, "pptx.slide.NotesSlideShapes", return_value=shapes_)
+        return class_mock(request, "pptx_ng.slide.NotesSlideShapes", return_value=shapes_)
 
     @pytest.fixture
     def placeholder_(self, request):
@@ -424,11 +424,11 @@ class DescribeSlide(object):
 
     @pytest.fixture
     def SlidePlaceholders_(self, request, placeholders_):
-        return class_mock(request, "pptx.slide.SlidePlaceholders", return_value=placeholders_)
+        return class_mock(request, "pptx_ng.slide.SlidePlaceholders", return_value=placeholders_)
 
     @pytest.fixture
     def SlideShapes_(self, request, shapes_):
-        return class_mock(request, "pptx.slide.SlideShapes", return_value=shapes_)
+        return class_mock(request, "pptx_ng.slide.SlideShapes", return_value=shapes_)
 
     @pytest.fixture
     def shapes_(self, request):
@@ -684,11 +684,11 @@ class DescribeSlideLayout(object):
 
     @pytest.fixture
     def LayoutPlaceholders_(self, request, placeholders_):
-        return class_mock(request, "pptx.slide.LayoutPlaceholders", return_value=placeholders_)
+        return class_mock(request, "pptx_ng.slide.LayoutPlaceholders", return_value=placeholders_)
 
     @pytest.fixture
     def LayoutShapes_(self, request, shapes_):
-        return class_mock(request, "pptx.slide.LayoutShapes", return_value=shapes_)
+        return class_mock(request, "pptx_ng.slide.LayoutShapes", return_value=shapes_)
 
     @pytest.fixture
     def package_(self, request):
@@ -928,7 +928,7 @@ class DescribeSlideMaster(object):
 
     @pytest.fixture
     def SlideLayouts_(self, request, slide_layouts_):
-        return class_mock(request, "pptx.slide.SlideLayouts", return_value=slide_layouts_)
+        return class_mock(request, "pptx_ng.slide.SlideLayouts", return_value=slide_layouts_)
 
     @pytest.fixture
     def slide_layouts_(self, request):

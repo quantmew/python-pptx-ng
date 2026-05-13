@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.shapes.graphfrm import CT_GraphicalObjectFrame
+from pptx_ng.oxml.shapes.graphfrm import CT_GraphicalObjectFrame
 
 from ...unitutil.cxml import xml
 

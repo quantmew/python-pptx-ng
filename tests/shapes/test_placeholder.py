@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.data import ChartData
-from pptx.enum.chart import XL_CHART_TYPE as XCT
-from pptx.enum.shapes import MSO_SHAPE_TYPE, PP_PLACEHOLDER
-from pptx.oxml.shapes.shared import ST_Direction, ST_PlaceholderSize
-from pptx.parts.image import ImagePart
-from pptx.parts.slide import NotesSlidePart, SlidePart
-from pptx.shapes.placeholder import (
+from pptx_ng.chart.data import ChartData
+from pptx_ng.enum.chart import XL_CHART_TYPE as XCT
+from pptx_ng.enum.shapes import MSO_SHAPE_TYPE, PP_PLACEHOLDER
+from pptx_ng.oxml.shapes.shared import ST_Direction, ST_PlaceholderSize
+from pptx_ng.parts.image import ImagePart
+from pptx_ng.parts.slide import NotesSlidePart, SlidePart
+from pptx_ng.shapes.placeholder import (
     BasePlaceholder,
     ChartPlaceholder,
     LayoutPlaceholder,
@@ -23,8 +23,8 @@ from pptx.shapes.placeholder import (
     _BaseSlidePlaceholder,
     _InheritsDimensions,
 )
-from pptx.shapes.shapetree import NotesSlidePlaceholders
-from pptx.slide import NotesMaster, SlideLayout, SlideMaster
+from pptx_ng.shapes.shapetree import NotesSlidePlaceholders
+from pptx_ng.slide import NotesMaster, SlideLayout, SlideMaster
 
 from ..oxml.unitdata.shape import (
     a_graphicFrame,
@@ -298,7 +298,7 @@ class DescribeChartPlaceholder(object):
         placeholder_graphic_frame_ = instance_mock(request, PlaceholderGraphicFrame)
         PlaceholderGraphicFrame_ = class_mock(
             request,
-            "pptx.shapes.placeholder.PlaceholderGraphicFrame",
+            "pptx_ng.shapes.placeholder.PlaceholderGraphicFrame",
             return_value=placeholder_graphic_frame_,
         )
         chart_data_ = instance_mock(request, ChartData)
@@ -450,7 +450,7 @@ class DescribePicturePlaceholder(object):
         placeholder_picture_ = instance_mock(request, PlaceholderPicture)
         PlaceholderPicture_ = class_mock(
             request,
-            "pptx.shapes.placeholder.PlaceholderPicture",
+            "pptx_ng.shapes.placeholder.PlaceholderPicture",
             return_value=placeholder_picture_,
         )
         picture_ph = PicturePlaceholder(None, "parent")
@@ -539,7 +539,7 @@ class DescribeTablePlaceholder(object):
         placeholder_graphic_frame_ = instance_mock(request, PlaceholderGraphicFrame)
         PlaceholderGraphicFrame_ = class_mock(
             request,
-            "pptx.shapes.placeholder.PlaceholderGraphicFrame",
+            "pptx_ng.shapes.placeholder.PlaceholderGraphicFrame",
             return_value=placeholder_graphic_frame_,
         )
         table_ph = TablePlaceholder(None, "parent")

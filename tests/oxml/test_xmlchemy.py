@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.exc import InvalidXmlError
-from pptx.oxml import register_element_cls
-from pptx.oxml.ns import qn
-from pptx.oxml.simpletypes import BaseIntType
-from pptx.oxml.xmlchemy import (
+from pptx_ng.exc import InvalidXmlError
+from pptx_ng.oxml import register_element_cls
+from pptx_ng.oxml.ns import qn
+from pptx_ng.oxml.simpletypes import BaseIntType
+from pptx_ng.oxml.xmlchemy import (
     BaseOxmlElement,
     Choice,
     OneAndOnlyOne,

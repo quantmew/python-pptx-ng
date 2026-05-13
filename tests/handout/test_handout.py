@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.handout import HandoutMaster
-from pptx.oxml.handout import CT_HandoutMaster, CT_HandoutMasterIdList, CT_HandoutMasterIdListEntry
-from pptx.oxml.ns import qn
+from pptx_ng import Presentation
+from pptx_ng.handout import HandoutMaster
+from pptx_ng.oxml.handout import CT_HandoutMaster, CT_HandoutMasterIdList, CT_HandoutMasterIdListEntry
+from pptx_ng.oxml.ns import qn
 
 
 class DescribeCT_HandoutMaster:
@@ -24,7 +24,7 @@ class DescribeCT_HandoutMaster:
 
 class DescribeCT_HandoutMasterIdList:
     def it_creates_element(self):
-        from pptx.oxml import parse_xml
+        from pptx_ng.oxml import parse_xml
 
         xml = '<p:handoutMasterIdLst xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"/>'
         lst = parse_xml(xml)
@@ -33,7 +33,7 @@ class DescribeCT_HandoutMasterIdList:
 
 class DescribeHandoutMasterPart:
     def it_creates_default_part(self):
-        from pptx.parts.handout import HandoutMasterPart
+        from pptx_ng.parts.handout import HandoutMasterPart
 
         prs = Presentation()
         part = HandoutMasterPart.create_default(prs.part.package)

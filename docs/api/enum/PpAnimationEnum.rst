@@ -10,7 +10,7 @@ Time node type for animations.
 
 Example::
 
-    from pptx.enum.animation import PP_TIMING_NODE_TYPE
+    from pptx_ng.enum.animation import PP_TIMING_NODE_TYPE
 
 ----
 

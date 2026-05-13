@@ -6,12 +6,12 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.fill import FillFormat
-from pptx.enum.text import MSO_ANCHOR
-from pptx.oxml.ns import qn
-from pptx.oxml.table import CT_Table, CT_TableCell, TcRange
-from pptx.shapes.graphfrm import GraphicFrame
-from pptx.table import (
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.enum.text import MSO_ANCHOR
+from pptx_ng.oxml.ns import qn
+from pptx_ng.oxml.table import CT_Table, CT_TableCell, TcRange
+from pptx_ng.shapes.graphfrm import GraphicFrame
+from pptx_ng.table import (
     Table,
     _Cell,
     _CellCollection,
@@ -20,8 +20,8 @@ from pptx.table import (
     _Row,
     _RowCollection,
 )
-from pptx.text.text import TextFrame
-from pptx.util import Inches, Length, Pt
+from pptx_ng.text.text import TextFrame
+from pptx_ng.util import Inches, Length, Pt
 
 from .unitutil.cxml import element, xml
 from .unitutil.mock import call, class_mock, instance_mock, property_mock
@@ -45,7 +45,7 @@ class DescribeTable(object):
     def it_provides_access_to_its_columns(self, request):
         columns_ = instance_mock(request, _ColumnCollection)
         _ColumnCollection_ = class_mock(
-            request, "pptx.table._ColumnCollection", return_value=columns_
+            request, "pptx_ng.table._ColumnCollection", return_value=columns_
         )
         tbl = element("a:tbl")
         table = Table(tbl, None)
@@ -70,7 +70,7 @@ class DescribeTable(object):
 
     def it_provides_access_to_its_rows(self, request):
         rows_ = instance_mock(request, _RowCollection)
-        _RowCollection_ = class_mock(request, "pptx.table._RowCollection", return_value=rows_)
+        _RowCollection_ = class_mock(request, "pptx_ng.table._RowCollection", return_value=rows_)
         tbl = element("a:tbl")
         table = Table(tbl, None)
 
@@ -109,7 +109,7 @@ class DescribeTable(object):
 
     @pytest.fixture
     def _Cell_(self, request):
-        return class_mock(request, "pptx.table._Cell")
+        return class_mock(request, "pptx_ng.table._Cell")
 
     @pytest.fixture
     def cell_(self, request):
@@ -497,7 +497,7 @@ class Describe_Cell(object):
 
     @pytest.fixture
     def TcRange_(self, request):
-        return class_mock(request, "pptx.table.TcRange")
+        return class_mock(request, "pptx_ng.table.TcRange")
 
     @pytest.fixture
     def tc_range_(self, request):
@@ -570,7 +570,7 @@ class Describe_CellCollection(object):
 
     @pytest.fixture
     def _Cell_(self, request):
-        return class_mock(request, "pptx.table._Cell")
+        return class_mock(request, "pptx_ng.table._Cell")
 
     @pytest.fixture
     def cell_(self, request):
@@ -736,7 +736,7 @@ class Describe_Row(object):
 
     @pytest.fixture
     def _CellCollection_(self, request, cells_):
-        return class_mock(request, "pptx.table._CellCollection", return_value=cells_)
+        return class_mock(request, "pptx_ng.table._CellCollection", return_value=cells_)
 
     @pytest.fixture
     def cells_(self, request):

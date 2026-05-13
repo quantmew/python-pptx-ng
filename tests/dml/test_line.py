@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.color import ColorFormat
-from pptx.dml.fill import FillFormat
-from pptx.dml.line import LineFormat
-from pptx.enum.dml import MSO_FILL, MSO_LINE
-from pptx.oxml.shapes.shared import CT_LineProperties
-from pptx.shapes.autoshape import Shape
+from pptx_ng.dml.color import ColorFormat
+from pptx_ng.dml.fill import FillFormat
+from pptx_ng.dml.line import LineFormat
+from pptx_ng.enum.dml import MSO_FILL, MSO_LINE
+from pptx_ng.oxml.shapes.shared import CT_LineProperties
+from pptx_ng.shapes.autoshape import Shape
 
 from ..oxml.unitdata.dml import an_ln
 from ..unitutil.cxml import element, xml
@@ -143,7 +143,7 @@ class DescribeLineFormat(object):
 
     @pytest.fixture
     def FillFormat_(self, request, fill_):
-        FillFormat_ = class_mock(request, "pptx.dml.line.FillFormat")
+        FillFormat_ = class_mock(request, "pptx_ng.dml.line.FillFormat")
         FillFormat_.from_fill_parent.return_value = fill_
         return FillFormat_
 

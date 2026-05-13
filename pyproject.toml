@@ -51,7 +51,7 @@ exclude = [
     "**/.*"
 ]
 include = [
-    "src/pptx",
+    "src/pptx_ng",
     "tests/"
 ]
 ignore =  []
@@ -141,7 +141,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["pptx"]
+known-first-party = ["pptx_ng"]
 
 [tool.setuptools.dynamic]
-version = {attr = "pptx.__version__"}
+version = {attr = "pptx_ng.__version__"}

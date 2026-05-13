@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.packuri import PackURI
-from pptx.package import Package
-from pptx.parts.coreprops import CorePropertiesPart
-from pptx.parts.presentation import PresentationPart
-from pptx.parts.slide import NotesMasterPart, SlideMasterPart, SlidePart
-from pptx.presentation import Presentation
-from pptx.slide import NotesMaster, Slide, SlideLayout, SlideMaster
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.packuri import PackURI
+from pptx_ng.package import Package
+from pptx_ng.parts.coreprops import CorePropertiesPart
+from pptx_ng.parts.presentation import PresentationPart
+from pptx_ng.parts.slide import NotesMasterPart, SlideMasterPart, SlidePart
+from pptx_ng.presentation import Presentation
+from pptx_ng.slide import NotesMaster, Slide, SlideLayout, SlideMaster
 
 from ..unitutil.cxml import element
 from ..unitutil.mock import call, class_mock, instance_mock, method_mock, property_mock
@@ -23,7 +23,7 @@ class DescribePresentationPart(object):
     def it_provides_access_to_its_presentation(self, request):
         prs_ = instance_mock(request, Presentation)
         Presentation_ = class_mock(
-            request, "pptx.parts.presentation.Presentation", return_value=prs_
+            request, "pptx_ng.parts.presentation.Presentation", return_value=prs_
         )
         prs_elm = element("p:presentation")
         prs_part = PresentationPart(None, None, None, prs_elm)
@@ -62,7 +62,7 @@ class DescribePresentationPart(object):
 
         The notes master present case is just above.
         """
-        NotesMasterPart_ = class_mock(request, "pptx.parts.presentation.NotesMasterPart")
+        NotesMasterPart_ = class_mock(request, "pptx_ng.parts.presentation.NotesMasterPart")
         NotesMasterPart_.create_default.return_value = notes_master_part_
         part_related_by_.side_effect = KeyError
         prs_part = PresentationPart(None, None, package_, None)
@@ -127,7 +127,7 @@ class DescribePresentationPart(object):
         slide_layout_ = instance_mock(request, SlideLayout)
         partname = PackURI("/ppt/slides/slide9.xml")
         property_mock(request, PresentationPart, "_next_slide_partname", return_value=partname)
-        SlidePart_ = class_mock(request, "pptx.parts.presentation.SlidePart")
+        SlidePart_ = class_mock(request, "pptx_ng.parts.presentation.SlidePart")
         SlidePart_.new.return_value = slide_part_
         relate_to_.return_value = "rId42"
         slide_layout_part_ = slide_layout_.part

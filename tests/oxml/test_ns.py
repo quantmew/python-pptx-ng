@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.oxml.ns import NamespacePrefixedTag, namespaces, nsdecls, nsuri, qn
+from pptx_ng.oxml.ns import NamespacePrefixedTag, namespaces, nsdecls, nsuri, qn
 
 
 class DescribeNamespacePrefixedTag(object):

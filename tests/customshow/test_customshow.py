@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from pptx import Presentation
-from pptx.customshow import CustomShow, CustomShows
+from pptx_ng import Presentation
+from pptx_ng.customshow import CustomShow, CustomShows
 
 
 class DescribeCustomShows:
@@ -280,13 +280,13 @@ class DescribeOxmlElements:
     """Tests for low-level oxml custom show elements."""
 
     def it_creates_custShowLst(self):
-        from pptx.oxml.customshow import CT_CustomShowList
+        from pptx_ng.oxml.customshow import CT_CustomShowList
 
         el = CT_CustomShowList.new()
         assert el.tag.endswith("}custShowLst")
 
     def it_adds_custShow(self):
-        from pptx.oxml.customshow import CT_CustomShowList
+        from pptx_ng.oxml.customshow import CT_CustomShowList
 
         lst = CT_CustomShowList.new()
         cs = lst.add_custShow(id=1, name="Test")
@@ -295,8 +295,8 @@ class DescribeOxmlElements:
         assert cs.sldLst is not None
 
     def it_creates_sldLst_and_adds_sld(self):
-        from pptx.oxml.customshow import CT_SlideRelationshipList
-        from pptx.oxml.ns import qn
+        from pptx_ng.oxml.customshow import CT_SlideRelationshipList
+        from pptx_ng.oxml.ns import qn
 
         lst = CT_SlideRelationshipList.new()
         entry = lst.add_sld("rId3")
@@ -304,8 +304,8 @@ class DescribeOxmlElements:
         assert len(lst.sld_lst) == 1
 
     def it_lists_sld_entries(self):
-        from pptx.oxml.customshow import CT_SlideRelationshipList
-        from pptx.oxml.ns import qn
+        from pptx_ng.oxml.customshow import CT_SlideRelationshipList
+        from pptx_ng.oxml.ns import qn
 
         lst = CT_SlideRelationshipList.new()
         lst.add_sld("rId1")

@@ -98,8 +98,8 @@ adjust the width and height of the shape to fit its text. Note that vertical
 alignment is set on the text frame. Horizontal alignment is set on each
 paragraph::
 
-    from pptx.util import Inches
-    from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
+    from pptx_ng.util import Inches
+    from pptx_ng.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
 
     text_frame = shape.text_frame
     text_frame.text = 'Spam, eggs, and spam'
@@ -120,7 +120,7 @@ Applying paragraph formatting
 The following produces a shape containing three left-aligned paragraphs, the
 second and third indented (like sub-bullets) under the first::
 
-    from pptx.enum.text import PP_ALIGN
+    from pptx_ng.enum.text import PP_ALIGN
 
     paragraph_strs = [
         'Egg, bacon, sausage and spam.',
@@ -151,9 +151,9 @@ the theme color Accent 1.
 
 ::
 
-    from pptx.dml.color import RGBColor
-    from pptx.enum.dml import MSO_THEME_COLOR
-    from pptx.util import Pt
+    from pptx_ng.dml.color import RGBColor
+    from pptx_ng.enum.dml import MSO_THEME_COLOR
+    from pptx_ng.util import Pt
 
     text_frame = shape.text_frame
     text_frame.clear()  # not necessary for newly-created shape
@@ -185,8 +185,8 @@ Adding math formulas
 A paragraph can contain inline math formulas using Office Math Markup Language
 (OMML). Use the ``add_math()`` method on a paragraph to add a formula::
 
-    from pptx import Presentation
-    from pptx.util import Inches
+    from pptx_ng import Presentation
+    from pptx_ng.util import Inches
 
     prs = Presentation()
     slide = prs.slides.add_slide(prs.slide_layouts[6])

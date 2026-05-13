@@ -9,7 +9,7 @@ Alias: ``PP_PLACEHOLDER``
 
 Example::
 
-    from pptx.enum.shapes import PP_PLACEHOLDER
+    from pptx_ng.enum.shapes import PP_PLACEHOLDER
 
     placeholder = slide.placeholders[0]
     assert placeholder.type == PP_PLACEHOLDER.TITLE

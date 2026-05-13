@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.line import LineFormat
-from pptx.enum.shapes import MSO_SHAPE_TYPE
-from pptx.shapes.base import BaseShape
-from pptx.shapes.connector import Connector
-from pptx.util import Emu
+from pptx_ng.dml.line import LineFormat
+from pptx_ng.enum.shapes import MSO_SHAPE_TYPE
+from pptx_ng.shapes.base import BaseShape
+from pptx_ng.shapes.connector import Connector
+from pptx_ng.util import Emu
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import instance_mock, method_mock

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.chart import Chart
-from pptx.enum.shapes import MSO_SHAPE_TYPE
-from pptx.parts.chart import ChartPart
-from pptx.parts.embeddedpackage import EmbeddedPackagePart
-from pptx.parts.slide import SlidePart
-from pptx.shapes.graphfrm import GraphicFrame, _OleFormat
-from pptx.shapes.shapetree import SlideShapes
-from pptx.spec import (
+from pptx_ng.chart.chart import Chart
+from pptx_ng.enum.shapes import MSO_SHAPE_TYPE
+from pptx_ng.parts.chart import ChartPart
+from pptx_ng.parts.embeddedpackage import EmbeddedPackagePart
+from pptx_ng.parts.slide import SlidePart
+from pptx_ng.shapes.graphfrm import GraphicFrame, _OleFormat
+from pptx_ng.shapes.shapetree import SlideShapes
+from pptx_ng.spec import (
     GRAPHIC_DATA_URI_CHART,
     GRAPHIC_DATA_URI_OLEOBJ,
     GRAPHIC_DATA_URI_TABLE,
@@ -80,7 +80,7 @@ class DescribeGraphicFrame(object):
     def it_provides_access_to_the_OleFormat_object(self, request):
         ole_format_ = instance_mock(request, _OleFormat)
         _OleFormat_ = class_mock(
-            request, "pptx.shapes.graphfrm._OleFormat", return_value=ole_format_
+            request, "pptx_ng.shapes.graphfrm._OleFormat", return_value=ole_format_
         )
         graphicFrame = element(
             "p:graphicFrame/a:graphic/a:graphicData{uri=http://schemas.openxmlformats"

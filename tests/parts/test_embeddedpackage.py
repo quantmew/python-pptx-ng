@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.shapes import PROG_ID
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.opc.package import OpcPackage, PackURI
-from pptx.parts.embeddedpackage import (
+from pptx_ng.enum.shapes import PROG_ID
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.opc.package import OpcPackage, PackURI
+from pptx_ng.parts.embeddedpackage import (
     EmbeddedDocxPart,
     EmbeddedPackagePart,
     EmbeddedPptxPart,
@@ -35,7 +35,7 @@ class DescribeEmbeddedPackagePart(object):
         package_ = instance_mock(request, OpcPackage)
         embedded_object_part_ = instance_mock(request, EmbeddedPartCls)
         EmbeddedPartCls_ = class_mock(
-            request, "pptx.parts.embeddedpackage.%s" % EmbeddedPartCls.__name__
+            request, "pptx_ng.parts.embeddedpackage.%s" % EmbeddedPartCls.__name__
         )
         EmbeddedPartCls_.new.return_value = embedded_object_part_
 

@@ -35,7 +35,7 @@ Example
 
 ::
 
-    from pptx.oxml.xmlchemy import BaseOxmlElement
+    from pptx_ng.oxml.xmlchemy import BaseOxmlElement
 
 
     class CT_Foobar(BaseOxmlElement):

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.dml import MSO_THEME_COLOR
-from pptx.oxml.dml.color import CT_Percentage, CT_SchemeColor, CT_SRgbColor
-from pptx.oxml.ns import qn
+from pptx_ng.enum.dml import MSO_THEME_COLOR
+from pptx_ng.oxml.dml.color import CT_Percentage, CT_SchemeColor, CT_SRgbColor
+from pptx_ng.oxml.ns import qn
 
 from .unitdata.dml import a_lumMod, a_lumOff, a_schemeClr, an_srgbClr
 

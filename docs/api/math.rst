@@ -17,8 +17,8 @@ Usage
 
 Add an inline math formula to a paragraph::
 
-    from pptx import Presentation
-    from pptx.util import Inches
+    from pptx_ng import Presentation
+    from pptx_ng.util import Inches
 
     prs = Presentation()
     slide = prs.slides.add_slide(prs.slide_layouts[0])

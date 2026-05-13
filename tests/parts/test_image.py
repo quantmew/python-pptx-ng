@@ -6,9 +6,9 @@ import io
 
 import pytest
 
-from pptx.package import Package
-from pptx.parts.image import Image, ImagePart
-from pptx.util import Emu
+from pptx_ng.package import Package
+from pptx_ng.parts.image import Image, ImagePart
+from pptx_ng.util import Emu
 
 from ..unitutil.file import absjoin, test_file_dir
 from ..unitutil.mock import (
@@ -48,7 +48,7 @@ class DescribeImagePart(object):
         assert isinstance(image_part, ImagePart)
 
     def it_provides_access_to_its_image(self, request, image_):
-        Image_ = class_mock(request, "pptx.parts.image.Image")
+        Image_ = class_mock(request, "pptx_ng.parts.image.Image")
         Image_.return_value = image_
         property_mock(request, ImagePart, "desc", return_value="foobar.png")
         image_part = ImagePart(None, None, None, b"blob", None)

@@ -6,8 +6,8 @@ from typing import cast
 
 import pytest
 
-from pptx.opc.constants import RELATIONSHIP_TARGET_MODE as RTM
-from pptx.opc.oxml import (
+from pptx_ng.opc.constants import RELATIONSHIP_TARGET_MODE as RTM
+from pptx_ng.opc.oxml import (
     CT_Default,
     CT_Override,
     CT_Relationship,
@@ -17,9 +17,9 @@ from pptx.opc.oxml import (
     oxml_tostring,
     serialize_part_xml,
 )
-from pptx.opc.packuri import PackURI
-from pptx.oxml import parse_xml
-from pptx.oxml.xmlchemy import BaseOxmlElement
+from pptx_ng.opc.packuri import PackURI
+from pptx_ng.oxml import parse_xml
+from pptx_ng.oxml.xmlchemy import BaseOxmlElement
 
 from ..unitutil.cxml import element
 

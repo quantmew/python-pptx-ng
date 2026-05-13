@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx import Presentation
-from pptx.validation import PresentationValidator
+from pptx_ng import Presentation
+from pptx_ng.validation import PresentationValidator
 
 
 class DescribePresentationValidator:
@@ -33,7 +33,7 @@ class DescribePresentationValidator:
             PresentationValidator(max_errors=-1)
 
     def it_validates_a_single_element(self):
-        from pptx.oxml import parse_xml
+        from pptx_ng.oxml import parse_xml
 
         element = parse_xml(
             '<p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">'
@@ -46,7 +46,7 @@ class DescribePresentationValidator:
         assert isinstance(errors, list)
 
     def it_registers_custom_constraints(self):
-        from pptx.validation.constraints import AttributeCannotOmitConstraint
+        from pptx_ng.validation.constraints import AttributeCannotOmitConstraint
 
         validator = PresentationValidator()
         validator.register_semantic_constraint(

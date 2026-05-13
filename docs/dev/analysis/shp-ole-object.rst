@@ -17,7 +17,7 @@ Proposed protocol
 
 ::
 
-    >>> from pptx.enum.shapes import PROG_ID
+    >>> from pptx_ng.enum.shapes import PROG_ID
     >>> shapes = prs.slides[0].shapes
     >>> shape = shapes.add_ole_object(
             "worksheet.xlsx", PROG_ID.EXCEL, left, top, width, height

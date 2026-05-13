@@ -5,9 +5,9 @@ from __future__ import annotations
 from behave import given, then, when
 from helpers import test_pptx
 
-from pptx import Presentation
-from pptx.enum.lang import MSO_LANGUAGE_ID
-from pptx.enum.text import MSO_UNDERLINE
+from pptx_ng import Presentation
+from pptx_ng.enum.lang import MSO_LANGUAGE_ID
+from pptx_ng.enum.text import MSO_UNDERLINE
 
 # given ===================================================
 

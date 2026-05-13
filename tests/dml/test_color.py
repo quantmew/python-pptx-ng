@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.dml.color import ColorFormat, RGBColor
-from pptx.enum.dml import MSO_COLOR_TYPE, MSO_THEME_COLOR
+from pptx_ng.dml.color import ColorFormat, RGBColor
+from pptx_ng.enum.dml import MSO_COLOR_TYPE, MSO_THEME_COLOR
 
 from ..oxml.unitdata.dml import (
     a_lumMod,

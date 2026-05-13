@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.enum.shapes import PP_PLACEHOLDER
-from pptx.oxml.ns import nsdecls
-from pptx.oxml.shapes.autoshape import CT_Shape
-from pptx.oxml.shapes.shared import ST_Direction, ST_PlaceholderSize
+from pptx_ng.enum.shapes import PP_PLACEHOLDER
+from pptx_ng.oxml.ns import nsdecls
+from pptx_ng.oxml.shapes.autoshape import CT_Shape
+from pptx_ng.oxml.shapes.shared import ST_Direction, ST_PlaceholderSize
 
 from ...unitutil.cxml import element
 from ..unitdata.shape import a_gd, a_prstGeom, an_avLst

@@ -13,8 +13,8 @@ semantic, and package-structure constraints. It is modeled on
 The validator is constructed directly and used to check an entire
 presentation, a single part, or an individual XML element::
 
-    from pptx import Presentation
-    from pptx.validation import PresentationValidator
+    from pptx_ng import Presentation
+    from pptx_ng.validation import PresentationValidator
 
     prs = Presentation('my_deck.pptx')
     validator = PresentationValidator()

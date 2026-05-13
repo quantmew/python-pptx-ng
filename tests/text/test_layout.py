@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.text.layout import TextFitter, _BinarySearchTree, _Line, _LineSource
+from pptx_ng.text.layout import TextFitter, _BinarySearchTree, _Line, _LineSource
 
 from ..unitutil.mock import (
     ANY,
@@ -25,7 +25,7 @@ class DescribeTextFitter(object):
 
     def it_can_determine_the_best_fit_font_size(self, request, line_source_):
         _LineSource_ = class_mock(
-            request, "pptx.text.layout._LineSource", return_value=line_source_
+            request, "pptx_ng.text.layout._LineSource", return_value=line_source_
         )
         _init_ = initializer_mock(request, TextFitter)
         _best_fit_font_size_ = method_mock(
@@ -151,7 +151,7 @@ class DescribeTextFitter(object):
 
     @pytest.fixture
     def _BinarySearchTree_(self, request):
-        return class_mock(request, "pptx.text.layout._BinarySearchTree")
+        return class_mock(request, "pptx_ng.text.layout._BinarySearchTree")
 
     @pytest.fixture
     def _fits_inside_predicate_(self, request):
@@ -163,7 +163,7 @@ class DescribeTextFitter(object):
 
     @pytest.fixture
     def _rendered_size_(self, request):
-        return function_mock(request, "pptx.text.layout._rendered_size")
+        return function_mock(request, "pptx_ng.text.layout._rendered_size")
 
 
 class Describe_BinarySearchTree(object):
@@ -224,7 +224,7 @@ class Describe_LineSource(object):
 
 # produces different results on Linux, fails Travis-CI
 
-# from pptx.text.layout import _rendered_size
+# from pptx_ng.text.layout import _rendered_size
 # from ..unitutil.file import testfile
 # class Describe_rendered_size(object):
 

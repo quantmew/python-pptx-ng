@@ -6,16 +6,16 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.shapes.autoshape import Shape
-from pptx.shapes.freeform import (
+from pptx_ng.shapes.autoshape import Shape
+from pptx_ng.shapes.freeform import (
     FreeformBuilder,
     _BaseDrawingOperation,
     _Close,
     _LineSegment,
     _MoveTo,
 )
-from pptx.shapes.shapetree import SlideShapes
-from pptx.util import Emu, Mm
+from pptx_ng.shapes.shapetree import SlideShapes
+from pptx_ng.util import Emu, Mm
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.file import snippet_seq

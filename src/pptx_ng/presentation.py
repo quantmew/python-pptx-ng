@@ -1,0 +1,168 @@
+"""Main presentation object."""
+
+from __future__ import annotations
+
+from typing import IO, TYPE_CHECKING, cast
+
+from pptx_ng.shared import PartElementProxy
+from pptx_ng.slide import SlideMasters, Slides
+from pptx_ng.util import lazyproperty
+
+if TYPE_CHECKING:
+    from pptx_ng.oxml.presentation import CT_Presentation, CT_SlideId
+    from pptx_ng.parts.presentation import PresentationPart
+    from pptx_ng.slide import NotesMaster, SlideLayouts
+    from pptx_ng.util import Length
+
+
+class Presentation(PartElementProxy):
+    """PresentationML (PML) presentation.
+
+    Not intended to be constructed directly. Use :func:`pptx.Presentation` to open or
+    create a presentation.
+    """
+
+    _element: CT_Presentation
+    part: PresentationPart  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    @property
+    def core_properties(self):
+        """|CoreProperties| instance for this presentation.
+
+        Provides read/write access to the Dublin Core document properties for the presentation.
+        """
+        return self.part.core_properties
+
+    @lazyproperty
+    def properties(self):
+        """|PresentationProperties| instance for this presentation.
+
+        Provides access to show properties, printing properties, etc.
+        If no presentation properties part exists, one is created.
+        """
+        from pptx_ng.presprops import PresentationProperties
+
+        return self.part.pres_props_part.presentation_properties
+
+    @lazyproperty
+    def comment_authors(self):
+        """|CommentAuthors| collection for this presentation.
+
+        Provides access to the list of comment authors. If no comment authors
+        part exists, one is created.
+        """
+        from pptx_ng.comment import CommentAuthors
+
+        return self.part.comment_authors_part.comment_authors
+
+    @lazyproperty
+    def custom_shows(self):
+        """|CustomShows| collection for this presentation.
+
+        Provides access to custom show definitions. If no custom show list
+        element exists, one is created.
+        """
+        from pptx_ng.customshow import CustomShows
+
+        return CustomShows(self._element.get_or_add_custShowLst(), self)
+
+    @property
+    def notes_master(self) -> NotesMaster:
+        """Instance of |NotesMaster| for this presentation.
+
+        If the presentation does not have a notes master, one is created from a default template
+        and returned. The same single instance is returned on each call.
+        """
+        return self.part.notes_master
+
+    @lazyproperty
+    def handout_master(self):
+        """|HandoutMaster| instance for this presentation.
+
+        If the presentation does not have a handout master, one is created
+        from a default template.
+        """
+        from pptx_ng.handout import HandoutMaster
+
+        return self.part.handout_master_part.handout_master
+
+    def save(self, file: str | IO[bytes]):
+        """Writes this presentation to `file`.
+
+        `file` can be either a file-path or a file-like object open for writing bytes.
+        """
+        self.part.save(file)
+
+    @property
+    def slide_height(self) -> Length | None:
+        """Height of slides in this presentation, in English Metric Units (EMU).
+
+        Returns |None| if no slide width is defined. Read/write.
+        """
+        sldSz = self._element.sldSz
+        if sldSz is None:
+            return None
+        return sldSz.cy
+
+    @slide_height.setter
+    def slide_height(self, height: Length):
+        sldSz = self._element.get_or_add_sldSz()
+        sldSz.cy = height
+
+    @property
+    def slide_layouts(self) -> SlideLayouts:
+        """|SlideLayouts| collection belonging to the first |SlideMaster| of this presentation.
+
+        A presentation can have more than one slide master and each master will have its own set
+        of layouts. This property is a convenience for the common case where the presentation has
+        only a single slide master.
+        """
+        return self.slide_masters[0].slide_layouts
+
+    @property
+    def slide_master(self):
+        """
+        First |SlideMaster| object belonging to this presentation. Typically,
+        presentations have only a single slide master. This property provides
+        simpler access in that common case.
+        """
+        return self.slide_masters[0]
+
+    @lazyproperty
+    def view_properties(self):
+        """|ViewProperties| instance for this presentation.
+
+        Provides access to view settings like grid spacing.
+        If no view properties part exists, one is created.
+        """
+        from pptx_ng.viewprops import ViewProperties
+
+        return self.part.view_props_part.view_properties
+
+    @lazyproperty
+    def slide_masters(self) -> SlideMasters:
+        """|SlideMasters| collection of slide-masters belonging to this presentation."""
+        return SlideMasters(self._element.get_or_add_sldMasterIdLst(), self)
+
+    @property
+    def slide_width(self):
+        """
+        Width of slides in this presentation, in English Metric Units (EMU).
+        Returns |None| if no slide width is defined. Read/write.
+        """
+        sldSz = self._element.sldSz
+        if sldSz is None:
+            return None
+        return sldSz.cx
+
+    @slide_width.setter
+    def slide_width(self, width: Length):
+        sldSz = self._element.get_or_add_sldSz()
+        sldSz.cx = width
+
+    @lazyproperty
+    def slides(self):
+        """|Slides| object containing the slides in this presentation."""
+        sldIdLst = self._element.get_or_add_sldIdLst()
+        self.part.rename_slide_parts([cast("CT_SlideId", sldId).rId for sldId in sldIdLst])
+        return Slides(sldIdLst, self)

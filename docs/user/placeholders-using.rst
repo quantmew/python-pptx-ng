@@ -189,8 +189,8 @@ placeholder, so this example assumes a starting presentation named
 ``having-chart-placeholder.pptx`` having a chart placeholder with idx 10 on
 its second slide layout::
 
-    >>> from pptx.chart.data import ChartData
-    >>> from pptx.enum.chart import XL_CHART_TYPE
+    >>> from pptx_ng.chart.data import ChartData
+    >>> from pptx_ng.enum.chart import XL_CHART_TYPE
 
     >>> prs = Presentation('having-chart-placeholder.pptx')
     >>> slide = prs.slides.add_slide(prs.slide_layouts[1])

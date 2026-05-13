@@ -5,7 +5,7 @@ Presentations
 A presentation is opened using the :func:`Presentation` function, provided
 directly by the :mod:`pptx` package::
 
-    from pptx import Presentation
+    from pptx_ng import Presentation
 
 
 This function returns a :class:`.Presentation` object which is the root of

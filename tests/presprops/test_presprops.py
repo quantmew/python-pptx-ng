@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from pptx import Presentation
-from pptx.presprops import PresentationProperties, ShowProperties
+from pptx_ng import Presentation
+from pptx_ng.presprops import PresentationProperties, ShowProperties
 
 
 class DescribePresentationProperties:

@@ -9,9 +9,9 @@ import zipfile
 import pytest
 from lxml import etree
 
-from pptx import Presentation
-from pptx.animation import AnimationTimeline
-from pptx.util import Inches
+from pptx_ng import Presentation
+from pptx_ng.animation import AnimationTimeline
+from pptx_ng.util import Inches
 
 
 NSMAP = {"p": "http://schemas.openxmlformats.org/presentationml/2006/main"}
@@ -241,13 +241,13 @@ class DescribeOxmlAnimationElements:
     """Tests for low-level oxml animation element classes."""
 
     def it_creates_par_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         par = OxmlElement("p:par")
         assert par.tag.endswith("}par")
 
     def it_creates_cTn_element_with_attributes(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         cTn = OxmlElement("p:cTn")
         cTn.set("id", "1")
@@ -258,20 +258,20 @@ class DescribeOxmlAnimationElements:
         assert cTn.get("fill") == "hold"
 
     def it_creates_seq_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         seq = OxmlElement("p:seq")
         assert seq.tag.endswith("}seq")
 
     def it_creates_spTgt_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         spTgt = OxmlElement("p:spTgt")
         spTgt.set("spid", "42")
         assert spTgt.get("spid") == "42"
 
     def it_creates_animEffect_element(self):
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         animEffect = OxmlElement("p:animEffect")
         animEffect.set("transition", "in")
@@ -281,7 +281,7 @@ class DescribeOxmlAnimationElements:
 
     def it_creates_nested_animation_structure(self):
         """Test creating a minimal animation tree manually."""
-        from pptx.oxml.xmlchemy import OxmlElement
+        from pptx_ng.oxml.xmlchemy import OxmlElement
 
         par = OxmlElement("p:par")
         cTn = OxmlElement("p:cTn")
@@ -417,32 +417,32 @@ class DescribeAnimationEnums:
     """Tests for animation enum definitions."""
 
     def it_has_timing_node_type_enum(self):
-        from pptx.enum.animation import PP_TIMING_NODE_TYPE
+        from pptx_ng.enum.animation import PP_TIMING_NODE_TYPE
 
         assert PP_TIMING_NODE_TYPE.AFTER_EFFECT.xml_value == "afterEffect"
         assert PP_TIMING_NODE_TYPE.MAIN_SEQUENCE.xml_value == "mainSeq"
 
     def it_has_preset_class_enum(self):
-        from pptx.enum.animation import PP_ANIMATION_PRESET_CLASS
+        from pptx_ng.enum.animation import PP_ANIMATION_PRESET_CLASS
 
         assert PP_ANIMATION_PRESET_CLASS.ENTRANCE.xml_value == "entr"
         assert PP_ANIMATION_PRESET_CLASS.EXIT.xml_value == "exit"
         assert PP_ANIMATION_PRESET_CLASS.EMPHASIS.xml_value == "emph"
 
     def it_has_time_node_fill_enum(self):
-        from pptx.enum.animation import PP_TIME_NODE_FILL
+        from pptx_ng.enum.animation import PP_TIME_NODE_FILL
 
         assert PP_TIME_NODE_FILL.HOLD.xml_value == "hold"
         assert PP_TIME_NODE_FILL.REMOVE.xml_value == "remove"
 
     def it_has_effect_transition_enum(self):
-        from pptx.enum.animation import PP_ANIMATION_EFFECT_TRANSITION
+        from pptx_ng.enum.animation import PP_ANIMATION_EFFECT_TRANSITION
 
         assert PP_ANIMATION_EFFECT_TRANSITION.IN.xml_value == "in"
         assert PP_ANIMATION_EFFECT_TRANSITION.OUT.xml_value == "out"
 
     def it_has_paragraph_build_type_enum(self):
-        from pptx.enum.animation import PP_PARAGRAPH_BUILD_TYPE
+        from pptx_ng.enum.animation import PP_PARAGRAPH_BUILD_TYPE
 
         assert PP_PARAGRAPH_BUILD_TYPE.ALL_AT_ONCE.xml_value == "allAtOnce"
         assert PP_PARAGRAPH_BUILD_TYPE.PARAGRAPH.xml_value == "p"
@@ -452,31 +452,31 @@ class DescribeTransitionEnums:
     """Tests for transition enum definitions."""
 
     def it_has_speed_enum(self):
-        from pptx.enum.transition import PP_TRANSITION_SPEED
+        from pptx_ng.enum.transition import PP_TRANSITION_SPEED
 
         assert PP_TRANSITION_SPEED.SLOW.xml_value == "slow"
         assert PP_TRANSITION_SPEED.FAST.xml_value == "fast"
 
     def it_has_side_direction_enum(self):
-        from pptx.enum.transition import PP_TRANSITION_SIDE_DIRECTION
+        from pptx_ng.enum.transition import PP_TRANSITION_SIDE_DIRECTION
 
         assert PP_TRANSITION_SIDE_DIRECTION.LEFT.xml_value == "l"
         assert PP_TRANSITION_SIDE_DIRECTION.RIGHT.xml_value == "r"
 
     def it_has_corner_direction_enum(self):
-        from pptx.enum.transition import PP_TRANSITION_CORNER_DIRECTION
+        from pptx_ng.enum.transition import PP_TRANSITION_CORNER_DIRECTION
 
         assert PP_TRANSITION_CORNER_DIRECTION.LEFT_UP.xml_value == "lu"
         assert PP_TRANSITION_CORNER_DIRECTION.RIGHT_DOWN.xml_value == "rd"
 
     def it_has_orientation_enum(self):
-        from pptx.enum.transition import PP_TRANSITION_ORIENTATION
+        from pptx_ng.enum.transition import PP_TRANSITION_ORIENTATION
 
         assert PP_TRANSITION_ORIENTATION.HORIZONTAL.xml_value == "horz"
         assert PP_TRANSITION_ORIENTATION.VERTICAL.xml_value == "vert"
 
     def it_has_in_out_direction_enum(self):
-        from pptx.enum.transition import PP_TRANSITION_IN_OUT_DIRECTION
+        from pptx_ng.enum.transition import PP_TRANSITION_IN_OUT_DIRECTION
 
         assert PP_TRANSITION_IN_OUT_DIRECTION.OUT.xml_value == "out"
         assert PP_TRANSITION_IN_OUT_DIRECTION.IN.xml_value == "in"

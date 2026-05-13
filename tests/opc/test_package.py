@@ -11,11 +11,11 @@ from typing import Any
 
 import pytest
 
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.opc.constants import RELATIONSHIP_TARGET_MODE as RTM
-from pptx.opc.constants import RELATIONSHIP_TYPE as RT
-from pptx.opc.oxml import CT_Relationship, CT_Relationships
-from pptx.opc.package import (
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.opc.constants import RELATIONSHIP_TARGET_MODE as RTM
+from pptx_ng.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx_ng.opc.oxml import CT_Relationship, CT_Relationships
+from pptx_ng.opc.package import (
     OpcPackage,
     Part,
     PartFactory,
@@ -26,9 +26,9 @@ from pptx.opc.package import (
     _Relationship,
     _Relationships,
 )
-from pptx.opc.packuri import PACKAGE_URI, PackURI
-from pptx.oxml import parse_xml
-from pptx.parts.presentation import PresentationPart
+from pptx_ng.opc.packuri import PACKAGE_URI, PackURI
+from pptx_ng.oxml import parse_xml
+from pptx_ng.parts.presentation import PresentationPart
 
 from ..unitutil.cxml import element
 from ..unitutil.file import absjoin, snippet_bytes, test_file_dir, testfile_bytes
@@ -236,7 +236,7 @@ class DescribeOpcPackage:
         )
         next_partname = tmpl % expected_n
         PackURI_ = class_mock(
-            request, "pptx.opc.package.PackURI", return_value=PackURI(next_partname)
+            request, "pptx_ng.opc.package.PackURI", return_value=PackURI(next_partname)
         )
         package = OpcPackage(None)
 
@@ -249,7 +249,7 @@ class DescribeOpcPackage:
         _rels_prop_.return_value = relationships_
         parts_ = tuple(instance_mock(request, Part) for _ in range(3))
         method_mock(request, OpcPackage, "iter_parts", return_value=iter(parts_))
-        PackageWriter_ = class_mock(request, "pptx.opc.package.PackageWriter")
+        PackageWriter_ = class_mock(request, "pptx_ng.opc.package.PackageWriter")
         package = OpcPackage(None)
 
         package.save("prs.pptx")
@@ -257,7 +257,7 @@ class DescribeOpcPackage:
         PackageWriter_.write.assert_called_once_with("prs.pptx", relationships_, parts_)
 
     def it_loads_the_pkg_file_to_help(self, request, _rels_prop_, relationships_):
-        _PackageLoader_ = class_mock(request, "pptx.opc.package._PackageLoader")
+        _PackageLoader_ = class_mock(request, "pptx_ng.opc.package._PackageLoader")
         _PackageLoader_.load.return_value = "pkg-rels-xml", {"partname": "part"}
         _rels_prop_.return_value = relationships_
         package = OpcPackage("prs.pptx")
@@ -272,7 +272,7 @@ class DescribeOpcPackage:
 
     def it_constructs_its_relationships_object_to_help(self, request, relationships_):
         _Relationships_ = class_mock(
-            request, "pptx.opc.package._Relationships", return_value=relationships_
+            request, "pptx_ng.opc.package._Relationships", return_value=relationships_
         )
         package = OpcPackage(None)
 
@@ -437,7 +437,7 @@ class DescribePart:
 
     def it_constructs_its_relationships_object_to_help(self, request, relationships_):
         _Relationships_ = class_mock(
-            request, "pptx.opc.package._Relationships", return_value=relationships_
+            request, "pptx_ng.opc.package._Relationships", return_value=relationships_
         )
         part = Part(PackURI("/ppt/slides/slide1.xml"), None, None)
 
@@ -464,7 +464,7 @@ class DescribeXmlPart:
         partname = PackURI("/ppt/slides/slide1.xml")
         element_ = element("p:sld")
         package_ = instance_mock(request, OpcPackage)
-        parse_xml_ = function_mock(request, "pptx.opc.package.parse_xml", return_value=element_)
+        parse_xml_ = function_mock(request, "pptx_ng.opc.package.parse_xml", return_value=element_)
         _init_ = initializer_mock(request, XmlPart)
 
         part = XmlPart.load(partname, CT.PML_SLIDE, package_, b"blob")
@@ -475,7 +475,7 @@ class DescribeXmlPart:
 
     def it_can_serialize_to_xml(self, request):
         element_ = element("p:sld")
-        serialize_part_xml_ = function_mock(request, "pptx.opc.package.serialize_part_xml")
+        serialize_part_xml_ = function_mock(request, "pptx_ng.opc.package.serialize_part_xml")
         xml_part = XmlPart(None, None, None, element_)
 
         blob = xml_part.blob
@@ -511,7 +511,7 @@ class DescribePartFactory:
     """Unit-test suite for `pptx.opc.package.PartFactory` objects."""
 
     def it_constructs_custom_part_type_for_registered_content_types(self, request, package_, part_):
-        SlidePart_ = class_mock(request, "pptx.opc.package.XmlPart")
+        SlidePart_ = class_mock(request, "pptx_ng.opc.package.XmlPart")
         SlidePart_.load.return_value = part_
         partname = PackURI("/ppt/slides/slide7.xml")
         PartFactory.part_type_for[CT.PML_SLIDE] = SlidePart_
@@ -524,7 +524,7 @@ class DescribePartFactory:
     def it_constructs_part_using_default_class_when_no_custom_registered(
         self, request, package_, part_
     ):
-        Part_ = class_mock(request, "pptx.opc.package.Part")
+        Part_ = class_mock(request, "pptx_ng.opc.package.Part")
         Part_.load.return_value = part_
         partname = PackURI("/bar/foo.xml")
 
@@ -924,7 +924,7 @@ class Describe_Relationships:
 
     @pytest.fixture
     def _Relationship_(self, request):
-        return class_mock(request, "pptx.opc.package._Relationship")
+        return class_mock(request, "pptx_ng.opc.package._Relationship")
 
     @pytest.fixture
     def relationship_(self, request):

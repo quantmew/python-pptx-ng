@@ -6,16 +6,16 @@ from __future__ import annotations
 
 import pytest
 
-from pptx.chart.axis import CategoryAxis, DateAxis, ValueAxis
-from pptx.chart.chart import Chart, ChartTitle, Legend, _Plots
-from pptx.chart.data import ChartData
-from pptx.chart.plot import _BasePlot
-from pptx.chart.series import SeriesCollection
-from pptx.chart.xmlwriter import _BaseSeriesXmlRewriter
-from pptx.dml.chtfmt import ChartFormat
-from pptx.enum.chart import XL_CHART_TYPE
-from pptx.parts.chart import ChartWorkbook
-from pptx.text.text import Font
+from pptx_ng.chart.axis import CategoryAxis, DateAxis, ValueAxis
+from pptx_ng.chart.chart import Chart, ChartTitle, Legend, _Plots
+from pptx_ng.chart.data import ChartData
+from pptx_ng.chart.plot import _BasePlot
+from pptx_ng.chart.series import SeriesCollection
+from pptx_ng.chart.xmlwriter import _BaseSeriesXmlRewriter
+from pptx_ng.dml.chtfmt import ChartFormat
+from pptx_ng.enum.chart import XL_CHART_TYPE
+from pptx_ng.parts.chart import ChartWorkbook
+from pptx_ng.text.text import Font
 
 from ..unitutil.cxml import element, xml
 from ..unitutil.mock import (
@@ -336,7 +336,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def CategoryAxis_(self, request, category_axis_):
-        return class_mock(request, "pptx.chart.chart.CategoryAxis", return_value=category_axis_)
+        return class_mock(request, "pptx_ng.chart.chart.CategoryAxis", return_value=category_axis_)
 
     @pytest.fixture
     def category_axis_(self, request):
@@ -348,7 +348,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def ChartTitle_(self, request, chart_title_):
-        return class_mock(request, "pptx.chart.chart.ChartTitle", return_value=chart_title_)
+        return class_mock(request, "pptx_ng.chart.chart.ChartTitle", return_value=chart_title_)
 
     @pytest.fixture
     def chart_title_(self, request):
@@ -356,7 +356,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def DateAxis_(self, request, date_axis_):
-        return class_mock(request, "pptx.chart.chart.DateAxis", return_value=date_axis_)
+        return class_mock(request, "pptx_ng.chart.chart.DateAxis", return_value=date_axis_)
 
     @pytest.fixture
     def date_axis_(self, request):
@@ -364,7 +364,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def Font_(self, request):
-        return class_mock(request, "pptx.chart.chart.Font")
+        return class_mock(request, "pptx_ng.chart.chart.Font")
 
     @pytest.fixture
     def font_(self, request):
@@ -372,7 +372,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def Legend_(self, request, legend_):
-        return class_mock(request, "pptx.chart.chart.Legend", return_value=legend_)
+        return class_mock(request, "pptx_ng.chart.chart.Legend", return_value=legend_)
 
     @pytest.fixture
     def legend_(self, request):
@@ -380,11 +380,11 @@ class DescribeChart(object):
 
     @pytest.fixture
     def PlotTypeInspector_(self, request):
-        return class_mock(request, "pptx.chart.chart.PlotTypeInspector")
+        return class_mock(request, "pptx_ng.chart.chart.PlotTypeInspector")
 
     @pytest.fixture
     def _Plots_(self, request, plots_):
-        return class_mock(request, "pptx.chart.chart._Plots", return_value=plots_)
+        return class_mock(request, "pptx_ng.chart.chart._Plots", return_value=plots_)
 
     @pytest.fixture
     def plot_(self, request):
@@ -398,7 +398,7 @@ class DescribeChart(object):
     def SeriesCollection_(self, request, series_collection_):
         return class_mock(
             request,
-            "pptx.chart.chart.SeriesCollection",
+            "pptx_ng.chart.chart.SeriesCollection",
             return_value=series_collection_,
         )
 
@@ -406,7 +406,7 @@ class DescribeChart(object):
     def SeriesXmlRewriterFactory_(self, request, series_rewriter_):
         return function_mock(
             request,
-            "pptx.chart.chart.SeriesXmlRewriterFactory",
+            "pptx_ng.chart.chart.SeriesXmlRewriterFactory",
             return_value=series_rewriter_,
             autospec=True,
         )
@@ -421,7 +421,7 @@ class DescribeChart(object):
 
     @pytest.fixture
     def ValueAxis_(self, request, value_axis_):
-        return class_mock(request, "pptx.chart.chart.ValueAxis", return_value=value_axis_)
+        return class_mock(request, "pptx_ng.chart.chart.ValueAxis", return_value=value_axis_)
 
     @pytest.fixture
     def value_axis_(self, request):
@@ -521,7 +521,7 @@ class DescribeChartTitle(object):
 
     @pytest.fixture
     def ChartFormat_(self, request, format_):
-        return class_mock(request, "pptx.chart.chart.ChartFormat", return_value=format_)
+        return class_mock(request, "pptx_ng.chart.chart.ChartFormat", return_value=format_)
 
     @pytest.fixture
     def format_(self, request):
@@ -529,7 +529,7 @@ class DescribeChartTitle(object):
 
     @pytest.fixture
     def TextFrame_(self, request):
-        return class_mock(request, "pptx.chart.chart.TextFrame")
+        return class_mock(request, "pptx_ng.chart.chart.TextFrame")
 
 
 class Describe_Plots(object):
@@ -580,7 +580,7 @@ class Describe_Plots(object):
 
     @pytest.fixture
     def PlotFactory_(self, request, plot_):
-        return function_mock(request, "pptx.chart.chart.PlotFactory", return_value=plot_)
+        return function_mock(request, "pptx_ng.chart.chart.PlotFactory", return_value=plot_)
 
     @pytest.fixture
     def plot_(self, request):

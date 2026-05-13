@@ -8,11 +8,11 @@ import tempfile
 
 import pytest
 
-from pptx import Presentation
-from pptx.media import Audio
-from pptx.opc.constants import CONTENT_TYPE as CT
-from pptx.oxml.slide import CT_TLMediaNodeAudio, CT_TimeNodeList
-from pptx.util import Inches
+from pptx_ng import Presentation
+from pptx_ng.media import Audio
+from pptx_ng.opc.constants import CONTENT_TYPE as CT
+from pptx_ng.oxml.slide import CT_TLMediaNodeAudio, CT_TimeNodeList
+from pptx_ng.util import Inches
 
 
 # -- Audio value object tests --
@@ -78,8 +78,8 @@ class DescribeAudioContentTypeConstants:
 
 class DescribeCT_TLMediaNodeAudio:
     def it_creates_audio_timing_element(self):
-        from pptx.oxml import parse_xml
-        from pptx.oxml.ns import nsdecls
+        from pptx_ng.oxml import parse_xml
+        from pptx_ng.oxml.ns import nsdecls
 
         xml = "<p:audio %s/>" % nsdecls("p")
         audio = parse_xml(xml)
@@ -88,13 +88,13 @@ class DescribeCT_TLMediaNodeAudio:
 
 class DescribeCT_TimeNodeListAddAudio:
     def it_adds_audio_timing(self):
-        from pptx.oxml import parse_xml
-        from pptx.oxml.ns import nsdecls
+        from pptx_ng.oxml import parse_xml
+        from pptx_ng.oxml.ns import nsdecls
 
         xml = '<p:childTnLst %s/>' % nsdecls("p")
         tnList = parse_xml(xml)
         # Wrap in a slide to support xpath
-        from pptx.oxml import parse_xml as px
+        from pptx_ng.oxml import parse_xml as px
 
         sld_xml = (
             '<p:sld xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">'
