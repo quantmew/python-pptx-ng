@@ -32,6 +32,12 @@ Feature Support
 * Add auto shapes (e.g. polygons, flowchart shapes, etc.) to a slide
 * Add and manipulate column, bar, line, and pie charts
 * Access and change core document properties such as title and subject
+* Add and read slide comments with comment authors
+* Configure presentation show properties (loop, timings, animations) and view properties (grid spacing)
+* Define custom shows (named sub-sets of slides)
+* Add slide transitions (fade, push, wipe, split, and 16 others)
+* Add entrance animations (appear, fade) to shapes
+* Validate presentations against Open XML schema and semantic constraints
 * And many others ...
 
 Even with all |pp| does, the PowerPoint document format is very rich and there are still
@@ -101,6 +107,13 @@ API Documentation
    api/image
    api/exc
    api/util
+   api/validation
+   api/comment
+   api/presprops
+   api/viewprops
+   api/customshow
+   api/transition
+   api/animation
    api/enum/index
 
 

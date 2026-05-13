@@ -36,3 +36,6 @@ can be found here:
    XlTickMark
 
    ExcelNumFormat
+
+   ValidationErrorType
+   SemanticValidationLevel
