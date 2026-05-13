@@ -8,6 +8,7 @@ from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from pptx.opc.package import XmlPart
 from pptx.opc.packuri import PackURI
 from pptx.parts.comment import CommentAuthorsPart
+from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
 from pptx.parts.slide import NotesMasterPart, SlidePart
 from pptx.presentation import Presentation
 from pptx.util import lazyproperty
@@ -96,6 +97,32 @@ class PresentationPart(XmlPart):
         presentation.
         """
         return Presentation(self._element, self)
+
+    @lazyproperty
+    def pres_props_part(self) -> PresentationPropertiesPart:
+        """Return the PresentationPropertiesPart for this presentation.
+
+        If the presentation does not have one, it is created.
+        """
+        try:
+            return self.part_related_by(RT.PRES_PROPS)
+        except KeyError:
+            pres_props_part = PresentationPropertiesPart.new(self.package)
+            self.relate_to(pres_props_part, RT.PRES_PROPS)
+            return pres_props_part
+
+    @lazyproperty
+    def view_props_part(self) -> ViewPropertiesPart:
+        """Return the ViewPropertiesPart for this presentation.
+
+        If the presentation does not have one, it is created.
+        """
+        try:
+            return self.part_related_by(RT.VIEW_PROPS)
+        except KeyError:
+            view_props_part = ViewPropertiesPart.new(self.package)
+            self.relate_to(view_props_part, RT.VIEW_PROPS)
+            return view_props_part
 
     def related_slide(self, rId: str) -> Slide:
         """Return |Slide| object for related |SlidePart| related by `rId`."""

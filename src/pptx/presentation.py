@@ -34,6 +34,17 @@ class Presentation(PartElementProxy):
         return self.part.core_properties
 
     @lazyproperty
+    def properties(self):
+        """|PresentationProperties| instance for this presentation.
+
+        Provides access to show properties, printing properties, etc.
+        If no presentation properties part exists, one is created.
+        """
+        from pptx.presprops import PresentationProperties
+
+        return self.part.pres_props_part.presentation_properties
+
+    @lazyproperty
     def comment_authors(self):
         """|CommentAuthors| collection for this presentation.
 
@@ -94,6 +105,17 @@ class Presentation(PartElementProxy):
         simpler access in that common case.
         """
         return self.slide_masters[0]
+
+    @lazyproperty
+    def view_properties(self):
+        """|ViewProperties| instance for this presentation.
+
+        Provides access to view settings like grid spacing.
+        If no view properties part exists, one is created.
+        """
+        from pptx.viewprops import ViewProperties
+
+        return self.part.view_props_part.view_properties
 
     @lazyproperty
     def slide_masters(self) -> SlideMasters:

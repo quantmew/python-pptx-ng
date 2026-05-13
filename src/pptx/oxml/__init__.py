@@ -306,6 +306,23 @@ register_element_cls("p:sldMasterIdLst", CT_SlideMasterIdList)
 register_element_cls("p:sldSz", CT_SlideSize)
 
 
+from pptx.oxml.presprops import (  # noqa: E402
+    CT_PresentationProperties,
+    CT_PrintProperties,
+    CT_ShowProperties,
+)
+
+register_element_cls("p:presentationPr", CT_PresentationProperties)
+register_element_cls("p:prnPr", CT_PrintProperties)
+register_element_cls("p:showPr", CT_ShowProperties)
+
+
+from pptx.oxml.viewprops import CT_GridSpacing, CT_ViewProperties  # noqa: E402
+
+register_element_cls("p:gridSpacing", CT_GridSpacing)
+register_element_cls("p:viewPr", CT_ViewProperties)
+
+
 from pptx.oxml.shapes.autoshape import (  # noqa: E402
     CT_AdjPoint2D,
     CT_CustomGeometry2D,

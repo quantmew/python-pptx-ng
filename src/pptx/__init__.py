@@ -14,6 +14,7 @@ from pptx.parts.comment import CommentAuthorsPart, CommentPart
 from pptx.parts.coreprops import CorePropertiesPart
 from pptx.parts.image import ImagePart
 from pptx.parts.media import MediaPart
+from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
 from pptx.parts.presentation import PresentationPart
 from pptx.parts.slide import (
     NotesMasterPart,
@@ -41,6 +42,8 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.OPC_CORE_PROPERTIES: CorePropertiesPart,
     CT.PML_NOTES_MASTER: NotesMasterPart,
     CT.PML_NOTES_SLIDE: NotesSlidePart,
+    CT.PML_PRES_PROPS: PresentationPropertiesPart,
+    CT.PML_VIEW_PROPS: ViewPropertiesPart,
     CT.PML_COMMENTS: CommentPart,
     CT.PML_COMMENT_AUTHORS: CommentAuthorsPart,
     CT.PML_SLIDE: SlidePart,
@@ -78,6 +81,8 @@ del (
     CorePropertiesPart,
     ImagePart,
     MediaPart,
+    PresentationPropertiesPart,
+    ViewPropertiesPart,
     SlidePart,
     SlideLayoutPart,
     SlideMasterPart,
