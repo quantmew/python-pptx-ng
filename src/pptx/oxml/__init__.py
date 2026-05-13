@@ -52,6 +52,23 @@ register_element_cls("a:hlinkClick", CT_Hyperlink)
 register_element_cls("a:hlinkHover", CT_Hyperlink)
 
 
+from pptx.oxml.comment import (  # noqa: E402
+    CT_Comment,
+    CT_CommentAuthor,
+    CT_CommentAuthorList,
+    CT_CommentList,
+    CT_CommentPosition,
+    CT_CommentText,
+)
+
+register_element_cls("p:cm", CT_Comment)
+register_element_cls("p:cmAuthor", CT_CommentAuthor)
+register_element_cls("p:cmAuthorLst", CT_CommentAuthorList)
+register_element_cls("p:cmLst", CT_CommentList)
+register_element_cls("p:pos", CT_CommentPosition)
+register_element_cls("p:text", CT_CommentText)
+
+
 from pptx.oxml.chart.axis import (  # noqa: E402
     CT_AxisUnit,
     CT_CatAx,

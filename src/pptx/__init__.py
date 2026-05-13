@@ -10,6 +10,7 @@ from pptx.api import Presentation
 from pptx.opc.constants import CONTENT_TYPE as CT
 from pptx.opc.package import PartFactory
 from pptx.parts.chart import ChartPart
+from pptx.parts.comment import CommentAuthorsPart, CommentPart
 from pptx.parts.coreprops import CorePropertiesPart
 from pptx.parts.image import ImagePart
 from pptx.parts.media import MediaPart
@@ -40,6 +41,8 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.OPC_CORE_PROPERTIES: CorePropertiesPart,
     CT.PML_NOTES_MASTER: NotesMasterPart,
     CT.PML_NOTES_SLIDE: NotesSlidePart,
+    CT.PML_COMMENTS: CommentPart,
+    CT.PML_COMMENT_AUTHORS: CommentAuthorsPart,
     CT.PML_SLIDE: SlidePart,
     CT.PML_SLIDE_LAYOUT: SlideLayoutPart,
     CT.PML_SLIDE_MASTER: SlideMasterPart,
@@ -70,6 +73,8 @@ PartFactory.part_type_for.update(content_type_to_part_class_map)
 
 del (
     ChartPart,
+    CommentAuthorsPart,
+    CommentPart,
     CorePropertiesPart,
     ImagePart,
     MediaPart,

@@ -33,6 +33,17 @@ class Presentation(PartElementProxy):
         """
         return self.part.core_properties
 
+    @lazyproperty
+    def comment_authors(self):
+        """|CommentAuthors| collection for this presentation.
+
+        Provides access to the list of comment authors. If no comment authors
+        part exists, one is created.
+        """
+        from pptx.comment import CommentAuthors
+
+        return self.part.comment_authors_part.comment_authors
+
     @property
     def notes_master(self) -> NotesMaster:
         """Instance of |NotesMaster| for this presentation.

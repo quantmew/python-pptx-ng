@@ -202,6 +202,11 @@ class Slide(_BaseSlide):
         return self.part.has_notes_slide
 
     @property
+    def has_comments(self) -> bool:
+        """`True` if this slide has comments, `False` otherwise."""
+        return self.part.has_comments
+
+    @property
     def notes_slide(self) -> NotesSlide:
         """The |NotesSlide| instance for this slide.
 
@@ -209,6 +214,16 @@ class Slide(_BaseSlide):
         returned on each call.
         """
         return self.part.notes_slide
+
+    @lazyproperty
+    def comments(self):
+        """The |Comments| instance for this slide.
+
+        If the slide does not have a comments part, one is created.
+        """
+        from pptx.comment import Comments
+
+        return self.part.comment_part.comments
 
     @lazyproperty
     def placeholders(self) -> SlidePlaceholders:

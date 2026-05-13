@@ -12,6 +12,7 @@ from pptx.opc.packuri import PackURI
 from pptx.oxml.slide import CT_NotesMaster, CT_NotesSlide, CT_Slide
 from pptx.oxml.theme import CT_OfficeStyleSheet
 from pptx.parts.chart import ChartPart
+from pptx.parts.comment import CommentPart
 from pptx.parts.embeddedpackage import EmbeddedPackagePart
 from pptx.slide import NotesMaster, NotesSlide, Slide, SlideLayout, SlideMaster
 from pptx.util import lazyproperty
@@ -236,6 +237,28 @@ class SlidePart(BaseSlidePart):
         The |Slide| object representing this slide part.
         """
         return Slide(self._element, self)
+
+    @property
+    def has_comments(self):
+        """Return True if this slide has a comments part, False otherwise."""
+        try:
+            self.part_related_by(RT.COMMENTS)
+        except KeyError:
+            return False
+        return True
+
+    @lazyproperty
+    def comment_part(self) -> CommentPart:
+        """The |CommentPart| for this slide.
+
+        If the slide does not have a comments part, a new one is created.
+        """
+        try:
+            return self.part_related_by(RT.COMMENTS)
+        except KeyError:
+            comment_part = CommentPart.new(self.package)
+            self.relate_to(comment_part, RT.COMMENTS)
+            return comment_part
 
     @property
     def slide_id(self) -> int:

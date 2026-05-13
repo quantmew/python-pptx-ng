@@ -7,6 +7,7 @@ from typing import IO, TYPE_CHECKING, Iterable
 from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from pptx.opc.package import XmlPart
 from pptx.opc.packuri import PackURI
+from pptx.parts.comment import CommentAuthorsPart
 from pptx.parts.slide import NotesMasterPart, SlidePart
 from pptx.presentation import Presentation
 from pptx.util import lazyproperty
@@ -74,6 +75,19 @@ class PresentationPart(XmlPart):
             notes_master_part = NotesMasterPart.create_default(self.package)
             self.relate_to(notes_master_part, RT.NOTES_MASTER)
             return notes_master_part
+
+    @lazyproperty
+    def comment_authors_part(self) -> CommentAuthorsPart:
+        """Return the |CommentAuthorsPart| for this presentation.
+
+        If the presentation does not have a comment authors part, one is created.
+        """
+        try:
+            return self.part_related_by(RT.COMMENT_AUTHORS)
+        except KeyError:
+            comment_authors_part = CommentAuthorsPart.new(self.package)
+            self.relate_to(comment_authors_part, RT.COMMENT_AUTHORS)
+            return comment_authors_part
 
     @lazyproperty
     def presentation(self):
