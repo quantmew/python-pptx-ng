@@ -21,3 +21,7 @@ class InvalidXmlError(PythonPptxError):
     Raised when a value is encountered in the XML that is not valid according
     to the schema.
     """
+
+
+class ValidationError(PythonPptxError):
+    """Raised when validation of a presentation or its parts fails."""

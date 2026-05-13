@@ -712,6 +712,13 @@ class BaseOxmlElement(etree.ElementBase, metaclass=MetaOxmlElement):
         """
         return super().xpath(xpath_str, namespaces=_nsmap)
 
+    def validate(self) -> list:
+        """Validate this element and its subtree, returning a list of errors."""
+        from pptx.validation import PresentationValidator
+
+        validator = PresentationValidator()
+        return validator.validate_element(self)
+
     @property
     def _nsptag(self) -> str:
         return NamespacePrefixedTag.from_clark_name(self.tag)
