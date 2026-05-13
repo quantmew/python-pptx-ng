@@ -567,6 +567,38 @@ class SlideShapes(_BaseGroupShapes):
         self._recalculate_extents()
         return cast(GraphicFrame, self._shape_factory(graphicFrame))
 
+    def add_chartex(
+        self,
+        chart_type: str,
+        left: Length,
+        top: Length,
+        width: Length,
+        height: Length,
+    ) -> GraphicFrame:
+        """Add a new extended chart (chartEx) to the slide.
+
+        `chart_type` specifies the chart variant, e.g. ``'treemap'``,
+        ``'sunburst'``, ``'waterfall'``, ``'funnel'``, ``'regionMap'``, or
+        ``'boxWhisker'``. The chart is positioned at (`left`, `top`) and has
+        size (`width`, `height`).
+
+        Returns a |GraphicFrame| object.
+        """
+        rId = self.part.add_chartex_part()
+        shape_id = self._next_shape_id
+        name = "ChartEx %d" % (shape_id - 1)
+        graphicFrame = CT_GraphicalObjectFrame.new_chartex_graphicFrame(
+            shape_id, name, rId, left, top, width, height,
+        )
+        self._spTree.append(graphicFrame)
+        self._recalculate_extents()
+
+        # Set chart type on the chartEx part
+        chartex_part = self.part.related_part(rId)
+        chartex_part.chart_ex.chart_type = chart_type
+
+        return cast(GraphicFrame, self._shape_factory(graphicFrame))
+
     def add_audio(
         self,
         audio_file: str | IO[bytes],

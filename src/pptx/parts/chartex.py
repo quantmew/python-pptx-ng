@@ -9,8 +9,10 @@ from typing import TYPE_CHECKING
 
 from pptx.opc.constants import CONTENT_TYPE as CT
 from pptx.opc.package import XmlPart
+from pptx.util import lazyproperty
 
 if TYPE_CHECKING:
+    from pptx.chartex import ChartEx
     from pptx.package import Package
 
 
@@ -34,3 +36,10 @@ class ChartExPart(XmlPart):
             package,
             etree.tostring(chart_space, xml_declaration=True, encoding="UTF-8", standalone=True),
         )
+
+    @lazyproperty
+    def chart_ex(self) -> ChartEx:
+        """|ChartEx| object representing the extended chart in this part."""
+        from pptx.chartex import ChartEx
+
+        return ChartEx(self._element, self)

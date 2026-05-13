@@ -125,6 +125,8 @@ API Documentation
    api/tags
    api/math
    api/diagram
+   api/chartex
+   api/model3d
    api/enum/index
 
 

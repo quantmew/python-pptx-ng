@@ -1,8 +1,10 @@
 """Core chartEx XML element classes.
 
-Provides minimal element classes for extended chart (chartEx) round-trip
-support. ChartEx is used for modern chart types like treemap, sunburst,
-waterfall, histogram, box-and-whisker, funnel, and region map charts.
+Provides element classes for extended chart (chartEx) support. ChartEx is used
+for modern chart types like treemap, sunburst, waterfall, histogram,
+box-and-whisker, funnel, and region map charts (Office 2016+).
+
+Reference: Open XML SDK, Office2016.Drawing.ChartDrawing namespace
 """
 
 from __future__ import annotations
@@ -40,7 +42,7 @@ class CT_ChartExSpace(BaseOxmlElement):
             CT_ChartExSpace,
             _parse(
                 '<cx:chartSpace %s xmlns:cxs="http://schemas.microsoft.com/office/drawing/2014/chartex">'
-                "<cx:chart/>"
+                "<cx:chart><cx:plotArea/></cx:chart>"
                 "<cx:chartData/>"
                 "</cx:chartSpace>" % nsdecls("cx")
             ),
@@ -50,10 +52,32 @@ class CT_ChartExSpace(BaseOxmlElement):
 class CT_ChartEx(BaseOxmlElement):
     """`cx:chart` — chart definition within a chartEx part."""
 
-    pass
+    _tag_seq = ("cx:plotArea", "cx:extLst")
+    plotArea: Callable[[], CT_PlotArea]
+    plotArea = ZeroOrOne("cx:plotArea", successors=("cx:extLst",))
+    del _tag_seq
+
+    get_or_add_plotArea: Callable[[], CT_PlotArea]
 
 
 class CT_ChartExData(BaseOxmlElement):
     """`cx:chartData` — chart data within a chartEx part."""
 
     pass
+
+
+class CT_PlotArea(BaseOxmlElement):
+    """`cx:plotArea` — chart plot area containing series and layout."""
+
+    _tag_seq = ("cx:layoutPr", "cx:extLst")
+    layoutPr: Callable[[], CT_SeriesLayoutPr]
+    layoutPr = ZeroOrOne("cx:layoutPr", successors=("cx:extLst",))
+    del _tag_seq
+
+    get_or_add_layoutPr: Callable[[], CT_SeriesLayoutPr]
+
+
+class CT_SeriesLayoutPr(BaseOxmlElement):
+    """`cx:layoutPr` — series layout properties defining the chart type."""
+
+    layout = OptionalAttribute("layout", XsdString)

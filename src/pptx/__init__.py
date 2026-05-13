@@ -22,6 +22,7 @@ from pptx.parts.diagram import (
 from pptx.parts.handout import HandoutMasterPart
 from pptx.parts.image import ImagePart
 from pptx.parts.media import MediaPart
+from pptx.parts.model3d import Model3DBlobPart
 from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
 from pptx.parts.presentation import PresentationPart
 from pptx.parts.slide import (
@@ -92,6 +93,7 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.WMV: MediaPart,
     CT.X_MS_VIDEO: MediaPart,
     CT.PML_TAGS: UserDefinedTagsPart,
+    CT.MODEL_GLB: Model3DBlobPart,
     # -- accommodate "image/jpg" as an alias for "image/jpeg" --
     "image/jpg": ImagePart,
 }
@@ -111,6 +113,7 @@ del (
     HandoutMasterPart,
     ImagePart,
     MediaPart,
+    Model3DBlobPart,
     PresentationPropertiesPart,
     ViewPropertiesPart,
     SlidePart,

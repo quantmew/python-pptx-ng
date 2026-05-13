@@ -138,11 +138,44 @@ from pptx.oxml.chartex.chartex import (  # noqa: E402
     CT_ChartEx,
     CT_ChartExData,
     CT_ChartExSpace,
+    CT_PlotArea,
+    CT_SeriesLayoutPr,
 )
 
 register_element_cls("cx:chart", CT_ChartEx)
 register_element_cls("cx:chartData", CT_ChartExData)
 register_element_cls("cx:chartSpace", CT_ChartExSpace)
+register_element_cls("cx:plotArea", CT_PlotArea)
+register_element_cls("cx:layoutPr", CT_SeriesLayoutPr)
+
+
+from pptx.oxml.model3d import (  # noqa: E402
+    CT_AmbientLight,
+    CT_DirectionalLight,
+    CT_Model3D,
+    CT_Model3DCamera,
+    CT_Model3DTransform,
+    CT_ObjectViewport,
+    CT_OrthographicProjection,
+    CT_PerspectiveProjection,
+    CT_PointLight,
+    CT_SpotLight,
+    CT_UnknownLight,
+    CT_WindowViewport,
+)
+
+register_element_cls("m3d:model3D", CT_Model3D)
+register_element_cls("m3d:camera", CT_Model3DCamera)
+register_element_cls("m3d:trans", CT_Model3DTransform)
+register_element_cls("m3d:objViewport", CT_ObjectViewport)
+register_element_cls("m3d:winViewport", CT_WindowViewport)
+register_element_cls("m3d:ambientLight", CT_AmbientLight)
+register_element_cls("m3d:ptLight", CT_PointLight)
+register_element_cls("m3d:spotLight", CT_SpotLight)
+register_element_cls("m3d:dirLight", CT_DirectionalLight)
+register_element_cls("m3d:unkLight", CT_UnknownLight)
+register_element_cls("m3d:orthographic", CT_OrthographicProjection)
+register_element_cls("m3d:perspective", CT_PerspectiveProjection)
 
 
 from pptx.oxml.chart.axis import (  # noqa: E402

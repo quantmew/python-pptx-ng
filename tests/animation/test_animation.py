@@ -304,3 +304,179 @@ class DescribeOxmlAnimationElements:
         # Verify structure
         assert par.find("{http://schemas.openxmlformats.org/presentationml/2006/main}cTn") is not None
         assert len(childTnLst) == 1
+
+
+class DescribeFlyInEffect:
+    """Tests for add_fly_in_effect."""
+
+    def it_adds_fly_in_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_fly_in_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        anims = timing_el.findall(".//p:anim", NSMAP)
+        assert len(anims) >= 1
+
+    def it_adds_fly_in_with_direction(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_fly_in_effect(txBox.shape_id, direction="left")
+
+        timing_el = slide._element.timing
+        cTns = timing_el.findall(".//p:cTn", NSMAP)
+        preset_cTn = next(c for c in cTns if c.get("presetID") == "2")
+        assert preset_cTn.get("presetSubtype") == "8"
+
+
+class DescribeSpinEffect:
+    """Tests for add_spin_effect."""
+
+    def it_adds_spin_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_spin_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        cTns = timing_el.findall(".//p:cTn", NSMAP)
+        preset_cTn = next(c for c in cTns if c.get("presetID") == "22")
+        assert preset_cTn.get("presetClass") == "emph"
+
+
+class DescribeFadeOutEffect:
+    """Tests for add_fade_out_effect."""
+
+    def it_adds_fade_out_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_fade_out_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        animEffects = timing_el.findall(".//p:animEffect", NSMAP)
+        assert len(animEffects) == 1
+        assert animEffects[0].get("transition") == "out"
+        assert animEffects[0].get("filter") == "fade"
+
+
+class DescribeDisappearEffect:
+    """Tests for add_disappear_effect."""
+
+    def it_adds_disappear_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_disappear_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        strVals = timing_el.findall(".//p:strVal", NSMAP)
+        assert any(v.get("val") == "hidden" for v in strVals)
+
+
+class DescribeGrowShrinkEffect:
+    """Tests for add_grow_shrink_effect."""
+
+    def it_adds_grow_shrink_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_grow_shrink_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        cTns = timing_el.findall(".//p:cTn", NSMAP)
+        preset_cTn = next(c for c in cTns if c.get("presetID") == "26")
+        assert preset_cTn.get("presetClass") == "emph"
+
+
+class DescribeZoomEffect:
+    """Tests for add_zoom_effect."""
+
+    def it_adds_zoom_effect(self):
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[0])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(2), Inches(1))
+        timing = slide.timing
+        timing.add_zoom_effect(txBox.shape_id)
+
+        timing_el = slide._element.timing
+        animEffects = timing_el.findall(".//p:animEffect", NSMAP)
+        assert len(animEffects) == 1
+        assert animEffects[0].get("transition") == "in"
+
+
+class DescribeAnimationEnums:
+    """Tests for animation enum definitions."""
+
+    def it_has_timing_node_type_enum(self):
+        from pptx.enum.animation import PP_TIMING_NODE_TYPE
+
+        assert PP_TIMING_NODE_TYPE.AFTER_EFFECT.xml_value == "afterEffect"
+        assert PP_TIMING_NODE_TYPE.MAIN_SEQUENCE.xml_value == "mainSeq"
+
+    def it_has_preset_class_enum(self):
+        from pptx.enum.animation import PP_ANIMATION_PRESET_CLASS
+
+        assert PP_ANIMATION_PRESET_CLASS.ENTRANCE.xml_value == "entr"
+        assert PP_ANIMATION_PRESET_CLASS.EXIT.xml_value == "exit"
+        assert PP_ANIMATION_PRESET_CLASS.EMPHASIS.xml_value == "emph"
+
+    def it_has_time_node_fill_enum(self):
+        from pptx.enum.animation import PP_TIME_NODE_FILL
+
+        assert PP_TIME_NODE_FILL.HOLD.xml_value == "hold"
+        assert PP_TIME_NODE_FILL.REMOVE.xml_value == "remove"
+
+    def it_has_effect_transition_enum(self):
+        from pptx.enum.animation import PP_ANIMATION_EFFECT_TRANSITION
+
+        assert PP_ANIMATION_EFFECT_TRANSITION.IN.xml_value == "in"
+        assert PP_ANIMATION_EFFECT_TRANSITION.OUT.xml_value == "out"
+
+    def it_has_paragraph_build_type_enum(self):
+        from pptx.enum.animation import PP_PARAGRAPH_BUILD_TYPE
+
+        assert PP_PARAGRAPH_BUILD_TYPE.ALL_AT_ONCE.xml_value == "allAtOnce"
+        assert PP_PARAGRAPH_BUILD_TYPE.PARAGRAPH.xml_value == "p"
+
+
+class DescribeTransitionEnums:
+    """Tests for transition enum definitions."""
+
+    def it_has_speed_enum(self):
+        from pptx.enum.transition import PP_TRANSITION_SPEED
+
+        assert PP_TRANSITION_SPEED.SLOW.xml_value == "slow"
+        assert PP_TRANSITION_SPEED.FAST.xml_value == "fast"
+
+    def it_has_side_direction_enum(self):
+        from pptx.enum.transition import PP_TRANSITION_SIDE_DIRECTION
+
+        assert PP_TRANSITION_SIDE_DIRECTION.LEFT.xml_value == "l"
+        assert PP_TRANSITION_SIDE_DIRECTION.RIGHT.xml_value == "r"
+
+    def it_has_corner_direction_enum(self):
+        from pptx.enum.transition import PP_TRANSITION_CORNER_DIRECTION
+
+        assert PP_TRANSITION_CORNER_DIRECTION.LEFT_UP.xml_value == "lu"
+        assert PP_TRANSITION_CORNER_DIRECTION.RIGHT_DOWN.xml_value == "rd"
+
+    def it_has_orientation_enum(self):
+        from pptx.enum.transition import PP_TRANSITION_ORIENTATION
+
+        assert PP_TRANSITION_ORIENTATION.HORIZONTAL.xml_value == "horz"
+        assert PP_TRANSITION_ORIENTATION.VERTICAL.xml_value == "vert"
+
+    def it_has_in_out_direction_enum(self):
+        from pptx.enum.transition import PP_TRANSITION_IN_OUT_DIRECTION
+
+        assert PP_TRANSITION_IN_OUT_DIRECTION.OUT.xml_value == "out"
+        assert PP_TRANSITION_IN_OUT_DIRECTION.IN.xml_value == "in"

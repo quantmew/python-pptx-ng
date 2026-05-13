@@ -200,6 +200,18 @@ class SlidePart(BaseSlidePart):
 
         return data_rId, layout_rId, style_rId, colors_rId
 
+    def add_chartex_part(self) -> str:
+        """Return rId of a new |ChartExPart| related to this slide."""
+        from pptx.parts.chartex import ChartExPart
+
+        return self.relate_to(ChartExPart.new(self._package), RT.CHART_EX)
+
+    def add_3d_model_part(self, blob: bytes) -> str:
+        """Return rId of a new |Model3DBlobPart| related to this slide."""
+        from pptx.parts.model3d import Model3DBlobPart
+
+        return self.relate_to(Model3DBlobPart.new(blob, self._package), RT.MODEL3D)
+
     def add_embedded_ole_object_part(
         self, prog_id: PROG_ID | str, ole_object_file: str | IO[bytes]
     ):

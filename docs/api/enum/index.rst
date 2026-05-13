@@ -25,6 +25,9 @@ can be found here:
    PpMediaType
    PpParagraphAlignment
    PpPlaceholderType
+   PpTransitionSpeed
+   PpTransitionDirection
+   PpAnimationEnum
 
    XlAxisCrosses
    XlCategoryType

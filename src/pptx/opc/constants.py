@@ -34,6 +34,7 @@ class CONTENT_TYPE:
     MP4 = "video/mp4"
     MPG = "video/mpeg"
     MS_PHOTO = "image/vnd.ms-photo"
+    MODEL_GLB = "model/gltf-binary"
     MS_VIDEO = "video/msvideo"
     OFC_CHART_COLORS = "application/vnd.ms-office.chartcolorstyle+xml"
     OFC_CHART_EX = "application/vnd.ms-office.chartex+xml"
@@ -216,6 +217,7 @@ class RELATIONSHIP_TYPE:
     CHART_USER_SHAPES = (
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chartUserShapes"
     )
+    CHART_EX = "http://schemas.microsoft.com/office/2014/relationships/chartEx"
     COMMENTS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
     COMMENT_AUTHORS = (
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors"
@@ -268,6 +270,7 @@ class RELATIONSHIP_TYPE:
     HYPERLINK = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
     IMAGE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
     MEDIA = "http://schemas.microsoft.com/office/2007/relationships/media"
+    MODEL3D = "http://schemas.microsoft.com/office/2017/06/relationships/model3d"
     NOTES_MASTER = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesMaster"
     NOTES_SLIDE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide"
     NUMBERING = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering"
