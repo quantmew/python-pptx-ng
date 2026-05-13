@@ -52,6 +52,42 @@ register_element_cls("a:hlinkClick", CT_Hyperlink)
 register_element_cls("a:hlinkHover", CT_Hyperlink)
 
 
+from pptx.oxml.animation import (  # noqa: E402
+    CT_TLAnimate,
+    CT_TLAnimateEffect,
+    CT_TLBuildList,
+    CT_TLBuildParagraph,
+    CT_TLCommonBehavior,
+    CT_TLCommonTimeNodeData,
+    CT_TLCondition,
+    CT_TLConditionList,
+    CT_TLSetEffect,
+    CT_TLShapeTarget,
+    CT_TLTargetElement,
+    CT_TLTimeAnimateValue,
+    CT_TLTimeAnimateValueList,
+    CT_TLTimeNodeExclusive,
+    CT_TLTimeNodeParallel,
+    CT_TLTimeNodeSequence,
+)
+
+register_element_cls("p:anim", CT_TLAnimate)
+register_element_cls("p:animEffect", CT_TLAnimateEffect)
+register_element_cls("p:bldLst", CT_TLBuildList)
+register_element_cls("p:bldP", CT_TLBuildParagraph)
+register_element_cls("p:cBhvr", CT_TLCommonBehavior)
+register_element_cls("p:cTn", CT_TLCommonTimeNodeData)
+register_element_cls("p:cond", CT_TLCondition)
+register_element_cls("p:excl", CT_TLTimeNodeExclusive)
+register_element_cls("p:par", CT_TLTimeNodeParallel)
+register_element_cls("p:seq", CT_TLTimeNodeSequence)
+register_element_cls("p:set", CT_TLSetEffect)
+register_element_cls("p:spTgt", CT_TLShapeTarget)
+register_element_cls("p:stCondLst", CT_TLConditionList)
+register_element_cls("p:tav", CT_TLTimeAnimateValue)
+register_element_cls("p:tavLst", CT_TLTimeAnimateValueList)
+register_element_cls("p:tgtEl", CT_TLTargetElement)
+
 from pptx.oxml.comment import (  # noqa: E402
     CT_Comment,
     CT_CommentAuthor,

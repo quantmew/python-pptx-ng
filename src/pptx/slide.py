@@ -249,6 +249,17 @@ class Slide(_BaseSlide):
         return Transition(trans_el)
 
     @lazyproperty
+    def timing(self):
+        """The |AnimationTimeline| for this slide.
+
+        Provides access to animation effects. If no timing element
+        exists, one is created on first use.
+        """
+        from pptx.animation import AnimationTimeline
+
+        return AnimationTimeline(self._element.get_or_add_timing(), self)
+
+    @lazyproperty
     def placeholders(self) -> SlidePlaceholders:
         """Sequence of placeholder shapes in this slide."""
         return SlidePlaceholders(self._element.spTree, self)
