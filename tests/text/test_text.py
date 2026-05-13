@@ -1212,3 +1212,102 @@ class Describe_Run(object):
     @pytest.fixture
     def hlink_(self, request):
         return instance_mock(request, _Hyperlink)
+
+
+class DescribeAddLatex:
+    """Integration tests for _Paragraph.add_latex()."""
+
+    def it_inserts_fraction_formula(self):
+        from pptx import Presentation
+        from pptx.util import Inches
+
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[6])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2))
+        p = txBox.text_frame.paragraphs[0]
+
+        p.add_latex(r"\frac{a}{b}")
+
+        math_elems = p._p.findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}oMath"
+        )
+        assert len(math_elems) == 1
+        # Should contain fraction element
+        fracs = math_elems[0].findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}f"
+        )
+        assert len(fracs) >= 1
+
+    def it_handles_integral_formula(self):
+        from pptx import Presentation
+        from pptx.util import Inches
+
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[6])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2))
+        p = txBox.text_frame.paragraphs[0]
+
+        p.add_latex(r"\int_0^{\infty} x^2 dx")
+
+        math_elems = p._p.findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}oMath"
+        )
+        assert len(math_elems) == 1
+        # Should contain nary element (integral)
+        narys = math_elems[0].findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}nary"
+        )
+        assert len(narys) >= 1
+
+    def it_raises_on_empty_latex(self):
+        from pptx import Presentation
+        from pptx.util import Inches
+
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[6])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2))
+        p = txBox.text_frame.paragraphs[0]
+
+        with pytest.raises(ValueError):
+            p.add_latex("")
+
+    def it_round_trips_latex_formula(self):
+        from pptx import Presentation
+        from pptx.util import Inches
+
+        import io
+
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[6])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2))
+        p = txBox.text_frame.paragraphs[0]
+
+        p.add_latex(r"\sqrt{a^2 + b^2}")
+
+        buf = io.BytesIO()
+        prs.save(buf)
+        buf.seek(0)
+
+        prs2 = Presentation(buf)
+        math_elems = prs2.slides[0].shapes[0]._element.findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}oMath"
+        )
+        assert len(math_elems) == 1
+
+    def it_inserts_multiple_formulas(self):
+        from pptx import Presentation
+        from pptx.util import Inches
+
+        prs = Presentation()
+        slide = prs.slides.add_slide(prs.slide_layouts[6])
+        txBox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2))
+        p = txBox.text_frame.paragraphs[0]
+
+        p.add_latex(r"a = b")
+        p.add_run().text = " and "
+        p.add_latex(r"c = d")
+
+        math_elems = p._p.findall(
+            ".//{http://schemas.openxmlformats.org/officeDocument/2006/math}oMath"
+        )
+        assert len(math_elems) == 2

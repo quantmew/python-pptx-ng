@@ -508,6 +508,33 @@ class _Paragraph(Subshape):
         self._p.append(mc_el)
         return MathFormula(oMath)
 
+    def add_latex(self, latex: str):
+        """Insert a LaTeX formula into this paragraph.
+
+        Converts *latex* to OMML via the LaTeX → MathML → OMML pipeline
+        and appends it as an inline math element.
+        """
+        if not latex:
+            raise ValueError("latex string must not be empty")
+
+        import latex2mathml.converter
+        import mathml2omml
+        from lxml import etree
+
+        formula = self.add_math()
+        oMath = formula._element
+
+        mathml = latex2mathml.converter.convert(latex)
+        omml_str = mathml2omml.convert(mathml)
+
+        m_ns = "http://schemas.openxmlformats.org/officeDocument/2006/math"
+        inner = omml_str[len("<m:oMath>") : -len("</m:oMath>")]
+        wrapped = f'<m:oMath xmlns:m="{m_ns}">{inner}</m:oMath>'
+        converted = etree.fromstring(wrapped)
+
+        for child in converted:
+            oMath.append(child)
+
     def add_run(self) -> _Run:
         """Return a new run appended to the runs in this paragraph."""
         r = self._p.add_r()

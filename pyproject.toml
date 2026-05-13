@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "python-pptx"
+name = "python-pptx-ng"
 authors = [{name = "Steve Canny", email = "stcanny@gmail.com"}]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -24,7 +24,9 @@ classifiers = [
 dependencies = [
     "Pillow>=3.3.2",
     "XlsxWriter>=0.5.7",
+    "latex2mathml>=3.78",
     "lxml>=3.1.0",
+    "mathml2omml>=0.0.2",
     "typing_extensions>=4.9.0",
 ]
 description = "Create, read, and update PowerPoint 2007+ (.pptx) files."
