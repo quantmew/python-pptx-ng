@@ -55,6 +55,17 @@ class Presentation(PartElementProxy):
 
         return self.part.comment_authors_part.comment_authors
 
+    @lazyproperty
+    def custom_shows(self):
+        """|CustomShows| collection for this presentation.
+
+        Provides access to custom show definitions. If no custom show list
+        element exists, one is created.
+        """
+        from pptx.customshow import CustomShows
+
+        return CustomShows(self._element.get_or_add_custShowLst(), self)
+
     @property
     def notes_master(self) -> NotesMaster:
         """Instance of |NotesMaster| for this presentation.

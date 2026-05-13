@@ -69,6 +69,18 @@ register_element_cls("p:pos", CT_CommentPosition)
 register_element_cls("p:text", CT_CommentText)
 
 
+from pptx.oxml.customshow import (  # noqa: E402
+    CT_CustomShow,
+    CT_CustomShowList,
+    CT_SlideRelationshipList,
+    CT_SlideRelationshipListEntry,
+)
+
+register_element_cls("p:custShow", CT_CustomShow)
+register_element_cls("p:custShowLst", CT_CustomShowList)
+register_element_cls("p:sldLst", CT_SlideRelationshipList)
+
+
 from pptx.oxml.chart.axis import (  # noqa: E402
     CT_AxisUnit,
     CT_CatAx,
