@@ -49,6 +49,8 @@ class PresentationValidator:
         self._schema_validator = SchemaValidator()
         self._package_validator = PackageValidator()
         self._semantic_validator = SemanticValidator()
+        for constraint in _default_constraints():
+            self._semantic_validator.register(constraint)
 
     @property
     def max_errors(self) -> int:
@@ -106,3 +108,10 @@ __all__ = [
     "ValidationErrorInfo",
     "ValidationContext",
 ]
+
+
+def _default_constraints():
+    """Lazy import to avoid circular dependencies."""
+    from pptx.validation.presentation_constraints import get_default_constraints
+
+    return get_default_constraints()

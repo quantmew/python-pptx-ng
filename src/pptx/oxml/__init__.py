@@ -593,6 +593,15 @@ register_element_cls("a:tcPr", CT_TableCellProperties)
 register_element_cls("a:tr", CT_TableRow)
 
 
+from pptx.oxml.tablestyle import (  # noqa: E402
+    CT_TableStyleEntry,
+    CT_TableStyleList,
+)
+
+register_element_cls("a:tblStyle", CT_TableStyleEntry)
+register_element_cls("a:tblStyleLst", CT_TableStyleList)
+
+
 from pptx.oxml.text import (  # noqa: E402
     CT_RegularTextRun,
     CT_TextBody,
@@ -812,6 +821,16 @@ register_element_cls("m:t", CT_OMathText)
 register_element_cls("m:ctrlPr", CT_OMathControlProperties)
 
 
-from pptx.oxml.theme import CT_OfficeStyleSheet  # noqa: E402
+from pptx.oxml.theme import (  # noqa: E402
+    CT_BaseStyles,
+    CT_ColorScheme,
+    CT_FormatScheme,
+    CT_FontScheme,
+    CT_OfficeStyleSheet,
+)
 
 register_element_cls("a:theme", CT_OfficeStyleSheet)
+register_element_cls("a:themeElements", CT_BaseStyles)
+register_element_cls("a:clrScheme", CT_ColorScheme)
+register_element_cls("a:fontScheme", CT_FontScheme)
+register_element_cls("a:fmtScheme", CT_FormatScheme)

@@ -6,8 +6,12 @@ from pptx.oxml import parse_xml
 from pptx.oxml.ns import qn
 from pptx.validation.constraints import (
     AttributeCannotOmitConstraint,
+    AttributeMutualExclusiveConstraint,
     AttributePairConstraint,
+    AttributeValueLengthConstraint,
+    AttributeValuePatternConstraint,
     AttributeValueRangeConstraint,
+    ParentTypeConstraint,
     ReferenceExistConstraint,
     UniqueAttributeValueConstraint,
 )
@@ -162,3 +166,112 @@ class DescribeAttributePairConstraint:
         constraint = AttributePairConstraint(attr1_name="attr1", attr2_name="attr2")
         constraint.validate(ctx, element)
         assert not ctx.is_valid
+
+
+class DescribeAttributeMutualExclusiveConstraint:
+    def it_passes_when_neither_present(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test {NSMAP}/>')
+        constraint = AttributeMutualExclusiveConstraint("attr1", "attr2")
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+    def it_passes_when_only_one_present(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test attr1="a" {NSMAP}/>')
+        constraint = AttributeMutualExclusiveConstraint("attr1", "attr2")
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+    def it_fails_when_both_present(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test attr1="a" attr2="b" {NSMAP}/>')
+        constraint = AttributeMutualExclusiveConstraint("attr1", "attr2")
+        constraint.validate(ctx, element)
+        assert not ctx.is_valid
+
+
+class DescribeAttributeValueLengthConstraint:
+    def it_passes_for_valid_length(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test name="hello" {NSMAP}/>')
+        constraint = AttributeValueLengthConstraint("name", min_length=1, max_length=10)
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+    def it_fails_for_too_short(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test name="" {NSMAP}/>')
+        constraint = AttributeValueLengthConstraint("name", min_length=1)
+        constraint.validate(ctx, element)
+        assert not ctx.is_valid
+
+    def it_fails_for_too_long(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test name="abcdefghijk" {NSMAP}/>')
+        constraint = AttributeValueLengthConstraint("name", max_length=10)
+        constraint.validate(ctx, element)
+        assert not ctx.is_valid
+
+    def it_skips_missing_attribute(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test {NSMAP}/>')
+        constraint = AttributeValueLengthConstraint("name", min_length=1)
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+
+class DescribeAttributeValuePatternConstraint:
+    def it_passes_for_matching_value(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test id="abc123" {NSMAP}/>')
+        constraint = AttributeValuePatternConstraint("id", r"^[a-z]+\d+$")
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+    def it_fails_for_non_matching_value(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test id="123" {NSMAP}/>')
+        constraint = AttributeValuePatternConstraint("id", r"^[a-z]+\d+$")
+        constraint.validate(ctx, element)
+        assert not ctx.is_valid
+
+    def it_skips_missing_attribute(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test {NSMAP}/>')
+        constraint = AttributeValuePatternConstraint("id", r"^\d+$")
+        constraint.validate(ctx, element)
+        assert ctx.is_valid
+
+
+class DescribeParentTypeConstraint:
+    def it_passes_for_allowed_parent(self):
+        ctx = ValidationContext()
+        element = parse_xml(
+            f'<p:root {NSMAP}>'
+            '  <p:child/>'
+            '</p:root>'
+        )
+        child = element[0]
+        constraint = ParentTypeConstraint(["p:root"])
+        constraint.validate(ctx, child)
+        assert ctx.is_valid
+
+    def it_fails_for_disallowed_parent(self):
+        ctx = ValidationContext()
+        element = parse_xml(
+            f'<p:other {NSMAP}>'
+            '  <p:child/>'
+            '</p:other>'
+        )
+        child = element[0]
+        constraint = ParentTypeConstraint(["p:root"])
+        constraint.validate(ctx, child)
+        assert not ctx.is_valid
+
+    def it_skips_root_element(self):
+        ctx = ValidationContext()
+        element = parse_xml(f'<p:test {NSMAP}/>')
+        constraint = ParentTypeConstraint(["p:root"])
+        constraint.validate(ctx, element)
+        assert ctx.is_valid

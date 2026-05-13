@@ -53,7 +53,7 @@ class DescribePresentationValidator:
             AttributeCannotOmitConstraint("someAttr")
         )
         # Constraint registered without error
-        assert len(validator._semantic_validator._constraints) == 1
+        assert len(validator._semantic_validator._constraints) == 4  # 3 default + 1 custom
 
     def it_validates_from_file(self, tmp_path):
         prs = Presentation()
@@ -65,3 +65,7 @@ class DescribePresentationValidator:
         validator = PresentationValidator()
         errors = validator.validate(prs2)
         assert len(errors) == 0
+
+    def it_auto_registers_default_constraints(self):
+        validator = PresentationValidator()
+        assert len(validator._semantic_validator._constraints) >= 3

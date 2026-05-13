@@ -36,9 +36,10 @@ Feature Support
 * Configure presentation show properties (loop, timings, animations) and view properties (grid spacing)
 * Define custom shows (named sub-sets of slides)
 * Add slide transitions (fade, push, wipe, split, and 16 others)
-* Add entrance animations (appear, fade) to shapes
+* Add entrance animations (appear, fly-in, zoom, fade, grow/turn, and more) to shapes
 * Add audio shapes to slides with poster frames and timing
 * Access handout master for print layout customization
+* Read theme color scheme and font scheme from slide masters
 * Add user-defined tags (key-value metadata) to slides
 * Embed mathematical formulas (OMML) including fractions, integrals, matrices, and more
 * Add SmartArt diagram graphics to slides
@@ -127,6 +128,8 @@ API Documentation
    api/diagram
    api/chartex
    api/model3d
+   api/tablestyle
+   api/theme
    api/enum/index
 
 

@@ -152,6 +152,7 @@ class CONTENT_TYPE:
     SML_WORKSHEET = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
     SWF = "application/x-shockwave-flash"
     TIFF = "image/tiff"
+    VBA_PROJECT = "application/vnd.ms-office.vbaProject"
     VIDEO = "video/unknown"
     WML_COMMENTS = "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"
     WML_DOCUMENT = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -328,6 +329,7 @@ class RELATIONSHIP_TYPE:
     )
     THUMBNAIL = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail"
     USERNAMES = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/usernames"
+    VBA_PROJECT = "http://schemas.microsoft.com/office/2006/relationships/vbaProject"
     VIDEO = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/video"
     VIEW_PROPS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps"
     VML_DRAWING = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"

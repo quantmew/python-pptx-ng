@@ -12,7 +12,10 @@ from pptx.opc.package import PartFactory
 from pptx.parts.chart import ChartPart
 from pptx.parts.chartex import ChartExPart
 from pptx.parts.comment import CommentAuthorsPart, CommentPart
+from pptx.parts.control import ActiveXControlPart
+from pptx.parts.customui import RibbonExtensibilityPart
 from pptx.parts.coreprops import CorePropertiesPart
+from pptx.parts.dsignature import DigitalSignatureXmlSignaturePart
 from pptx.parts.diagram import (
     DiagramColorsPart,
     DiagramDataPart,
@@ -32,7 +35,12 @@ from pptx.parts.slide import (
     SlideMasterPart,
     SlidePart,
 )
+from pptx.parts.slidesync import SlideSyncDataPart
+from pptx.parts.tablestyle import TableStylesPart
 from pptx.parts.tags import UserDefinedTagsPart
+from pptx.parts.theme import ThemePart
+from pptx.parts.vba import VbaProjectPart
+from pptx.parts.webextension import WebExtensionPart, WebExTaskpanesPart
 
 if TYPE_CHECKING:
     from pptx.opc.package import Part
@@ -93,7 +101,14 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
     CT.WMV: MediaPart,
     CT.X_MS_VIDEO: MediaPart,
     CT.PML_TAGS: UserDefinedTagsPart,
+    CT.PML_TABLE_STYLES: TableStylesPart,
+    CT.OFC_THEME: ThemePart,
+    CT.PML_SLIDE_UPDATE_INFO: SlideSyncDataPart,
     CT.MODEL_GLB: Model3DBlobPart,
+    CT.VBA_PROJECT: VbaProjectPart,
+    CT.OPC_DIGITAL_SIGNATURE_XMLSIGNATURE: DigitalSignatureXmlSignaturePart,
+    "application/vnd.ms-office.webextension+xml": WebExtensionPart,
+    "application/vnd.ms-office.webextensiontaskpanes+xml": WebExTaskpanesPart,
     # -- accommodate "image/jpg" as an alias for "image/jpeg" --
     "image/jpg": ImagePart,
 }
@@ -101,11 +116,13 @@ content_type_to_part_class_map: dict[str, type[Part]] = {
 PartFactory.part_type_for.update(content_type_to_part_class_map)
 
 del (
+    ActiveXControlPart,
     ChartPart,
     ChartExPart,
     CommentAuthorsPart,
     CommentPart,
     CorePropertiesPart,
+    DigitalSignatureXmlSignaturePart,
     DiagramColorsPart,
     DiagramDataPart,
     DiagramLayoutPart,
@@ -115,12 +132,19 @@ del (
     MediaPart,
     Model3DBlobPart,
     PresentationPropertiesPart,
+    RibbonExtensibilityPart,
     ViewPropertiesPart,
+    WebExTaskpanesPart,
+    WebExtensionPart,
     SlidePart,
     SlideLayoutPart,
     SlideMasterPart,
+    SlideSyncDataPart,
+    TableStylesPart,
+    ThemePart,
     PresentationPart,
     UserDefinedTagsPart,
+    VbaProjectPart,
     CT,
     PartFactory,
 )

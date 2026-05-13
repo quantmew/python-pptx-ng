@@ -11,6 +11,7 @@ from pptx.parts.comment import CommentAuthorsPart
 from pptx.parts.handout import HandoutMasterPart
 from pptx.parts.presprops import PresentationPropertiesPart, ViewPropertiesPart
 from pptx.parts.slide import NotesMasterPart, SlidePart
+from pptx.parts.tablestyle import TableStylesPart
 from pptx.presentation import Presentation
 from pptx.util import lazyproperty
 
@@ -105,6 +106,19 @@ class PresentationPart(XmlPart):
             comment_authors_part = CommentAuthorsPart.new(self.package)
             self.relate_to(comment_authors_part, RT.COMMENT_AUTHORS)
             return comment_authors_part
+
+    @lazyproperty
+    def table_styles_part(self) -> TableStylesPart:
+        """Return the |TableStylesPart| for this presentation.
+
+        If the presentation does not have one, it is created.
+        """
+        try:
+            return self.part_related_by(RT.TABLE_STYLES)
+        except KeyError:
+            table_styles_part = TableStylesPart.new(self.package)
+            self.relate_to(table_styles_part, RT.TABLE_STYLES)
+            return table_styles_part
 
     @lazyproperty
     def presentation(self):

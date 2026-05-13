@@ -294,3 +294,160 @@ class AttributePairConstraint(SemanticConstraint):
             )
 
         return None
+
+
+class AttributeMutualExclusiveConstraint(SemanticConstraint):
+    """Validates that at most one of two attributes is present.
+
+    Corresponds to DocumentFormat.OpenXml.Validation.Semantic.AttributeMutualExclusive.
+    """
+
+    def __init__(self, attr1_name: str, attr2_name: str):
+        super().__init__(SemanticValidationLevel.ELEMENT)
+        self._attr1_name = attr1_name
+        self._attr2_name = attr2_name
+
+    def validate_core(self, ctx, element, part=None):
+        from pptx.oxml.ns import qn
+
+        clark1 = qn(self._attr1_name) if ":" in self._attr1_name else self._attr1_name
+        clark2 = qn(self._attr2_name) if ":" in self._attr2_name else self._attr2_name
+
+        if element.get(clark1) is not None and element.get(clark2) is not None:
+            return ValidationErrorInfo(
+                id="Sem_AttributeMutualExclusive",
+                error_type=ValidationErrorType.SEMANTIC,
+                description=f"Attributes '{self._attr1_name}' and "
+                f"'{self._attr2_name}' are mutually exclusive.",
+                part=part,
+                element=element,
+            )
+
+        return None
+
+
+class AttributeValueLengthConstraint(SemanticConstraint):
+    """Validates that a string attribute value falls within a length range.
+
+    Corresponds to DocumentFormat.OpenXml.Validation.Semantic.AttributeValueLengthConstraint.
+    """
+
+    def __init__(
+        self,
+        attr_name: str,
+        min_length: int = 0,
+        max_length: int | None = None,
+    ):
+        super().__init__(SemanticValidationLevel.ELEMENT)
+        self._attr_name = attr_name
+        self._min_length = min_length
+        self._max_length = max_length
+
+    def validate_core(self, ctx, element, part=None):
+        from pptx.oxml.ns import qn
+
+        clark_name = qn(self._attr_name) if ":" in self._attr_name else self._attr_name
+        attr_value = element.get(clark_name)
+
+        if attr_value is None:
+            return None
+
+        length = len(attr_value)
+        if length < self._min_length:
+            return ValidationErrorInfo(
+                id="Sem_AttributeValueLengthTooSmall",
+                error_type=ValidationErrorType.SEMANTIC,
+                description=f"Attribute '{self._attr_name}' value length {length} "
+                f"is less than minimum {self._min_length}.",
+                part=part,
+                element=element,
+            )
+
+        if self._max_length is not None and length > self._max_length:
+            return ValidationErrorInfo(
+                id="Sem_AttributeValueLengthTooLarge",
+                error_type=ValidationErrorType.SEMANTIC,
+                description=f"Attribute '{self._attr_name}' value length {length} "
+                f"exceeds maximum {self._max_length}.",
+                part=part,
+                element=element,
+            )
+
+        return None
+
+
+class AttributeValuePatternConstraint(SemanticConstraint):
+    """Validates that an attribute value matches a regex pattern.
+
+    Corresponds to DocumentFormat.OpenXml.Validation.Semantic.AttributeValuePatternConstraint.
+    """
+
+    def __init__(self, attr_name: str, pattern: str):
+        super().__init__(SemanticValidationLevel.ELEMENT)
+        self._attr_name = attr_name
+        self._pattern = pattern
+
+    def validate_core(self, ctx, element, part=None):
+        import re
+        from pptx.oxml.ns import qn
+
+        clark_name = qn(self._attr_name) if ":" in self._attr_name else self._attr_name
+        attr_value = element.get(clark_name)
+
+        if attr_value is None or attr_value == "":
+            return None
+
+        if not re.match(self._pattern, attr_value):
+            return ValidationErrorInfo(
+                id="Sem_AttributeValuePatternMismatch",
+                error_type=ValidationErrorType.SEMANTIC,
+                description=f"Attribute '{self._attr_name}' value '{attr_value}' "
+                f"does not match required pattern '{self._pattern}'.",
+                part=part,
+                element=element,
+            )
+
+        return None
+
+
+class ParentTypeConstraint(SemanticConstraint):
+    """Validates that an element's parent is one of a set of allowed types.
+
+    Corresponds to DocumentFormat.OpenXml.Validation.Semantic.ParentTypeConstraint.
+    """
+
+    def __init__(self, allowed_parent_tags: list[str]):
+        super().__init__(SemanticValidationLevel.ELEMENT)
+        self._allowed_parent_tags = allowed_parent_tags
+
+    def validate_core(self, ctx, element, part=None):
+        from pptx.oxml.ns import qn
+
+        parent = element.getparent()
+        if parent is None:
+            return None
+
+        allowed = [
+            qn(tag) if ":" in tag else tag
+            for tag in self._allowed_parent_tags
+        ]
+
+        if parent.tag not in allowed:
+            return ValidationErrorInfo(
+                id="Sem_InvalidParentType",
+                error_type=ValidationErrorType.SEMANTIC,
+                description=f"Element <{_short_tag(element.tag)}> has invalid "
+                f"parent <{_short_tag(parent.tag)}>. Allowed parents: "
+                f"{self._allowed_parent_tags}.",
+                part=part,
+                element=element,
+            )
+
+        return None
+
+
+def _short_tag(tag: str) -> str:
+    """Strip namespace from a Clark-notation tag for display."""
+    if "}" in tag:
+        return tag.split("}", 1)[1]
+    return tag
