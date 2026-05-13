@@ -162,6 +162,7 @@ class CT_Slide(_BaseSlideElement):
     _tag_seq = ("p:cSld", "p:clrMapOvr", "p:transition", "p:timing", "p:extLst")
     cSld: CT_CommonSlideData = OneAndOnlyOne("p:cSld")  # pyright: ignore[reportAssignmentType]
     clrMapOvr = ZeroOrOne("p:clrMapOvr", successors=_tag_seq[2:])
+    transition = ZeroOrOne("p:transition", successors=_tag_seq[3:])  # pyright: ignore[reportAssignmentType]
     timing = ZeroOrOne("p:timing", successors=_tag_seq[4:])
     del _tag_seq
 

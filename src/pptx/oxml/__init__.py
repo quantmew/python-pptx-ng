@@ -439,6 +439,11 @@ register_element_cls("p:spPr", CT_ShapeProperties)
 register_element_cls("p:xfrm", CT_Transform2D)
 
 
+from pptx.oxml.transition import CT_Transition  # noqa: E402
+
+register_element_cls("p:transition", CT_Transition)
+
+
 from pptx.oxml.slide import (  # noqa: E402
     CT_Background,
     CT_BackgroundProperties,

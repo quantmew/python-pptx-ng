@@ -225,6 +225,29 @@ class Slide(_BaseSlide):
 
         return self.part.comment_part.comments
 
+    @property
+    def transition(self):
+        """The |Transition| for this slide, or |None| if not set.
+
+        Read-only. Use `add_transition()` to add one.
+        """
+        from pptx.transition import Transition
+
+        trans_el = self._element.transition
+        if trans_el is None:
+            return None
+        return Transition(trans_el)
+
+    def add_transition(self) -> Transition:
+        """Add a transition to this slide and return it.
+
+        If a transition already exists, it is replaced.
+        """
+        from pptx.transition import Transition
+
+        trans_el = self._element.get_or_add_transition()
+        return Transition(trans_el)
+
     @lazyproperty
     def placeholders(self) -> SlidePlaceholders:
         """Sequence of placeholder shapes in this slide."""
